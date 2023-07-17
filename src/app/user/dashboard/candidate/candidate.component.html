@@ -1,0 +1,59 @@
+
+<div>
+    <div class="card mb-3" style="width: 600px;">
+        <h4 class="card-header">Candidate</h4>
+    
+        <div class="card-body">
+            <form [formGroup]="formData" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                    <label class="form-label">Chose position</label>
+                    <select (change)="changePosition($event)">
+                       
+                        <option *ngFor="let name of enumKeys | keyvalue" [ngValue]="name.value" > {{positionEnum[name.value]}} </option>
+                        </select>
+                
+                </div>
+                <div class="mb-3">
+                    <label class="from-label">First Name</label>
+                    <input type="text" formControlName="firstName" class="form-control"/>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Last name</label>
+                    <input type="email" formControlName="lname" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" formControlName="email" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Phone No</label>
+                    <input type="phone" formControlName="phone" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Your Skills </label>
+                    <input type="email" formControlName="skills" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">chosee file</label>
+                    <input type="email" formControlName="fileUpload" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Joing Date</label>
+                    <input type="Date" formControlName="jDate" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Enter comment</label>
+                    <input type="text" formControlName="comment" class="form-control" />
+                </div>
+                
+                <div>
+                    <button [disabled]="loading" class="btn btn-primary">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                        Submit
+                    </button>
+                    <button class="btn btn-primary"><span></span>Clear</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
