@@ -2,6 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup ,FormBuilder, Validators,FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { first, pipe } from 'rxjs';
+import { NotificationService } from 'src/app/service/NotificationService';
+import { candidateservice } from 'src/app/service/candidateservice';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,12 +15,16 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   login : any ;
- 
+  flag = false;
   constructor( private formBuilder : FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private httpService: HttpClient) {
-   }
+    private httpService: HttpClient,
+    private notification : NotificationService,
+    private candidate : candidateservice
+    ) {
+   
+    }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -26,9 +33,12 @@ export class LoginComponent implements OnInit {
     });
 
   }
+  get f() {
+    return this.form.controls;
+  }
   onSubmit(){
     if(this.form.valid){
-
+     
       this.submitted = true;
       this.httpService.get('./assets/login.json').subscribe({ 
         next: data => {
@@ -39,9 +49,17 @@ export class LoginComponent implements OnInit {
               if((check.email === this.form.get('email')?.value) && 
                  (check.password === this.form.get('password')?.value)){
                  this.router.navigate(["./dashboard/"]);
+                 this.flag = true
               }
             }
           }
+        }
+        if(!this.flag){
+          debugger
+          this.notification.error("User Name and Password Not found");
+          debugger
+        }else{
+          this.notification.success("add Sucess"); 
         }
     }
 

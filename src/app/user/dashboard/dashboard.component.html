@@ -1,31 +1,9 @@
-
-
-<nav id="sidebar">
-    <div class="sidebar-header">
-        <h3>PORTAL</h3>
+<div>
+    <div>
+        <app-header></app-header>
     </div>
-
-    <ul class="list-unstyled components">
-        <li>
-            <a routerLinkActive="active" routerLink="/dashboard">
-                <i class="fas fa-home"></i>
-              Candidate
-            </a>
-           
-        </li>
-        <li>
-            <a routerLinkActive="active" routerLink="interview">
-                <i class="fa fa-user"></i>
-                Interview Candidate
-            </a>
-            <a href="#">
-                <i class="fas fa-copy"></i>
-                Employee 
-            </a>
-           
-        </li>
-    </ul>
-</nav>
-<div class='container'>
 	<router-outlet></router-outlet>
+    <div>
+        <app-footer></app-footer>
+    </div>
 <div>

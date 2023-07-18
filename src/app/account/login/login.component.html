@@ -1,23 +1,25 @@
 <div style="margin-top: 200px;margin-left: 600px;">
-<div class="card mb-3" style="width: 600px;">
+<div class="card mb-3" style="width: 600px; ">
     <h4 class="card-header">login</h4>
 
     <div class="card-body">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="mb-3">
                 <label class="from-label">Email</label>
-                <input type="email" formControlName="email" class="form-control"/>
+                <input type="email" formControlName="email" class="form-control"
+                class="form-control" />
             </div>
             <div class="mb-3">
                 <label class="form-label">Password</label>
                 <input type="password" formControlName="password" class="form-control" />
             </div>
             <div>
-                <button [disabled]="loading" class="btn btn-primary">
+                <button [disabled]="loading" class="btn text-dark" style="background-color: rgb(226, 226, 226);">
                     <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
                     Login
-                </button>
-                <a link="">Forgot password?</a>
+                </button><span>&nbsp;&nbsp;
+                </span>                
+                 <a link="">Forgot password?</a>
             </div>
         </form>
     </div>

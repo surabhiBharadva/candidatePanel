@@ -1,7 +1,5 @@
-
-<div>
-    <div class="card mb-3" style="width: 600px;">
-        <h4 class="card-header">Candidate</h4>
+<div class="card mb-3 container2" style="width: 600px;">
+        <h4 class="card-header">Candidate Add</h4>
     
         <div class="card-body">
             <form [formGroup]="formData" (ngSubmit)="onSubmit()">
@@ -16,10 +14,12 @@
                 <div class="mb-3">
                     <label class="from-label">First Name</label>
                     <input type="text" formControlName="firstName" class="form-control"/>
+                    <div *ngIf="f['firstName'].errors?.['required']">First Name Required</div>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Last name</label>
+                    <label class="form-label">Last Name</label>
                     <input type="email" formControlName="lname" class="form-control" />
+                    <div *ngIf="f['lname'].errors?.['required']">Last name Required</div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Email</label>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Phone No</label>
-                    <input type="phone" formControlName="phone" class="form-control" />
+                    <input type="number" formControlName="phone" class="form-control" />
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Your Skills </label>
@@ -47,13 +47,13 @@
                 </div>
                 
                 <div>
-                    <button [disabled]="loading" class="btn btn-primary">
+                    <button [disabled]="loading" class="btn text-dark" style="background-color: rgb(226, 226, 226);">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
                         Submit
                     </button>
-                    <button class="btn btn-primary"><span></span>Clear</button>
+                    <span>&nbsp;&nbsp;</span>
+                    <button class="btn text-dark" style="background-color: rgb(226, 226, 226);"><span></span>Clear</button>
                 </div>
             </form>
         </div>
-    </div>
     </div>

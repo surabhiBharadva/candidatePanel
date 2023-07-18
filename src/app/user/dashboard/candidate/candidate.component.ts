@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { validateHeaderName } from 'http';
 import { PositionEnum } from 'src/app/model/PositionEnum';
+import { NotificationService } from 'src/app/service/NotificationService';
 import { candidateservice } from 'src/app/service/candidateservice';
 @Component({
   selector: 'app-candidate',
@@ -23,7 +25,8 @@ export class CandidateComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private httpService: HttpClient,
-    private candidate: candidateservice) {
+    private candidate: candidateservice,
+    private notification: NotificationService) {
       this.enumKeys=Object.keys(this.positionEnum);
    }
 
@@ -34,7 +37,7 @@ export class CandidateComponent implements OnInit {
       firstName : [null , Validators.required],
       lname :[null,Validators.required],
       email : [null],
-      phone : [null],
+      phone : [null, Validators.min(10)],
       skills : [null],
       fileUpload : [null],
       jDate : [null],
@@ -43,6 +46,10 @@ export class CandidateComponent implements OnInit {
     });
 
   }
+  get f() {
+    return this.formData.controls;
+  }
+
   changePosition(name : any){
     debugger
     this.formData.get("position")?.setValue(name.target.value);
@@ -50,8 +57,10 @@ export class CandidateComponent implements OnInit {
   onSubmit(){
     debugger
     if(this.formData.valid){
+      debugger
       this.submitted = true;
       this.candidate.candidateList.push(this.formData.value);
+      this.notification.success("add Success candidate"); 
     }
     }
    
