@@ -1,1 +1,29 @@
-<p>interview works!</p>
+
+<div class="card mb-3 container2" style="width: 600px;">
+    <h4 class="card-header">Interview Add</h4>
+
+    <div class="card-body">
+        <form [formGroup]="formData" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+                <label class="form-label">Candidate Name</label>
+                <select style="width: 100px;">
+                   
+                    <option *ngFor="let candidate of candidat;" [ngValue]="candidate"> {{candidate.lname}} </option>
+                    </select>
+            
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Joing Date</label>
+                <input type="Date" formControlName="jDate" class="form-control" />
+            </div>
+            <div>
+                <button [disabled]="loading" class="btn text-dark" style="background-color: rgb(226, 226, 226);">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                    Submit
+                </button>
+                <span>&nbsp;&nbsp;</span>
+                <button class="btn text-dark" style="background-color: rgb(226, 226, 226);"><span></span>Clear</button>
+            </div>
+        </form>
+    </div>
+</div>

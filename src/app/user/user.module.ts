@@ -10,12 +10,13 @@ import { CandidateComponent } from './dashboard/candidate/candidate.component';
 import { CandidateListComponent } from './dashboard/candidate-list/candidate-list.component';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
+
 @NgModule({
   declarations: [DashboardComponent,CandidateComponent,InterviewComponent, CandidateListComponent,HeaderComponent,FooterComponent],
   imports: [
     CommonModule,
     UserRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class UserModule { }

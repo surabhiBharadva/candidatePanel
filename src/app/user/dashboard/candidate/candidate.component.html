@@ -5,7 +5,7 @@
             <form [formGroup]="formData" (ngSubmit)="onSubmit()">
                 <div class="mb-3">
                     <label class="form-label">Chose position</label>
-                    <select (change)="changePosition($event)">
+                    <select (change)="changePosition($event)" style="width: 100px;">
                        
                         <option *ngFor="let name of enumKeys | keyvalue" [ngValue]="name.value" > {{positionEnum[name.value]}} </option>
                         </select>

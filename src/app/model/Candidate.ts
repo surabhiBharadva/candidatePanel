@@ -1,5 +1,5 @@
 export class Candidate{
-    id?:string;
+    id?:number;
     position?: string;
     firstName ?: String;
     lname ?: String;

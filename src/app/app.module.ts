@@ -9,7 +9,6 @@ import { LoginComponent } from './account/login/login.component';
 import { FakeBackendInterceptor } from './service/FakeBackendInterceptor';
 import { NotificationComponent } from './notification/notification.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +20,6 @@ import { NotificationComponent } from './notification/notification.component';
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    
    
   ],
   providers: [

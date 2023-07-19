@@ -8,15 +8,27 @@ import { environment } from "src/environments/environment";
 
 @Injectable({ providedIn: 'root' })
 export class candidateservice {
+  
+  
+   
    loginData : any ;
     flag = false;
     candidateList : Candidate[] = [];
+    candidateObject : Candidate = {};
     constructor(
       private httpService : HttpClient
     ) {
        
     }
-   
+    getById(id2: number) {
+      for(let candidat of this.candidateList){
+        debugger
+        if(candidat.id === id2){
+          return this.candidateObject = candidat;;
+        }
+      }
+      return this.candidateObject;
+    }
     login(value : string , value2 : string){
       this.httpService.get('./assets/login.json').subscribe({ 
         next: data => {
@@ -33,11 +45,8 @@ export class candidateservice {
           }
         }
 
-    getCandidate(id: string){
+    getCandidate(){
         let candidat: Candidate = {};
-        this.candidateList.map(val=>{
-          if(val.id == id) candidat = val;
-        });
         return this.candidateList;
       }
   

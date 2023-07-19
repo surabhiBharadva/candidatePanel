@@ -1,4 +1,14 @@
-<div *ngFor="let alert of notification" class="{{cssClass(alert)}}">
-    <span [innerHTML]="alert.message"></span>
-    <button class="btn-close" (click)="removeAlert(alert)"></button>
+<div *ngFor="let alert of notification" class="{{cssClass(alert)}}" style="display: flex;
+flex-wrap: wrap;
+flex-direction: column;
+align-content: flex-start;
+flex-flow: column wrap-reverse;
+z-index: 10;
+position: absolute;
+top: 200px;
+right: 10px;
+max-height: 150%;
+background-color: rgb(206, 248, 242);">
+    <label>{{alert.message}}&nbsp;
+    <button class="btn-close" (click)="removeAlert(alert)"></button></label>
 </div>

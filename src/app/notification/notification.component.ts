@@ -19,7 +19,6 @@ export class NotificationComponent implements OnInit ,OnDestroy {
 
   ngOnInit(): void {
     this.alertSubscription = this.notificationService.onNotification(this.id).subscribe(alert => {
-      debugger
        this.notification.push(alert);
        if(alert.timeout){
         setTimeout(() => this.close(alert), alert.timeout);
@@ -38,7 +37,6 @@ close(notifications: Notification) {
   this.notification = this.notification.filter(notif => notif.id !== notifications.id);
 }
   removeAlert(alert: Notification){
-    debugger
     if (!this.notification.includes(alert)) return;
 
     if (this.fade) {
@@ -52,10 +50,9 @@ close(notifications: Notification) {
     }
   }
   cssClass(notification: Notification) {
-    debugger
     if (!notification) return;
 
-    const classes = ['notification', 'notification-dismissible', 'mt-4', 'container'];
+    const classes = ["toast-body"];
             
     const alertTypeClass = {
         [AlertType.Success]: 'notification-success',

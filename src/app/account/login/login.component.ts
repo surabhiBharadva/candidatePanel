@@ -55,9 +55,7 @@ export class LoginComponent implements OnInit {
           }
         }
         if(!this.flag){
-          debugger
           this.notification.error("User Name and Password Not found");
-          debugger
         }else{
           this.notification.success("add Sucess"); 
         }

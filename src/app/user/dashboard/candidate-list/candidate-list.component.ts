@@ -16,7 +16,7 @@ export class CandidateListComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(param => {
       if(param){
-        this.candidat = this.candidate.getCandidate(param['id']);
+        this.candidat = this.candidate.getCandidate();
       }
     })
     console.log(this.candidat);

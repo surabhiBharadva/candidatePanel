@@ -9,8 +9,6 @@ export class NotificationService{
     private subject = new Subject<Notification>();
     private defaultId = 'defualt-notification';
     onNotification(id = this.defaultId) : Observable<Notification>{
-
-    debugger
         return this.subject.asObservable().pipe(filter(x => x && x.id === id));
     }
 
@@ -23,7 +21,6 @@ export class NotificationService{
         this.notification(new Notification({...options,type:AlertType.Error,message,timeout}))
     }
     notification(notification : Notification){
-        debugger
         notification.id = notification.id || this.defaultId;
 
         this.subject.next(notification);

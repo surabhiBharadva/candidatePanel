@@ -13,6 +13,7 @@
             <th style="width: 15%">Resume</th>
             <th style="width: 10%">Joing Date</th>
             <th style="width: 10%">Enter Comment</th>
+            <th style="width: 10%">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -26,6 +27,9 @@
             <td>{{candidate.fileUpload}}</td>
             <td>{{candidate.jDate}}</td>
             <td>{{candidate.comment}}</td>
+            <td style="white-space: nowrap">
+                <a  routerLinkActive="active" routerLink="edit/{{candidate.id}}" class="btn btn-sm btn-primary me-1">Edit</a>
+            </td>
         </tr>
        
     </tbody>
