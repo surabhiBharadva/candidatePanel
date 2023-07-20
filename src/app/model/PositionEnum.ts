@@ -1,4 +1,5 @@
 export enum PositionEnum{
-    Java="java",
-    angular="Angular"
+    Java="Java Developer",
+    angular="Angular Developer",
+    fullStackDeveloper="Full Statck Developer"
 }

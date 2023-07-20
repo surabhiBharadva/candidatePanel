@@ -9,4 +9,7 @@ export class Candidate{
     fileUpload?: string;
     jDate?: string;
     comment?: string;
+    schduleDateTime?: Date;
+    status?:string;
+    hireOrNotHire?:boolean;
 }

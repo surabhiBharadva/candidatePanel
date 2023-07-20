@@ -2,4 +2,7 @@
     background-color: #add8e6;
     height: 80px;
     margin-top: 600px; 
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }

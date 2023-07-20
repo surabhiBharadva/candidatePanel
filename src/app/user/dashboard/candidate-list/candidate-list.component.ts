@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs';
@@ -11,15 +12,18 @@ import { candidateservice } from 'src/app/service/candidateservice';
 })
 export class CandidateListComponent implements OnInit {
   candidat ?: Candidate [] = []
-  constructor(private candidate : candidateservice,private route: ActivatedRoute) { }
+  candiDateData : any;
+  constructor(private candidate : candidateservice,private route: ActivatedRoute,private http: HttpClient) { }
 
   ngOnInit(): void {
+    debugger
     this.route.params.subscribe(param => {
       if(param){
         this.candidat = this.candidate.getCandidate();
       }
-    })
-    console.log(this.candidat);
+    });
+   // this.candidat = this.candidate.putJson();
+       
   }
 
 }

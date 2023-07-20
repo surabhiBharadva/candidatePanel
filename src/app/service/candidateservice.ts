@@ -22,7 +22,6 @@ export class candidateservice {
     }
     getById(id2: number) {
       for(let candidat of this.candidateList){
-        debugger
         if(candidat.id === id2){
           return this.candidateObject = candidat;;
         }
@@ -49,5 +48,14 @@ export class candidateservice {
         let candidat: Candidate = {};
         return this.candidateList;
       }
+  putJson(){
+    debugger
+    this.httpService.get('./assets/candidate.json').subscribe({ 
+      next: data => {
+        debugger
+        this.candidateList.push(data);    
+       }});
+     return this.candidateList;
+  }  
   
 }

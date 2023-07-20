@@ -6,6 +6,7 @@ import { validateHeaderName } from 'http';
 import { first } from 'rxjs';
 import { Candidate } from 'src/app/model/Candidate';
 import { PositionEnum } from 'src/app/model/PositionEnum';
+import { StatusEnum } from 'src/app/model/statusEnum';
 import { NotificationService } from 'src/app/service/NotificationService';
 import { candidateservice } from 'src/app/service/candidateservice';
 @Component({
@@ -16,13 +17,20 @@ import { candidateservice } from 'src/app/service/candidateservice';
 export class CandidateComponent implements OnInit {
   positionEnum = PositionEnum;
   enumKeys={};
+  enumKeyStatus={};
   formData! : FormGroup;
   loading = false;
   submitted = false;
   login : any ;
   id : number = 0;
-  id2 : number = 0;
+  id2 : string = "null";
+  num : number = 0;
+  updateCandidate = false;
   candiDateObjet : Candidate ={};
+  title :string = "Add";
+  file: File | undefined;
+  statusenum = StatusEnum;
+ // todayDate=this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   constructor( private formBuilder : FormBuilder,
     
 
@@ -32,10 +40,10 @@ export class CandidateComponent implements OnInit {
     private candidate: candidateservice,
     private notification: NotificationService) {
       this.enumKeys=Object.keys(this.positionEnum);
+      this.enumKeyStatus = Object.keys(this.statusenum);
    }
 
   ngOnInit(): void {
-    debugger
      this.id2 = this.route.snapshot.params['id'];
     this.formData = this.formBuilder.group({
       position : [null],
@@ -44,21 +52,22 @@ export class CandidateComponent implements OnInit {
       email : [null],
       phone : [null, Validators.min(10)],
       skills : [null],
-      fileUpload : [null],
+      fileUpload : [null,],
       jDate : [null],
       comment : [null],
-      id : [this.id++]
-
+      id : [null],
+      status : [null],
     });
-      if (this.id) {
-            // edit mode
-            
+     // edit mode
+      if (this.id2) { 
+            this.title = "Edit";
             this.loading = true;
-          
-                this.candiDateObjet = this.candidate.getById(this.id2);
-                    this.formData.patchValue(this.candiDateObjet);
-                    this.loading = false;
-                      }
+             this.num = parseInt(this.id2);
+             this.candiDateObjet = this.candidate.getById(this.num);
+             this.formData.patchValue(this.candiDateObjet);
+             this.loading = false;
+             this.updateCandidate = true;
+        }
   }
   get f() {
     return this.formData.controls;
@@ -67,13 +76,33 @@ export class CandidateComponent implements OnInit {
   changePosition(name : any){
     this.formData.get("position")?.setValue(name.target.value);
   }
+  changeStatus(name : any){
+    this.formData.get("status")?.setValue(name.target.value);
+  }
   onSubmit(){
     if(this.formData.valid){
-      debugger
-      this.submitted = true;
-      this.candidate.candidateList.push(this.formData.value);
-      this.notification.success("add Success candidate"); 
+      if(this.updateCandidate){
+        this.submitted = true;
+        this.candidate.candidateList.push(this.formData.value);
+        this.notification.success("Update Success candidate");
+        this.formData.reset();
+      }else{
+        this.submitted = true;
+        this.formData.get("id")?.setValue(this.id++);
+        this.formData.get("status")?.setValue("Pending");
+        this.candidate.candidateList.push(this.formData.value);
+        this.notification.success("add Success candidate");
+        this.formData.reset();
+      } 
     }
     }
-   
+    onChange(event: any){
+      this.file = event.target.files[0];
+    }
+    clearFrom(){
+      this.formData.reset();
+    }
+    close(){
+      this.router.navigate(["./dashboard/"]);
+    }
   }

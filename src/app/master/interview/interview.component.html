@@ -5,16 +5,16 @@
     <div class="card-body">
         <form [formGroup]="formData" (ngSubmit)="onSubmit()">
             <div class="mb-3">
-                <label class="form-label">Candidate Name</label>
-                <select style="width: 100px;">
+                <label class="form-label">Candidate Name</label><span>&nbsp;&nbsp;</span>
+                <select (click)="changeName($event)" style="width: 150px;border: 1px solid #eafdfd;border-radius: 5px 5px 5px 5px;height: 30px; border-color: rgb(215, 239, 243);">
                    
-                    <option *ngFor="let candidate of candidat;" [ngValue]="candidate"> {{candidate.lname}} </option>
+                    <option *ngFor="let candidate of candidat;" [ngValue]="candidate">{{candidate.lname}}</option>
                     </select>
             
             </div>
             <div class="mb-3">
-                <label class="form-label">Joing Date</label>
-                <input type="Date" formControlName="jDate" class="form-control" />
+                <label class="form-label">Schedule Date and Time</label>
+                <input type="datetime-local" formControlName="schduleDateTime" class="form-control" />
             </div>
             <div>
                 <button [disabled]="loading" class="btn text-dark" style="background-color: rgb(226, 226, 226);">
@@ -27,3 +27,33 @@
         </form>
     </div>
 </div>
+
+<div class="container">
+    <h2>Scheduled Interview</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width: 10%">Position</th>
+                <th style="width: 15%">First Name</th>
+                <th style="width: 10%">Last Name</th>
+                <th style="width: 15%">Skills</th>
+                <th style="width: 15%">Resume</th>
+                <th style="width: 10%">Comment</th>
+                <th style="width: 10%">Status</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let candidate of candidat">
+                <td>{{candidate.position}}</td>
+                <td>{{candidate.firstName}}</td>
+                <td>{{candidate.lname}}</td>
+                <td>{{candidate.skills}}</td>
+                <td>{{candidate.fileUpload}}</td>
+                <td>{{candidate.comment}}</td>
+                <td>{{candidate.status}}</td>
+            </tr>
+           
+        </tbody>
+    </table>
+    </div>

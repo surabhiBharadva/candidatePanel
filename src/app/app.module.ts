@@ -8,12 +8,15 @@ import { HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './account/login/login.component';
 import { FakeBackendInterceptor } from './service/FakeBackendInterceptor';
 import { NotificationComponent } from './notification/notification.component';
+import { EmployeeListComponent } from './master/employee-list/employee-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     NotificationComponent,
+    EmployeeListComponent,
+
   ],
   imports: [
     BrowserModule,

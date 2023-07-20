@@ -1,48 +1,67 @@
-<div class="card mb-3 container2" style="width: 600px;">
-        <h4 class="card-header">Candidate Add</h4>
-    
+<div class="card mb-3 container2" style="width: 1000px;">
+        <div class="card-header d-flex justify-content-between align-items-center">
+        <h4>Candidate {{title}}</h4>
+        
+        <button type="button" class="btn-close" aria-label="Close" (click)="close()" style="color: black;"></button>
+        </div>
         <div class="card-body">
             <form [formGroup]="formData" (ngSubmit)="onSubmit()">
-                <div class="mb-3">
-                    <label class="form-label">Chose position</label>
-                    <select (change)="changePosition($event)" style="width: 100px;">
-                       
-                        <option *ngFor="let name of enumKeys | keyvalue" [ngValue]="name.value" > {{positionEnum[name.value]}} </option>
-                        </select>
+                <div class="row">
+                <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label">Choose Position</label>
+                        
+                    <select (change)="changePosition($event)" data-style="btn-default" class="form-control selectpicker">
+                        <option *ngFor="let name of enumKeys | keyvalue" [ngValue]="name.value"> {{positionEnum[name.value]}} </option>
+                    </select>
                 
                 </div>
-                <div class="mb-3">
-                    <label class="from-label">First Name</label>
+                </div>
+                <div class="row">
+                <div class="col-6 mb-3" >
+                    <label class="form-label">First Name</label>
                     <input type="text" formControlName="firstName" class="form-control"/>
-                    <div *ngIf="f['firstName'].errors?.['required']">First Name Required</div>
                 </div>
-                <div class="mb-3">
+                <div class="col-6 mb-3">
                     <label class="form-label">Last Name</label>
-                    <input type="email" formControlName="lname" class="form-control" />
-                    <div *ngIf="f['lname'].errors?.['required']">Last name Required</div>
+                    <input type="text" formControlName="lname" class="form-control" />
                 </div>
-                <div class="mb-3">
+            </div>
+            <div class="row">
+                <div class="col-6 mb-3">
                     <label class="form-label">Email</label>
                     <input type="email" formControlName="email" class="form-control" />
                 </div>
-                <div class="mb-3">
+                <div class="col-6 mb-3">
                     <label class="form-label">Phone No</label>
                     <input type="number" formControlName="phone" class="form-control" />
                 </div>
+            </div>
                 <div class="mb-3">
-                    <label class="form-label">Your Skills </label>
-                    <input type="email" formControlName="skills" class="form-control" />
+                    <label class="form-label">Skills</label>
+                    <select data-style="btn-default" class="form-control selectpicker">
+                        <option *ngFor="let name of enumKeys | keyvalue" [ngValue]="name.value"> {{positionEnum[name.value]}} </option>
+                    </select>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">chosee file</label>
-                    <input type="email" formControlName="fileUpload" class="form-control" />
+                <div class="row">
+                <div class="col-6 mb-3">
+                    <label class="form-label">Choose File</label>
+                    <input class="form-control" formControlName="fileUpload" accept=".png" type="file" (change)="onChange($event)"/>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Joing Date</label>
+                <div class="col-6 mb-3">
+                    <label class="form-label">Joining date</label>
                     <input type="Date" formControlName="jDate" class="form-control" />
                 </div>
+            </div>
+            <div class="row" *ngIf="updateCandidate">
+            <div class="col-6 mb-3">
+                <label class="form-label">Status</label>
+                <select (change)="changeStatus($event)" data-style="btn-default" class="form-control selectpicker">
+                    <option *ngFor="let name of enumKeyStatus | keyvalue" [ngValue]="name.value"> {{statusenum[name.value]}} </option>
+                </select>
+            </div>
+            </div>
                 <div class="mb-3">
-                    <label class="form-label">Enter comment</label>
+                    <label class="form-label">Comment</label>
                     <input type="text" formControlName="comment" class="form-control" />
                 </div>
                 
@@ -52,7 +71,7 @@
                         Submit
                     </button>
                     <span>&nbsp;&nbsp;</span>
-                    <button class="btn text-dark" style="background-color: rgb(226, 226, 226);"><span></span>Clear</button>
+                    <button class="btn text-dark" style="background-color: rgb(226, 226, 226);" (click)= "clearFrom()"><span></span>Clear</button>
                 </div>
             </form>
         </div>

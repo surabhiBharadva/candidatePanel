@@ -1,34 +1,37 @@
 <div class="container">
-<h2>Candidate Add</h2>
-<a routerLinkActive="active" routerLink="candidate" style="background-color: rgb(226, 226, 226);" class="btn mb-2 text-dark">Add candidate</a>
+<a routerLinkActive="active" routerLink="candidate" style="background-color: rgb(226, 226, 226);" class="btn mb-2 text-dark">Add Candidate</a>
 <table class="table table-striped">
     <thead>
         <tr>
             <th style="width: 10%">Position</th>
-            <th style="width: 15%">First Name</th>
-            <th style="width: 10%">LastName</th>
+            <th style="width: 15%">Name</th>
             <th style="width: 10%">Email</th>
             <th style="width: 10%">Phone No</th>
             <th style="width: 15%">Skills</th>
             <th style="width: 15%">Resume</th>
-            <th style="width: 10%">Joing Date</th>
-            <th style="width: 10%">Enter Comment</th>
+            <th style="width: 10%">Joining date</th>
+            <th style="width: 10%">Comment</th>
+            <th style="width: 10%">Status</th>
             <th style="width: 10%">Action</th>
+            <th style="width: 10%">Interview Schedule</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let candidate of candidat">
             <td>{{candidate.position}}</td>
-            <td>{{candidate.firstName}}</td>
-            <td>{{candidate.lname}}</td>
+            <td>{{candidate.firstName}} {{candidate.lname}} </td>
             <td>{{candidate.email}}</td>
             <td>{{candidate.phone}}</td>
             <td>{{candidate.skills}}</td>
             <td>{{candidate.fileUpload}}</td>
-            <td>{{candidate.jDate}}</td>
+            <td>{{candidate.jDate | date:'shortDate'}}</td>
             <td>{{candidate.comment}}</td>
+            <td>{{candidate.status}}</td>
             <td style="white-space: nowrap">
-                <a  routerLinkActive="active" routerLink="edit/{{candidate.id}}" class="btn btn-sm btn-primary me-1">Edit</a>
+                <a  routerLinkActive="active" routerLink="edit/{{candidate.id}}" class="btn btn-sm btn-light border border-secondary me-1">Edit</a>
+            </td>
+            <td style="white-space: nowrap">
+                <a  routerLinkActive="active" routerLink="interview" class="btn btn-sm btn-light border border-secondary me-1">Interview Schedule</a>
             </td>
         </tr>
        

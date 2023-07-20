@@ -1,0 +1,30 @@
+[
+    {
+        "id" : 12,
+        "firstName":"Surabhi",
+        "lname":"Bharadva",
+        "position":"Java Developer",
+        "email":"surabhi@gmail.com",
+        "fileupload":"",
+        "jDate":"",
+        "comment":"dfsd",
+        "schduleDateTime":"",
+        "status":"pending",
+        "hireOrNotHire":true
+
+    },
+    {
+        "id" : 13,
+        "firstName":"Surabhi",
+        "lname":"Bharadva",
+        "position":"Java Developer",
+        "email":"surabhi@gmail.com",
+        "fileupload":"",
+        "jDate":"",
+        "comment":"dfsd",
+        "schduleDateTime":"",
+        "status":"pending",
+        "hireOrNotHire":false
+
+    }
+]

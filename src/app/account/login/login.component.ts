@@ -53,12 +53,11 @@ export class LoginComponent implements OnInit {
               }
             }
           }
+        
+        if(this.flag){
+          this.notification.success("add Success"); 
         }
-        if(!this.flag){
-          this.notification.error("User Name and Password Not found");
-        }else{
-          this.notification.success("add Sucess"); 
-        }
+      }
     }
 
   }
