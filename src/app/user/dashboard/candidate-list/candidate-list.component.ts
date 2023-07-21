@@ -11,19 +11,21 @@ import { candidateservice } from 'src/app/service/candidateservice';
   styleUrls: ['./candidate-list.component.css']
 })
 export class CandidateListComponent implements OnInit {
-  candidat ?: Candidate [] = []
-  candiDateData : any;
-  constructor(private candidate : candidateservice,private route: ActivatedRoute,private http: HttpClient) { }
+  candidateList?: Candidate[] = []
+  candiDateData: any;
+  constructor(private candidateService: candidateservice, private route: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit(): void {
     debugger
-    this.route.params.subscribe(param => {
-      if(param){
-        this.candidat = this.candidate.getCandidate();
+    this.candidateService.getCandidateList().subscribe(
+      data => {
+        this.candidateList = data;
       }
-    });
-   // this.candidat = this.candidate.putJson();
-       
+    );
+
+    console.log(this.candidateList);
+    // this.candidat = this.candidate.putJson();
+
   }
 
 }

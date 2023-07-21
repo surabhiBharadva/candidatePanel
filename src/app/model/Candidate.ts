@@ -1,3 +1,5 @@
+import { Interview } from "./Interview";
+
 export class Candidate{
     id?:number;
     position?: string;
@@ -9,7 +11,8 @@ export class Candidate{
     fileUpload?: string;
     jDate?: string;
     comment?: string;
-    schduleDateTime?: Date;
+    schduleDateTime?: string;
     status?:string;
     hireOrNotHire?:boolean;
+    interview ?: Interview;
 }

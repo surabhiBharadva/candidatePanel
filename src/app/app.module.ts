@@ -6,16 +6,14 @@ import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './account/login/login.component';
-import { FakeBackendInterceptor } from './service/FakeBackendInterceptor';
 import { NotificationComponent } from './notification/notification.component';
-import { EmployeeListComponent } from './master/employee-list/employee-list.component';
-
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { candiddateSer } from './service/candidateSer';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    NotificationComponent,
-    EmployeeListComponent,
+    NotificationComponent
 
   ],
   imports: [
@@ -23,11 +21,11 @@ import { EmployeeListComponent } from './master/employee-list/employee-list.comp
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(candiddateSer),
+    HttpClientInMemoryWebApiModule
    
   ],
-  providers: [
-
-    FakeBackendInterceptor],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

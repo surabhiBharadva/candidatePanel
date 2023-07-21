@@ -1,61 +1,66 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError } from "rxjs";
+import { catchError, map, tap } from 'rxjs/operators';
 import { Candidate } from "../model/Candidate";
 import { Router } from "@angular/router";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 
 @Injectable({ providedIn: 'root' })
 export class candidateservice {
+ 
   
-  
-   
-   loginData : any ;
-    flag = false;
-    candidateList : Candidate[] = [];
-    candidateObject : Candidate = {};
-    constructor(
-      private httpService : HttpClient
-    ) {
-       
-    }
-    getById(id2: number) {
-      for(let candidat of this.candidateList){
-        if(candidat.id === id2){
-          return this.candidateObject = candidat;;
-        }
-      }
-      return this.candidateObject;
-    }
-    login(value : string , value2 : string){
-      this.httpService.get('./assets/login.json').subscribe({ 
-        next: data => {
-            this.loginData = data as string [];	          
-         }})
-         if(this.loginData){
-            for(let check of this.loginData){
-              if((check.email === value) && 
-                 (check.password === value2)){
-               //  this.router.navigate(["./dashboard/"]);
-                 this.flag = true
-              }
-            }
-          }
-        }
+  apiurl = 'api/candidate';
+  headers = new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json');
+  httpOptions = {
+    headers: this.headers
+  };
 
-    getCandidate(){
-        let candidat: Candidate = {};
-        return this.candidateList;
-      }
-  putJson(){
+  loginData: any;
+  flag = false;
+  candidateList: Candidate[] = [];
+  candidateObject: Candidate = {};
+  constructor(
+    private httpService: HttpClient
+  ) {
+
+  }
+  private handleError(error: any) {
+    console.error(error);                                       //Created a function to handle and log errors, in case
+    return throwError(error);
+  }
+
+  getCadidateById(id: number) : Observable<Candidate> {
     debugger
-    this.httpService.get('./assets/candidate.json').subscribe({ 
-      next: data => {
-        debugger
-        this.candidateList.push(data);    
-       }});
-     return this.candidateList;
-  }  
-  
+    const url = `${this.apiurl}/${id}`;
+    return this.httpService.get<Candidate>(url).pipe(
+    catchError(this.handleError)
+    );
+  }
+  getById(id2: number) {
+    for (let candidat of this.candidateList) {
+      if (candidat.id === id2) {
+        return this.candidateObject = candidat;;
+      }
+    }
+    return this.candidateObject;
+  }
+
+  getCandidate() {
+    let candidat: Candidate = {};
+    return this.candidateList;
+  }
+  addCandidadte(candidate: Candidate): Observable<Candidate> {
+    candidate.id = 0;
+    return this.httpService.post<Candidate>(this.apiurl, candidate, this.httpOptions).pipe(
+      tap(data => console.log(data)),
+      catchError(this.handleError)
+    );
+  }
+  getCandidateList(): Observable<Candidate[]> {
+    return this.httpService.get<Candidate[]>(this.apiurl).pipe(tap(data => console.log(data)),
+      catchError(this.handleError)
+    );
+  }
+
 }

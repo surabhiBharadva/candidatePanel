@@ -1,40 +1,40 @@
 <div class="container">
-<a routerLinkActive="active" routerLink="candidate" style="background-color: rgb(226, 226, 226);" class="btn mb-2 text-dark">Add Candidate</a>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th style="width: 10%">Position</th>
-            <th style="width: 15%">Name</th>
-            <th style="width: 10%">Email</th>
-            <th style="width: 10%">Phone No</th>
-            <th style="width: 15%">Skills</th>
-            <th style="width: 15%">Resume</th>
-            <th style="width: 10%">Joining date</th>
-            <th style="width: 10%">Comment</th>
-            <th style="width: 10%">Status</th>
-            <th style="width: 10%">Action</th>
-            <th style="width: 10%">Interview Schedule</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let candidate of candidat">
-            <td>{{candidate.position}}</td>
-            <td>{{candidate.firstName}} {{candidate.lname}} </td>
-            <td>{{candidate.email}}</td>
-            <td>{{candidate.phone}}</td>
-            <td>{{candidate.skills}}</td>
-            <td>{{candidate.fileUpload}}</td>
-            <td>{{candidate.jDate | date:'shortDate'}}</td>
-            <td>{{candidate.comment}}</td>
-            <td>{{candidate.status}}</td>
-            <td style="white-space: nowrap">
-                <a  routerLinkActive="active" routerLink="edit/{{candidate.id}}" class="btn btn-sm btn-light border border-secondary me-1">Edit</a>
-            </td>
-            <td style="white-space: nowrap">
-                <a  routerLinkActive="active" routerLink="interview" class="btn btn-sm btn-light border border-secondary me-1">Interview Schedule</a>
-            </td>
-        </tr>
-       
-    </tbody>
-</table>
+    <img alt="" src="assets\image\plus.svg" width="40" height="40" routerLinkActive="active" routerLink="candidate" />
+    <table class="table table-striped w-200">
+        <thead>
+            <tr>
+                <th style="width: 10%">Position</th>
+                <th style="width: 10%">Name</th>
+                <th style="width: 10%">Email</th>
+                <th style="width: 10%">Phone No</th>
+                <th style="width: 10%">Resume</th>
+                <th style="width: 10%">Joining date</th>
+                <th style="width: 10%">Status</th>
+                <th style="width: 10%">Schedule Date</th>
+                <th style="width: 7%">Action</th>
+                <th style="width: 10%">Interview Schedule</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let candidate of candidateList">
+                <td>{{candidate.position}}</td>
+                <td>{{candidate.firstName}} {{candidate.lname}} </td>
+                <td>{{candidate.email}}</td>
+                <td>{{candidate.phone}}</td>
+                <td>{{candidate.fileUpload}}</td>
+                <td>{{candidate.jDate | date:'shortDate'}}</td>
+                <td>{{candidate.interview}}</td>
+                <td>{{candidate.schduleDateTime}}</td>
+                <td style="white-space: nowrap">
+                    <img alt="" src="assets\image\pen.svg" width="20" height="20" routerLinkActive="active"
+                        routerLink="edit/{{candidate.id}}" />
+                </td>
+                <td style="white-space: nowrap">
+                    <a routerLinkActive="active" routerLink="interview/{{candidate.id}}"
+                        class="btn btn-sm btn-light border border-secondary me-1">Interview Schedule</a>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
 </div>
