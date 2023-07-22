@@ -38,10 +38,11 @@ export class LoginComponent implements OnInit {
   }
   onSubmit(){
     if(this.form.valid){
-     
+     debugger
       this.submitted = true;
       this.httpService.get('./assets/login.json').subscribe({ 
         next: data => {
+          debugger
             this.login = data as string [];	          
          }})
          if(this.login){
@@ -57,6 +58,7 @@ export class LoginComponent implements OnInit {
         if(this.flag){
           this.notification.success("add Success"); 
         }
+        this.router.navigate(["./dashboard/"]);
       }
     }
 

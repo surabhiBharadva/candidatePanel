@@ -23,8 +23,8 @@
                 <td>{{candidate.phone}}</td>
                 <td>{{candidate.fileUpload}}</td>
                 <td>{{candidate.jDate | date:'shortDate'}}</td>
-                <td>{{candidate.interview}}</td>
-                <td>{{candidate.schduleDateTime}}</td>
+                <td>{{candidate?.interview?.status}}</td>
+                <td>{{candidate?.interview?.schduleDateTime}}</td>
                 <td style="white-space: nowrap">
                     <img alt="" src="assets\image\pen.svg" width="20" height="20" routerLinkActive="active"
                         routerLink="edit/{{candidate.id}}" />

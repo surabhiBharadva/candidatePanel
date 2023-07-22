@@ -38,12 +38,12 @@ export class CandidateComponent implements OnInit {
     private httpService: HttpClient,
     private candidate: candidateservice,
     private notification: NotificationService) {
-    this.enumKeys = Object.keys(this.positionEnum);
-    this.enumKeyStatus = Object.keys(this.statusenum);
   }
 
   ngOnInit(): void {
     this.id2 = this.route.snapshot.params['id'];
+    this.enumKeys = Object.keys(this.positionEnum);
+    this.enumKeyStatus = Object.keys(this.statusenum);
     this.formData = this.formBuilder.group({
       position: [null],
       firstName: [null, Validators.required],
@@ -53,9 +53,7 @@ export class CandidateComponent implements OnInit {
       skills: [null],
       fileUpload: [null,],
       jDate: [null],
-      comment: [null],
-      status: [null],
-      schduleDateTime: [null]
+      comment: [null]
     });
     // edit mode
     if (this.id2) {
@@ -66,11 +64,9 @@ export class CandidateComponent implements OnInit {
       debugger
       this.candidate.getCadidateById(this.num).subscribe(
         data => {
-          debugger
-          this.candiDateObjet = data;
+         this.formData.patchValue(data);
         }
       )
-      this.formData.patchValue(this.candiDateObjet);
       this.loading = false;
       this.updateCandidate = true;
     }
@@ -90,7 +86,9 @@ export class CandidateComponent implements OnInit {
       debugger
       if (this.updateCandidate) {
         this.submitted = true;
-      
+        this.candidate.UpdateCandidate(this.num,this.formData.value).subscribe(
+          data => console.log(data)
+        )
         this.notification.success("Update Success candidate");
         this.formData.reset();
       } else {

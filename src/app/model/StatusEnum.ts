@@ -3,5 +3,7 @@ export enum StatusEnum{
     scheduled="Scheduled",
     select="Select",
     reject="Reject",
+    accept="Accept",
+    inProgress="InProgress"
 
 }

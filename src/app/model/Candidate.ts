@@ -11,7 +11,6 @@ export class Candidate{
     fileUpload?: string;
     jDate?: string;
     comment?: string;
-    schduleDateTime?: string;
     status?:string;
     hireOrNotHire?:boolean;
     interview ?: Interview;

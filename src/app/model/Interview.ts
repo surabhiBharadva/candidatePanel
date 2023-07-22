@@ -5,6 +5,6 @@ export class Interview{
     comment?: string;
     schduleDateTime?: string;
     status?:string;
-    employeename?: string;
+    employeeName?: string;
     candidate ?: Candidate
 }

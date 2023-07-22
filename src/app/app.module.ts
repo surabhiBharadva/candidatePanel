@@ -9,6 +9,7 @@ import { LoginComponent } from './account/login/login.component';
 import { NotificationComponent } from './notification/notification.component';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { candiddateSer } from './service/candidateSer';
+import { EmployeeSer } from './service/EmpoyeeSer';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,8 +22,7 @@ import { candiddateSer } from './service/candidateSer';
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(candiddateSer),
-    HttpClientInMemoryWebApiModule
+    HttpClientInMemoryWebApiModule.forRoot(candiddateSer)
    
   ],
   providers: [],

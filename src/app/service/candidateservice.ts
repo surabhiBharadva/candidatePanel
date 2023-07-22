@@ -5,10 +5,11 @@ import { Candidate } from "../model/Candidate";
 import { Router } from "@angular/router";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
+import { Interview } from "../model/Interview";
 
 @Injectable({ providedIn: 'root' })
 export class candidateservice {
- 
+  id : number = 6 ;
   
   apiurl = 'api/candidate';
   headers = new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json');
@@ -46,21 +47,37 @@ export class candidateservice {
     return this.candidateObject;
   }
 
-  getCandidate() {
-    let candidat: Candidate = {};
-    return this.candidateList;
-  }
   addCandidadte(candidate: Candidate): Observable<Candidate> {
-    candidate.id = 0;
+    candidate.id = this.id++;;
     return this.httpService.post<Candidate>(this.apiurl, candidate, this.httpOptions).pipe(
       tap(data => console.log(data)),
       catchError(this.handleError)
     );
   }
   getCandidateList(): Observable<Candidate[]> {
-    return this.httpService.get<Candidate[]>(this.apiurl).pipe(tap(data => console.log(data)),
+    return this.httpService.get<Candidate[]>(this.apiurl).pipe(tap(
+      data => this.candidateList = data),
       catchError(this.handleError)
     );
   }
-
+  UpdateCandidate(id:number, candidat : any) :Observable<Candidate>{
+    debugger
+    const url = `${this.apiurl}/${id}`;
+    candidat.id = 1;
+    return this.httpService.put<Candidate>(url, candidat, this.httpOptions).pipe(tap(data => console.log(data)),
+      catchError(this.handleError)
+    );
+  }
+  UpdateCandidateList(id:number, candidat : Interview) :Observable<Candidate>{
+    debugger
+    const url = `${this.apiurl}/${id}`;
+    let interview = {
+      employeeName : candidat.employeeName,
+      schduleDateTime : candidat.schduleDateTime
+    }
+    candidat.id = 1;
+    return this.httpService.put<Candidate>(url, interview, this.httpOptions).pipe(tap(data => console.log(data)),
+      catchError(this.handleError)
+    );
+  }
 }
