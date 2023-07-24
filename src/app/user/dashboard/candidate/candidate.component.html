@@ -52,17 +52,8 @@
                         (change)="onChange($event)" />
                 </div>
                 <div class="col-6 mb-3">
-                    <label class="form-label">Joining date</label>
+                    <label class="form-label">Joining Date</label>
                     <input type="Date" formControlName="jDate" class="form-control" />
-                </div>
-            </div>
-            <div class="row" *ngIf="updateCandidate">
-                <div class="col-6 mb-3">
-                    <label class="form-label">Status</label>
-                    <select (change)="changeStatus($event)" data-style="btn-default" class="form-control selectpicker">
-                        <option *ngFor="let name of enumKeyStatus | keyvalue" [ngValue]="name.value">
-                            {{statusenum[name.value]}} </option>
-                    </select>
                 </div>
             </div>
             <div class="mb-3">

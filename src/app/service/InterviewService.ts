@@ -20,6 +20,10 @@ export class Interviewsevice{
         console.error(error);                                       //Created a function to handle and log errors, in case
         return throwError(error);
     }
+    AddInterview(interview: Interview): Observable<Interview> {
+        interview.id = this.id++;
+        return this.httpService.post<Interview>(this.apiurl, interview, this.httpOptions).pipe(tap(data => console.log(data)), catchError(this.handleError))
+    }
     UpdateCandidate(id:number, interview : Interview) :Observable<Interview>{
        debugger
         const url = `${this.apiurl}/${id}`;

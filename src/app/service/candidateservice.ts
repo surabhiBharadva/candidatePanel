@@ -11,7 +11,7 @@ import { Interview } from "../model/Interview";
 export class candidateservice {
   id : number = 6 ;
   
-  apiurl = 'api/candidate';
+  private url = 'http://localhost:8080/api/v1/candidate';
   headers = new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json');
   httpOptions = {
     headers: this.headers
@@ -33,50 +33,46 @@ export class candidateservice {
 
   getCadidateById(id: number) : Observable<Candidate> {
     debugger
-    const url = `${this.apiurl}/${id}`;
+    const url = `${this.url}/${id}`;
     return this.httpService.get<Candidate>(url).pipe(
     catchError(this.handleError)
     );
   }
-  getById(id2: number) {
-    for (let candidat of this.candidateList) {
-      if (candidat.id === id2) {
-        return this.candidateObject = candidat;;
-      }
-    }
-    return this.candidateObject;
-  }
 
   addCandidadte(candidate: Candidate): Observable<Candidate> {
-    candidate.id = this.id++;;
-    return this.httpService.post<Candidate>(this.apiurl, candidate, this.httpOptions).pipe(
-      tap(data => console.log(data)),
-      catchError(this.handleError)
-    );
+    debugger
+    return this.httpService.post<Candidate>(`${this.url}`, candidate).pipe(tap(data => console.log(data)),
+    catchError(this.handleError)
+    )
   }
   getCandidateList(): Observable<Candidate[]> {
-    return this.httpService.get<Candidate[]>(this.apiurl).pipe(tap(
+    return this.httpService.get<Candidate[]>(this.url + "/getCandidate").pipe(tap(
       data => this.candidateList = data),
       catchError(this.handleError)
     );
   }
   UpdateCandidate(id:number, candidat : any) :Observable<Candidate>{
     debugger
-    const url = `${this.apiurl}/${id}`;
+    const url = `${this.url}/${id}`;
     candidat.id = 1;
     return this.httpService.put<Candidate>(url, candidat, this.httpOptions).pipe(tap(data => console.log(data)),
       catchError(this.handleError)
     );
   }
-  UpdateCandidateList(id:number, candidat : Interview) :Observable<Candidate>{
+  UpdateCandidateList(id:number, interview : Interview) :Observable<Candidate>{
     debugger
-    const url = `${this.apiurl}/${id}`;
-    let interview = {
-      employeeName : candidat.employeeName,
-      schduleDateTime : candidat.schduleDateTime
+    const url = `${this.url}/${id}`;
+    interview.id = 1;
+    this.getCadidateById(id).subscribe(data => this.candidateObject = data);
+    let interviewObj = {
+      "id" : 1,
+      "interview" : {
+        "id" : interview.id,
+        "schduleDateTime" : interview.schduleDateTime,
+        "employeeName" : interview.employeeName
+      }
     }
-    candidat.id = 1;
-    return this.httpService.put<Candidate>(url, interview, this.httpOptions).pipe(tap(data => console.log(data)),
+    return this.httpService.put<Candidate>(url, interviewObj, this.httpOptions).pipe(tap(data => console.log(data)),
       catchError(this.handleError)
     );
   }

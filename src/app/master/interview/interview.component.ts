@@ -60,8 +60,8 @@ export class InterviewComponent implements OnInit {
   }
   onSubmit() {
     if (this.formData.valid) {
-      this.candidate.UpdateCandidateList(this.num, this.formData.value).subscribe(data => {
-        console.log(data);
+      this.interviewSevice.AddInterview(this.formData.value).subscribe(data => {
+       this.candidate.UpdateCandidateList(this.num , data).subscribe(data => console.log(data))
       })
     }
   }

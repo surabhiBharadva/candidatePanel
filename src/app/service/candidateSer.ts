@@ -8,19 +8,19 @@ export class candiddateSer implements InMemoryDbService{
         const candidate: Candidate[] = [
             
             { id: 1, firstName: 'bharadva',lname : 'surabhi', position : "Anguler Developer",comment: "Scheduled",email:"asdsd",jDate:"2023-07-20",phone:"3333", interview : {
-                id :1,comment :"sdsd",status:"pending",employeeName:"asd",schduleDateTime:""
+                id :1,comment :"sdsd",status:"Pending",employeeName:"asd",schduleDateTime:""
             }},
             { id: 2, firstName: 'Pencil',lname : 'surabhi', position : "Anguler Developer",comment: "Pending", email:"asdsd",jDate:"2023-07-20",phone:"3333", interview : {
-                id :1,comment :"sdsd",status:"pending",employeeName:"asd",schduleDateTime:"2023-07-22T15:26"
+                id :1,comment :"sdsd",status:"Pending",employeeName:"asd",schduleDateTime:"2023-07-22T15:26"
             }},
             { id: 3, firstName: 'Table' ,lname : 'surabhi', position : "Anguler Developer",comment: "Select",email:"asdsd",jDate:"2023-07-20",phone:"3333", interview : {
-                id :1,comment :"sdsd",status:"pending",employeeName:"asd",schduleDateTime:"2023-07-22T15:26"
+                id :1,comment :"sdsd",status:"Pending",employeeName:"asd",schduleDateTime:"2023-07-22T15:26"
             }},
             { id: 4, firstName: 'Chair',lname : 'surabhi', position : "Anguler Developer",comment: "Reject",email:"asdsd",jDate:"2023-07-20",phone:"3333", interview : {
-                id :1,comment :"sdsd",status:"pending",employeeName:"asd",schduleDateTime:"2023-07-22T15:26"
+                id :1,comment :"sdsd",status:"Pending",employeeName:"asd",schduleDateTime:"2023-07-22T15:26"
             }},
             { id: 5, firstName: 'Bed',lname : 'surabhi', position : "Anguler Developer",comment: "Inprogrress",email:"asdsd",jDate:"2023-07-20",phone:"3333", interview : {
-                id :1,comment :"sdsd",status:"pending",employeeName:"asd",schduleDateTime:"2023-07-22T15:26"
+                id :1,comment :"sdsd",status:"Pending",employeeName:"asd",schduleDateTime:"2023-07-22T15:26"
             }}
       
           ];

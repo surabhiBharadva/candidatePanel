@@ -22,7 +22,7 @@ import { EmployeeSer } from './service/EmpoyeeSer';
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(candiddateSer)
+    HttpClientInMemoryWebApiModule.forRoot(candiddateSer,{ delay: 1000, passThruUnknownUrl: true })
    
   ],
   providers: [],
