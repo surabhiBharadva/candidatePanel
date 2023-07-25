@@ -6,9 +6,11 @@ import { Router } from "@angular/router";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { Interview } from "../model/Interview";
+import { json } from "stream/consumers";
 
 @Injectable({ providedIn: 'root' })
 export class candidateservice {
+
   id : number = 6 ;
   
   private url = 'http://localhost:8080/api/v1/candidate';
@@ -39,14 +41,19 @@ export class candidateservice {
     );
   }
 
-  addCandidadte(candidate: Candidate): Observable<Candidate> {
+  addCandidadte(candidate: any,file : any): Observable<Candidate> {
     debugger
-    return this.httpService.post<Candidate>(`${this.url}`, candidate).pipe(tap(data => console.log(data)),
+    const fileData = new FormData();
+        if(file){
+        fileData.append("candidate",JSON.stringify(candidate))
+        fileData.append("file",file)
+        }
+    return this.httpService.post<Candidate>(`${this.url}`,fileData).pipe(tap(data => console.log(data)),
     catchError(this.handleError)
     )
   }
   getCandidateList(): Observable<Candidate[]> {
-    return this.httpService.get<Candidate[]>(this.url + "/getCandidate").pipe(tap(
+    return this.httpService.get<Candidate[]>(this.url).pipe(tap(
       data => this.candidateList = data),
       catchError(this.handleError)
     );
@@ -54,13 +61,11 @@ export class candidateservice {
   UpdateCandidate(id:number, candidat : any) :Observable<Candidate>{
     debugger
     const url = `${this.url}/${id}`;
-    candidat.id = 1;
     return this.httpService.put<Candidate>(url, candidat, this.httpOptions).pipe(tap(data => console.log(data)),
       catchError(this.handleError)
     );
   }
   UpdateCandidateList(id:number, interview : Interview) :Observable<Candidate>{
-    debugger
     const url = `${this.url}/${id}`;
     interview.id = 1;
     this.getCadidateById(id).subscribe(data => this.candidateObject = data);

@@ -1,17 +1,20 @@
 import { Interview } from "./Interview";
+import { PositionEnum } from "./PositionEnum";
+import { DocumentData } from "./DocumentData";
 
 export class Candidate{
     id?:number;
-    position?: string;
     firstName ?: String;
     lname ?: String;
+    position?: PositionEnum;
     email ?: String;
     phone ?: String;
-    skills ?: string;
-    fileUpload?: string;
-    jDate?: string;
-    comment?: string;
-    status?:string;
+    skills ?: String;
+    fileUpload?: String;
+    jDate?:Date;
+    comment?:String;
+    status?:String;
     hireOrNotHire?:boolean;
     interview ?: Interview;
+    documentDetails?: DocumentData;
 }

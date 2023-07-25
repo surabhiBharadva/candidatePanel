@@ -21,8 +21,8 @@
                 <td>{{candidate.firstName}} {{candidate.lname}} </td>
                 <td>{{candidate.email}}</td>
                 <td>{{candidate.phone}}</td>
-                <td>{{candidate.fileUpload}}</td>
-                <td>{{candidate.jDate | date:'shortDate'}}</td>
+                <td>{{candidate?.documentDetails?.name}}</td>
+                <td>{{candidate.jDate |  date: 'dd-MM-yyyy'}}</td>
                 <td>{{candidate?.interview?.status}}</td>
                 <td>{{candidate?.interview?.schduleDateTime | date : 'short'}}</td>
                 <td style="white-space: nowrap">

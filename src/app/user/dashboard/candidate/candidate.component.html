@@ -12,9 +12,10 @@
 
                     <select (change)="changePosition($event)" data-style="btn-default"
                         class="form-control selectpicker">
-                        <option *ngFor="let name of enumKeys | keyvalue" [ngValue]="name.value">
+                        <option *ngFor="let name of enumKeys | keyvalue" [ngValue]="name">
                             {{positionEnum[name.value]}} </option>
                     </select>
+                    
 
                 </div>
             </div>
@@ -40,8 +41,9 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Skills</label>
-                <select data-style="btn-default" class="form-control selectpicker">
-                    <option *ngFor="let name of enumKeys | keyvalue" [ngValue]="name.value">
+                
+                <select data-style="btn-default" class="form-control selectpicker" multiselect multiple="multiple"  aria-label="size 3 select example"  data-live-search="true">
+                    <option *ngFor="let name of enumKeys | keyvalue" [ngValue]="name">
                         {{positionEnum[name.value]}} </option>
                 </select>
             </div>

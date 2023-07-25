@@ -15,7 +15,7 @@ import { candidateservice } from 'src/app/service/candidateservice';
   styleUrls: ['./candidate.component.css']
 })
 export class CandidateComponent implements OnInit {
-  positionEnum = PositionEnum;
+  positionEnum  = PositionEnum;
   enumKeys = {};
   enumKeyStatus = {};
   formData!: FormGroup;
@@ -29,7 +29,7 @@ export class CandidateComponent implements OnInit {
   candiDateObjet: Candidate = {};
   title: string = "Add";
   candidateObj: Candidate[] = [];
-  file: File | undefined;
+  file!:any;
   statusenum = StatusEnum;
   // todayDate=this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   constructor(private formBuilder: FormBuilder,
@@ -41,23 +41,23 @@ export class CandidateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.id2 = this.route.snapshot.params['id'];
     this.enumKeys = Object.keys(this.positionEnum);
     this.enumKeyStatus = Object.keys(this.statusenum);
     this.formData = this.formBuilder.group({
-      position: [null],
       firstName: [null, Validators.required],
       lname: [null, Validators.required],
       email: [null],
+      position: [null],
       phone: [null, Validators.min(10)],
       skills: [null],
-      fileUpload: [null,],
+      fileUpload: [null],
       jDate: [null],
       comment: [null]
     });
     // edit mode
     if (this.id2) {
-      debugger
       this.title = "Edit";
       this.loading = true;
       this.num = parseInt(this.id2);
@@ -76,14 +76,16 @@ export class CandidateComponent implements OnInit {
   }
 
   changePosition(name: any) {
+    console.log("=> "+name.target.value)
     this.formData.get("position")?.setValue(name.target.value);
   }
   changeStatus(name: any) {
     this.formData.get("status")?.setValue(name.target.value);
   }
+
   onSubmit() {
+    debugger
     if (this.formData.valid) {
-      debugger
       if (this.updateCandidate) {
         this.submitted = true;
         this.candidate.UpdateCandidate(this.num,this.formData.value).subscribe(
@@ -93,7 +95,9 @@ export class CandidateComponent implements OnInit {
         this.formData.reset();
       } else {
         this.submitted = true;
-        this.candidate.addCandidadte(this.formData.value).subscribe(data => {
+        const fileData = new FormData();
+        
+        this.candidate.addCandidadte(this.formData.value,this.file).subscribe(data => {
           this.candiDateObjet = data;
           console.log(this.candiDateObjet);
         })
@@ -103,6 +107,7 @@ export class CandidateComponent implements OnInit {
     }
   }
   onChange(event: any) {
+    debugger
     this.file = event.target.files[0];
   }
   clearFrom() {
@@ -112,3 +117,5 @@ export class CandidateComponent implements OnInit {
     this.router.navigate(["./dashboard/"]);
   }
 }
+
+
