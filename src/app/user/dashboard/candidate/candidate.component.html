@@ -10,7 +10,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <label class="form-label">Choose Position</label>
 
-                    <select (change)="changePosition($event)" data-style="btn-default"
+                    <select  (change)="changePosition($event)" data-style="btn-default"
                         class="form-control selectpicker">
                         <option *ngFor="let name of enumKeys | keyvalue" [ngValue]="name">
                             {{positionEnum[name.value]}} </option>
@@ -50,7 +50,7 @@
             <div class="row">
                 <div class="col-6 mb-3">
                     <label class="form-label">Upload Resume</label>
-                    <input class="form-control" formControlName="fileUpload" accept=".png" type="file"
+                    <input class="form-control" formControlName="fileUpload" accept=".pdf" type="file"
                         (change)="onChange($event)" />
                 </div>
                 <div class="col-6 mb-3">

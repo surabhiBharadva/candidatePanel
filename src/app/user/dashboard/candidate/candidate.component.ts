@@ -15,7 +15,8 @@ import { candidateservice } from 'src/app/service/candidateservice';
   styleUrls: ['./candidate.component.css']
 })
 export class CandidateComponent implements OnInit {
-  positionEnum  = PositionEnum;
+  positionEnum  =  PositionEnum;
+  positionEnum2  = typeof PositionEnum;
   enumKeys = {};
   enumKeyStatus = {};
   formData!: FormGroup;
@@ -31,6 +32,7 @@ export class CandidateComponent implements OnInit {
   candidateObj: Candidate[] = [];
   file!:any;
   statusenum = StatusEnum;
+  week1: any;
   // todayDate=this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -48,14 +50,15 @@ export class CandidateComponent implements OnInit {
     this.formData = this.formBuilder.group({
       firstName: [null, Validators.required],
       lname: [null, Validators.required],
+      position: [''],
       email: [null],
-      position: [null],
       phone: [null, Validators.min(10)],
       skills: [null],
       fileUpload: [null],
       jDate: [null],
       comment: [null]
     });
+    
     // edit mode
     if (this.id2) {
       this.title = "Edit";
@@ -64,7 +67,10 @@ export class CandidateComponent implements OnInit {
       debugger
       this.candidate.getCadidateById(this.num).subscribe(
         data => {
-         this.formData.patchValue(data);
+          debugger
+         this.formData.patchValue({
+          position : this.getKey(data.position)
+        });
         }
       )
       this.loading = false;
@@ -74,15 +80,23 @@ export class CandidateComponent implements OnInit {
   get f() {
     return this.formData.controls;
   }
-
+  
   changePosition(name: any) {
-    console.log("=> "+name.target.value)
-    this.formData.get("position")?.setValue(name.target.value);
+    debugger
+   // console.log("=> "+name.tar;get.value)
+   const name2 = name.target.value;
+   const indexOfS = Object.values(PositionEnum).indexOf(name2 as unknown as PositionEnum);
+    this.week1 = Object.keys(PositionEnum)[indexOfS];
+    this.formData.get("position")?.setValue(this.week1);
   }
   changeStatus(name: any) {
     this.formData.get("status")?.setValue(name.target.value);
   }
-
+  getKey(id : any){
+    debugger
+    const indexOfS = Object.keys(PositionEnum).indexOf(id);
+     return Object.values(PositionEnum)[indexOfS];
+  }
   onSubmit() {
     debugger
     if (this.formData.valid) {

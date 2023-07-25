@@ -17,11 +17,11 @@
         </thead>
         <tbody>
             <tr *ngFor="let candidate of candidateList">
-                <td>{{candidate.position}}</td>
+                <td>{{getKey(candidate.position)}}</td>
                 <td>{{candidate.firstName}} {{candidate.lname}} </td>
                 <td>{{candidate.email}}</td>
                 <td>{{candidate.phone}}</td>
-                <td>{{candidate?.documentDetails?.name}}</td>
+                <td>{{candidate?.documentDetails?.name}} <button type="button" (click)="getpdf(candidate?.documentDetails)"></button></td>
                 <td>{{candidate.jDate |  date: 'dd-MM-yyyy'}}</td>
                 <td>{{candidate?.interview?.status}}</td>
                 <td>{{candidate?.interview?.schduleDateTime | date : 'short'}}</td>
