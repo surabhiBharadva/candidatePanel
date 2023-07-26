@@ -34,22 +34,20 @@ export class candidateservice {
   }
 
   getCadidateById(id: number) : Observable<Candidate> {
-    debugger
     const url = `${this.url}/${id}`;
     return this.httpService.get<Candidate>(url).pipe(
     catchError(this.handleError)
     );
   }
 
-  addCandidadte(candidate: any,file : any): Observable<Candidate> {
-    debugger
+  addCandidadte(candidate: any, file: any): Observable<Candidate> {
     const fileData = new FormData();
-        if(file){
-        fileData.append("candidate",JSON.stringify(candidate))
-        fileData.append("file",file)
-        }
-    return this.httpService.post<Candidate>(`${this.url}`,fileData).pipe(tap(data => console.log(data)),
-    catchError(this.handleError)
+    if (file) {
+      fileData.append("candidate", JSON.stringify(candidate))
+      fileData.append("file", file)
+    }
+    return this.httpService.post<Candidate>(`${this.url}`, fileData).pipe(tap(data => console.log(data)),
+      catchError(this.handleError)
     )
   }
   getCandidateList(): Observable<Candidate[]> {
@@ -59,7 +57,6 @@ export class candidateservice {
     );
   }
   UpdateCandidate(id:number, candidat : any) :Observable<Candidate>{
-    debugger
     const url = `${this.url}/${id}`;
     return this.httpService.put<Candidate>(url, candidat, this.httpOptions).pipe(tap(data => console.log(data)),
       catchError(this.handleError)

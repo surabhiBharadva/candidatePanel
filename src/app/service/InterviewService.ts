@@ -5,12 +5,15 @@ import { Interview } from "../model/Interview";
 
 @Injectable({ providedIn: 'root' })
 export class Interviewsevice{
-    id: number = 6;
-    apiurl = "api/interview";
+    private apiurl = 'http://localhost:8080/api/v1/interview';
     headers = new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json');
     httpOptions = {
         headers: this.headers
     };
+
+    loginData: any;
+    flag = false;
+    documentList: Document[] = [];
     constructor(
         private httpService: HttpClient
     ) {
@@ -19,17 +22,24 @@ export class Interviewsevice{
     private handleError(error: any) {
         console.error(error);                                       //Created a function to handle and log errors, in case
         return throwError(error);
+      }
+
+    addInterview(candidateId : number,interview: Interview): Observable<Interview> {
+        
+        const url = `${this.apiurl}/${candidateId}`;
+        return this.httpService.post<Interview>(url, interview, this.httpOptions).pipe(tap(data => console.log(data)), catchError(this.handleError))
     }
-    AddInterview(interview: Interview): Observable<Interview> {
-        interview.id = this.id++;
-        return this.httpService.post<Interview>(this.apiurl, interview, this.httpOptions).pipe(tap(data => console.log(data)), catchError(this.handleError))
+
+    getInterview() : Observable<Interview[]>{
+        return this.httpService.get<Interview[]>(this.apiurl,this.httpOptions).pipe(tap(data => console.log(data)), catchError(this.handleError))
     }
-    UpdateCandidate(id:number, interview : Interview) :Observable<Interview>{
-       debugger
+
+
+    UpdateCandidate(id: number, interview: Interview): Observable<Interview> {
         const url = `${this.apiurl}/${id}`;
         interview.id = 1;
         return this.httpService.put<Interview>(url, interview, this.httpOptions).pipe(tap(data => console.log(data)),
-          catchError(this.handleError)
+            catchError(this.handleError)
         );
-      }
+    }
 }

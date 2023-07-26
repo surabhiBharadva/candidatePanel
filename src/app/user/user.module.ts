@@ -12,8 +12,9 @@ import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { EmployeeComponent } from '../master/employee/employee.component';
 import { EmployeeListComponent } from '../master/employee-list/employee-list.component';
+import { InterviewStatusUpdateComponent } from '../master/interview-status-update/interview-status-update.component';
 @NgModule({
-  declarations: [EmployeeComponent,EmployeeListComponent, DashboardComponent,CandidateComponent,InterviewComponent, CandidateListComponent,HeaderComponent,FooterComponent],
+  declarations: [EmployeeComponent, EmployeeListComponent, DashboardComponent, CandidateComponent, InterviewComponent, CandidateListComponent, HeaderComponent, FooterComponent, InterviewStatusUpdateComponent],
   imports: [
     CommonModule,
     UserRoutingModule,

@@ -5,9 +5,6 @@ import { catchError, throwError } from "rxjs";
 @Injectable({ providedIn: 'root' })
 export class DocumentService {
  
-
-  id : number = 6 ;
-  
   private url = 'http://localhost:8080/api/v1/document';
   headers = new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json');
   httpOptions = {
@@ -17,7 +14,6 @@ export class DocumentService {
   loginData: any;
   flag = false;
   documentList: Document[] = [];
- //documentObject: Document = {};
   constructor(
     private httpService: HttpClient
   ) {

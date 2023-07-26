@@ -32,7 +32,7 @@ export class CandidateComponent implements OnInit {
   candidateObj: Candidate[] = [];
   file!:any;
   statusenum = StatusEnum;
-  week1: any;
+  enum: any;
   // todayDate=this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -64,13 +64,9 @@ export class CandidateComponent implements OnInit {
       this.title = "Edit";
       this.loading = true;
       this.num = parseInt(this.id2);
-      debugger
       this.candidate.getCadidateById(this.num).subscribe(
         data => {
-          debugger
-         this.formData.patchValue({
-          position : this.getKey(data.position)
-        });
+         this.formData.patchValue(data);
         }
       )
       this.loading = false;
@@ -82,24 +78,21 @@ export class CandidateComponent implements OnInit {
   }
   
   changePosition(name: any) {
-    debugger
-   // console.log("=> "+name.tar;get.value)
    const name2 = name.target.value;
    const indexOfS = Object.values(PositionEnum).indexOf(name2 as unknown as PositionEnum);
-    this.week1 = Object.keys(PositionEnum)[indexOfS];
-    this.formData.get("position")?.setValue(this.week1);
+    this.enum = Object.keys(PositionEnum)[indexOfS];
+    this.formData.get("position")?.setValue(this.enum);
   }
   changeStatus(name: any) {
     this.formData.get("status")?.setValue(name.target.value);
   }
   getKey(id : any){
-    debugger
     const indexOfS = Object.keys(PositionEnum).indexOf(id);
      return Object.values(PositionEnum)[indexOfS];
   }
   onSubmit() {
-    debugger
     if (this.formData.valid) {
+      debugger
       if (this.updateCandidate) {
         this.submitted = true;
         this.candidate.UpdateCandidate(this.num,this.formData.value).subscribe(
@@ -109,7 +102,6 @@ export class CandidateComponent implements OnInit {
         this.formData.reset();
       } else {
         this.submitted = true;
-        const fileData = new FormData();
         
         this.candidate.addCandidadte(this.formData.value,this.file).subscribe(data => {
           this.candiDateObjet = data;
@@ -121,7 +113,6 @@ export class CandidateComponent implements OnInit {
     }
   }
   onChange(event: any) {
-    debugger
     this.file = event.target.files[0];
   }
   clearFrom() {

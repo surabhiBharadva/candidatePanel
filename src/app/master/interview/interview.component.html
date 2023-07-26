@@ -1,6 +1,5 @@
 <div class="card mb-3 container2" style="width: 600px;">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h4></h4>
 
         <button type="button" class="btn-close" aria-label="Close" (click)="close()" style="color: black;"></button>
     </div>
@@ -9,7 +8,7 @@
             <div class="mb-3">
                 <label class="form-label">Employee Name</label><span>&nbsp;&nbsp;</span>
                 <select (click)="changeName($event)" data-style="btn-default" class="form-control selectpicker">
-                    <option *ngFor="let i of employees" [ngValue]="i"> {{i.name}} </option>
+                    <option *ngFor="let i of employees" [ngValue]="i"> {{i.firstName}} </option>
                 </select>
             </div>
             <div class="mb-3">
@@ -35,26 +34,27 @@
         <thead>
             <tr>
                 <th style="width: 10%">Position</th>
-                <th style="width: 15%">First Name</th>
-                <th style="width: 10%">Last Name</th>
-                <th style="width: 15%">Skills</th>
-                <th style="width: 15%">Resume</th>
-                <th style="width: 10%">Comment</th>
-
+                <th style="width: 15%">Name</th>
+                <th style="width: 15%">Employee Name</th>
+                <th style="width: 10%;">Status</th>
+                <th style="width: 15%">SchduleDateTime</th>
+                <th style="width: 10%;">Action</th>
 
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let candidate of candidat">
-                <td>{{candidate.position}}</td>
-                <td>{{candidate.firstName}}</td>
-                <td>{{candidate.lname}}</td>
-                <td>{{candidate.skills}}</td>
-                <td>{{candidate.fileUpload}}</td>
-                <td>{{candidate.comment}}</td>
-
+            <tr *ngFor="let interview of interviewList">
+                <td>{{interview?.candidate?.position}}</td>
+                <td>{{interview?.candidate?.firstName}} {{interview?.candidate?.lname}}</td>
+                <td>{{interview.employeeName}}</td>
+                <td>{{getValue(interview.status)}}</td>
+                <td>{{interview?.schduleDateTime | date: 'medium'}}</td>
+                
+                    <td style="white-space: nowrap">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Open modal for @getbootstrap</button>
+                    </td>
+            
             </tr>
-
         </tbody>
     </table>
 </div>

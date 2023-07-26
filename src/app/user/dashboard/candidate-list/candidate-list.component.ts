@@ -21,10 +21,8 @@ export class CandidateListComponent implements OnInit {
   constructor(private candidateService: candidateservice, private route: ActivatedRoute, private http: HttpClient, private documentService : DocumentService) { }
 
   ngOnInit(): void {
-    debugger
     this.candidateService.getCandidateList().subscribe(
       data => {
-        debugger
         this.candidateList = data;
       }
     );
@@ -39,23 +37,26 @@ export class CandidateListComponent implements OnInit {
         console.log(data)
         );
   }
-  getpdf(id : any){
+  getpdf(document : any){
     debugger
-    var stringifyData = JSON.stringify(id);
-    const data = encode( stringifyData );
-
-    this.file = new Blob( [ data ], {
+    const data = encode( document.fileData );
+    let respone = this.base64ToArrayBuffer(document.fileData);
+    this.file = new Blob( [respone], {
       type: "application/pdf"
-   });
+   }); 
+    var urlOpen = URL.createObjectURL(this.file);
+    window.open(urlOpen, '_blank');
 
-  
-
-      
-    var urlOpen = window.URL.createObjectURL(this.file);
-    window.open(urlOpen, 'new');
-    
-    
-   
+  }
+  base64ToArrayBuffer(base64:any):ArrayBuffer {
+    debugger
+    var binary_string =  window.atob(base64);
+    var len = binary_string.length;
+    var bytes = new Uint8Array( len );
+    for (var i = 0; i < len; i++)        {
+        bytes[i] = binary_string.charCodeAt(i);
+    }
+    return bytes.buffer;
   }
 
 }

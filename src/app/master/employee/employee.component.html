@@ -8,6 +8,13 @@
         <form [formGroup]="formData" (ngSubmit)="onSubmit()">
             <div class="row">
                 <div class="col-6 mb-3">
+                    <label class="form-label">Aadhar Card</label>
+                    <input type="text" formControlName="acardNum" class="form-control" />
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-6 mb-3">
                     <label class="form-label">First Name</label>
                     <input type="text" formControlName="firstName" class="form-control" />
                 </div>
@@ -31,8 +38,45 @@
                     <label class="form-label">Joining date</label>
                     <input type="Date" formControlName="jDate" class="form-control" />
                 </div>
+                <div class="col-6 mb-3">
+                    <label class="form-label">Date of Birth</label>
+                    <input type="Date" formControlName="dob" class="form-control" />
+                </div>
             </div>
-
+            <div class="row">
+                <div class="col-4 mb-3">
+                    <label class="form-label">Country</label>
+                    <input type="text" formControlName="country" class="form-control" />
+                </div>
+                <div class="col-4 mb-3">
+                    <label class="form-label">State</label>
+                    <input type="text" formControlName="state" class="form-control" />
+                </div>
+                <div class="col-4 mb-3">
+                    <label class="form-label">City</label>
+                    <input type="text" formControlName="city" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+            
+                <div class="col-4 mb-3">
+                    <label class="form-label">Aadhar Card</label>
+                <input class="form-control" formControlName="adadharcard" accept=".pdf" type="file"
+                    (change)="onChange($event)" />
+                </div>
+                <div class="col-4 mb-3">
+                    <label class="form-label">Pan Card</label>
+                    <input class="form-control" formControlName="pancard" accept=".pdf" type="file"
+                        (change)="onChange($event)" />
+                </div>
+                <div class="col-4 mb-3">
+                    <label class="form-label">Marksheet</label>
+                    <input class="form-control" formControlName="marksheet" accept=".pdf" type="file"
+                        (change)="onChange($event)" />
+                </div>
+               
+            </div>
+           
             <div>
                 <button [disabled]="loading" class="btn text-dark" style="background-color: rgb(226, 226, 226);">
                     <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>

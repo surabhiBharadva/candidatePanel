@@ -1,0 +1,25 @@
+<div class="container">
+    <table class="table table-striped w-200">
+        <thead>
+            <tr>
+                <th style="width: 15%">Employee Name</th>
+                <th style="width: 10%;">Phone</th>
+                <th style="width: 15%">Email</th>
+                <th style="width: 10%;">Joing Date</th>
+                <th style="width: 10%;">Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let employee of employeeList">
+                
+                <td>{{employee.firstName}} {{employee.lname}}</td>
+                <td>{{employee.email}}</td>
+                <td>{{employee.phone}}</td>
+                <td>{{employee.jDate}}</td>
+                <td style="white-space: nowrap">
+                    <img  alt="" src="assets\image\pen.svg" width="40" height="40" routerLinkActive="active" routerLink="employeeUpdate/{{employee.id}}" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
