@@ -1,4 +1,5 @@
 import { Candidate } from "./Candidate";
+import { Employee } from "./Employee";
 import { StatusEnum } from "./StatusEnum";
 
 export class Interview{
@@ -10,4 +11,5 @@ export class Interview{
     candidate ?: Candidate;
     candidateId?: number;
     feedback?:string;
+    employee?:Employee
 }

@@ -9,9 +9,10 @@
                 <th style="width: 10%">Phone No</th>
                 <th style="width: 10%">Resume</th>
                 <th style="width: 10%">Joining Date</th>
-                <th style="width: 7%">Action</th>
+                <th style="width: 7%">Status</th>
+                <th style="width: 4%">Action</th>
                 <th style="width: 7%">Interview Schedule</th>
-                <th style="width: 7%">Employee</th>
+              
             </tr>
         </thead>
         <tbody>
@@ -20,9 +21,9 @@
                 <td>{{candidate.firstName}} {{candidate.lname}} </td>
                 <td>{{candidate.email}}</td>
                 <td>{{candidate.phone}}</td>
-                <td>{{candidate?.documentDetails?.name}} <button type="button" class="btn-view" aria-label="View" (click)="getpdf(candidate?.documentDetails)"></button></td>
+                <td>{{candidate?.documentDetails?.name}}</td>
                 <td>{{candidate.jDate |  date: 'dd-MM-yyyy'}}</td>
-              
+                <td>{{getStatusKey(candidate.status)}}</td>
                 <td style="white-space: nowrap">
                     <img alt="" src="assets\image\pen.svg" width="20" height="20" routerLinkActive="active"
                         routerLink="edit/{{candidate.id}}" />
@@ -30,11 +31,9 @@
                 <td style="white-space: nowrap">
                     <img  alt="" src="assets\image\interview-icon.svg" width="40" height="40" routerLinkActive="active" routerLink="interview/{{candidate.id}}" />
                 </td>
-                <td style="white-space: nowrap">
-                    <img  alt="" src="assets\image\interview-icon.svg" width="40" height="40" routerLinkActive="active" routerLink="employeeUpdate/{{candidate.id}}" />
-                </td>
             </tr>
 
         </tbody>
     </table>
+    <router-outlet></router-outlet>
 </div>

@@ -1,1 +1,32 @@
-<p>interview-status-update works!</p>
+<div class="card mb-3 container2" style="width: 600px;">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h1></h1>
+        <button type="button" class="btn-close" aria-label="Close" (click)="close()" style="color: black;"></button>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="formData" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+                
+                <label class="form-label">Interviewer Name</label><span>&nbsp;&nbsp;</span>
+                <select (click)="changeStatus($event)" data-style="btn-default" class="form-control selectpicker">
+                    <option *ngFor="let name of interviewStatus | keyvalue" [ngValue]="name">
+                        {{statusEnum[name.value]}} </option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Comment</label>
+                <input type="text" formControlName="feedback" class="form-control" />
+            </div>
+            <div>
+                <button [disabled]="loading" class="btn text-dark" style="background-color: rgb(226, 226, 226);">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                    Submit
+                </button>
+                <span>&nbsp;&nbsp;</span>
+                <button class="btn text-dark" style="background-color: rgb(226, 226, 226);"
+                    (click)="clearFrom()"><span></span>Clear</button>
+            </div>
+           
+        </form>
+    </div>
+</div>

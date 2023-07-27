@@ -5,6 +5,7 @@ import { Interview } from "../model/Interview";
 
 @Injectable({ providedIn: 'root' })
 export class Interviewsevice{
+    
     private apiurl = 'http://localhost:8080/api/v1/interview';
     headers = new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json');
     httpOptions = {
@@ -35,11 +36,13 @@ export class Interviewsevice{
     }
 
 
-    UpdateCandidate(id: number, interview: Interview): Observable<Interview> {
+    updateInterview(id: number, interview: Interview): Observable<Interview> {
         const url = `${this.apiurl}/${id}`;
         interview.id = 1;
         return this.httpService.put<Interview>(url, interview, this.httpOptions).pipe(tap(data => console.log(data)),
             catchError(this.handleError)
         );
     }
+
+    
 }

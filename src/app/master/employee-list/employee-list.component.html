@@ -2,7 +2,9 @@
     <table class="table table-striped w-200">
         <thead>
             <tr>
-                <th style="width: 15%">Employee Name</th>
+                <th style="width: 10%;">Employee Id</th>
+                <th style="width: 15%">Employee Name</th> 
+                <th style="width: 10%;">Aadhar card</th>
                 <th style="width: 10%;">Phone</th>
                 <th style="width: 15%">Email</th>
                 <th style="width: 10%;">Joing Date</th>
@@ -11,15 +13,20 @@
         </thead>
         <tbody>
             <tr *ngFor="let employee of employeeList">
-                
+                <td>{{employee.id}}</td>
                 <td>{{employee.firstName}} {{employee.lname}}</td>
-                <td>{{employee.email}}</td>
+                <td>{{employee.acardNum}}</td>
                 <td>{{employee.phone}}</td>
+                <td>{{employee.email}}</td>
                 <td>{{employee.jDate}}</td>
                 <td style="white-space: nowrap">
-                    <img  alt="" src="assets\image\pen.svg" width="40" height="40" routerLinkActive="active" routerLink="employeeUpdate/{{employee.id}}" />
+                    <img  alt="" src="assets\image\pen.svg" width="20" height="20" routerLinkActive="active" routerLink="../employeeUpdate/{{employee.id}}" />
                 </td>
             </tr>
         </tbody>
     </table>
+   
 </div>
+<div>
+    <router-outlet></router-outlet>
+</div>  

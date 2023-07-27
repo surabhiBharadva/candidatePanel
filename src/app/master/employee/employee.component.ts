@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EmployeeStatus } from 'src/app/model/EmployeeStatus';
 import { EmployeeService } from 'src/app/service/EmployeeService';
 import { NotificationService } from 'src/app/service/NotificationService';
 import { candidateservice } from 'src/app/service/candidateservice';
@@ -21,17 +22,20 @@ export class EmployeeComponent implements OnInit {
   fileList: File[] = [];
   listOfFiles: any[] = []; 
   file : any;
+  enum : any;
+ 
+  employeeStatus = EmployeeStatus;
+  employeeStatusList = {};
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private httpService: HttpClient,
-    private candidate: candidateservice,
     private employeeService : EmployeeService,
-    private notification: NotificationService) { }
+    ) { }
 
   ngOnInit(): void {
 
     this.id2 = this.route.snapshot.params['id'];
+    this.employeeStatusList = Object.keys(this.employeeStatus);
     this.formData = this.formBuilder.group({
       firstName : ['', Validators.required],
       lname : ['', Validators.required],
@@ -45,12 +49,14 @@ export class EmployeeComponent implements OnInit {
       dob:[''],
       adadharcard:[''],
       pancard:[''],
-      marksheet:['']
+      marksheet:[''],
+      ststus:['']
     })
     if (this.id2) {
+      debugger
       this.loading = true;
       this.num = parseInt(this.id2);
-      this.candidate.getCadidateById(this.num).subscribe(
+      this.employeeService.getEmployeeById(this.num).subscribe(
         data => {
          this.formData.patchValue(data);
         }
@@ -66,8 +72,7 @@ export class EmployeeComponent implements OnInit {
  
   onSubmit() {
     if(this.formData.valid){
-      debugger
-      this.employeeService.addEmployee(this.formData.value,this.fileList).subscribe(data =>
+      this.employeeService.updateEmployee(this.num ,this.formData.value).subscribe(data =>
         console.log(data)
         );
     }
@@ -81,5 +86,12 @@ export class EmployeeComponent implements OnInit {
   }
   close() {
     this.router.navigate(["./dashboard/"]);
+  }
+
+  changeStatus(name : any){
+    const name2 = name.target.value;
+    const indexOfS = Object.values(EmployeeStatus).indexOf(name2 as unknown as EmployeeStatus);
+     this.enum = Object.keys(EmployeeStatus)[indexOfS];
+     this.formData.get("status")?.setValue(this.enum);
   }
 }

@@ -27,6 +27,8 @@ export class InterviewComponent implements OnInit {
   candiDateObjet: Candidate = {};
   candidateIdNum  : number = 0;
   enum: any;
+  id: number = 0;
+  mymodel : any;
   constructor(
     private candidate: candidateservice,
     private formBuilder: FormBuilder,
@@ -39,8 +41,15 @@ export class InterviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.candidateId = this.route.snapshot.params['id'];
-
+    debugger
     this.candidateIdNum = parseInt(this.candidateId);
+    
+    this.candidate.getCadidateById(this.candidateIdNum).subscribe(
+      data => {
+       this.candidateObject = data;
+       this.mymodel = this.candiDateObjet.firstName;
+      }
+    )
     this.employeeService.getEmplyeeList().subscribe(
       data => {
         this.employees = data;
@@ -62,7 +71,6 @@ export class InterviewComponent implements OnInit {
   }
   onSubmit() {
     if (this.formData.valid) {
-      debugger
       const indexOfS = Object.values(StatusEnum).indexOf(StatusEnum.scheduled as unknown as StatusEnum);
       this.enum = Object.keys(StatusEnum)[indexOfS];
       this.formData.get("status")?.setValue(this.enum);
@@ -71,17 +79,26 @@ export class InterviewComponent implements OnInit {
       })
     }
   }
+
   changeName(name: any) {
     this.formData.get("employeeName")?.setValue(name.target.value);
   }
+
   clearFrom() {
     this.formData.reset();
   }
+
   close() {
     this.router.navigate(["./dashboard/"]);
   }
+
   getValue(id : any){
     const indexOfS = Object.keys(StatusEnum).indexOf(id);
     return Object.values(StatusEnum)[indexOfS];
   }
+
+  view(id : any){
+    this.router.navigate(["/interviewUpdate"]);
+  }
+
 }

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { encode } from 'punycode';
 import { first } from 'rxjs';
 import { Candidate } from 'src/app/model/Candidate';
+import { CandidateStatusEnum } from 'src/app/model/CandidateEnum';
 import { PositionEnum } from 'src/app/model/PositionEnum';
 import { DocumentService } from 'src/app/service/DocumentService';
 import { candidateservice } from 'src/app/service/candidateservice';
@@ -14,11 +15,11 @@ import { candidateservice } from 'src/app/service/candidateservice';
   styleUrls: ['./candidate-list.component.css']
 })
 export class CandidateListComponent implements OnInit {
-  positionEnum = PositionEnum ; 
+  positionEnum = PositionEnum;
   candidateList?: Candidate[] = []
   candiDateData: any;
-  file! : Blob;
-  constructor(private candidateService: candidateservice, private route: ActivatedRoute, private http: HttpClient, private documentService : DocumentService) { }
+  file!: Blob;
+  constructor(private candidateService: candidateservice, private route: ActivatedRoute, private http: HttpClient, private documentService: DocumentService) { }
 
   ngOnInit(): void {
     this.candidateService.getCandidateList().subscribe(
@@ -28,33 +29,34 @@ export class CandidateListComponent implements OnInit {
     );
 
   }
-  getKey(id : any){
+  getKey(id: any) {
     const indexOfS = Object.keys(PositionEnum).indexOf(id);
     return Object.values(PositionEnum)[indexOfS];
   }
-  getpdfview(id : any){
-      this.documentService.getpdf(id).subscribe( data =>
-        console.log(data)
-        );
+  getpdfview(id: any) {
+    this.documentService.getpdf(id).subscribe(data =>
+      console.log(data)
+    );
   }
-  getpdf(document : any){
-    debugger
-    const data = encode( document.fileData );
-    let respone = this.base64ToArrayBuffer(document.fileData);
-    this.file = new Blob( [respone], {
+
+  getStatusKey(id: any) {
+    const indexOfS = Object.keys(CandidateStatusEnum).indexOf(id);
+    return Object.values(CandidateStatusEnum)[indexOfS];
+  }
+  getpdf(document: any) {
+    this.file = new Blob([document], {
       type: "application/pdf"
-   }); 
+    });
     var urlOpen = URL.createObjectURL(this.file);
     window.open(urlOpen, '_blank');
 
   }
-  base64ToArrayBuffer(base64:any):ArrayBuffer {
-    debugger
-    var binary_string =  window.atob(base64);
+  base64ToArrayBuffer(base64: any): ArrayBuffer {
+    var binary_string = window.atob(base64);
     var len = binary_string.length;
-    var bytes = new Uint8Array( len );
-    for (var i = 0; i < len; i++)        {
-        bytes[i] = binary_string.charCodeAt(i);
+    var bytes = new Uint8Array(len);
+    for (var i = 0; i < len; i++) {
+      bytes[i] = binary_string.charCodeAt(i);
     }
     return bytes.buffer;
   }

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { validateHeaderName } from 'http';
 import { first } from 'rxjs';
 import { Candidate } from 'src/app/model/Candidate';
+import { CandidateStatusEnum } from 'src/app/model/CandidateEnum';
 import { PositionEnum } from 'src/app/model/PositionEnum';
 import { StatusEnum } from 'src/app/model/StatusEnum';
 import { NotificationService } from 'src/app/service/NotificationService';
@@ -17,8 +18,10 @@ import { candidateservice } from 'src/app/service/candidateservice';
 export class CandidateComponent implements OnInit {
   positionEnum  =  PositionEnum;
   positionEnum2  = typeof PositionEnum;
+  candidateStatus = CandidateStatusEnum;
   enumKeys = {};
   enumKeyStatus = {};
+  enumKeyCandiddateStatus = {};
   formData!: FormGroup;
   loading = false;
   submitted = false;
@@ -33,6 +36,7 @@ export class CandidateComponent implements OnInit {
   file!:any;
   statusenum = StatusEnum;
   enum: any;
+  selectedUser: any ;
   // todayDate=this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -47,16 +51,19 @@ export class CandidateComponent implements OnInit {
     this.id2 = this.route.snapshot.params['id'];
     this.enumKeys = Object.keys(this.positionEnum);
     this.enumKeyStatus = Object.keys(this.statusenum);
+    this.enumKeyCandiddateStatus = Object.keys(this.candidateStatus)
+    
     this.formData = this.formBuilder.group({
       firstName: [null, Validators.required],
       lname: [null, Validators.required],
-      position: [''],
+      position: [null],
       email: [null],
       phone: [null, Validators.min(10)],
       skills: [null],
       fileUpload: [null],
       jDate: [null],
-      comment: [null]
+      comment: [null],
+      status:['']
     });
     
     // edit mode
@@ -66,7 +73,16 @@ export class CandidateComponent implements OnInit {
       this.num = parseInt(this.id2);
       this.candidate.getCadidateById(this.num).subscribe(
         data => {
-         this.formData.patchValue(data);
+         this.formData.patchValue({
+          firstName : data.firstName,
+          lname : data.lname,
+          skills : data.skills,
+          email : data.email,
+          phone : data.phone,
+          jDate : data.jDate,
+          comment : data.comment,
+          position : data.position
+         });
         }
       )
       this.loading = false;
@@ -76,20 +92,20 @@ export class CandidateComponent implements OnInit {
   get f() {
     return this.formData.controls;
   }
+  get position() {
+    return this.formData.get("position");
+  }
   
   changePosition(name: any) {
-   const name2 = name.target.value;
+    debugger
+   const name2 = name.target.value
    const indexOfS = Object.values(PositionEnum).indexOf(name2 as unknown as PositionEnum);
     this.enum = Object.keys(PositionEnum)[indexOfS];
-    this.formData.get("position")?.setValue(this.enum);
+    this.formData.get("position")?.setValue(this.enum, {
+      onlySelf: true
+    });
   }
-  changeStatus(name: any) {
-    this.formData.get("status")?.setValue(name.target.value);
-  }
-  getKey(id : any){
-    const indexOfS = Object.keys(PositionEnum).indexOf(id);
-     return Object.values(PositionEnum)[indexOfS];
-  }
+  
   onSubmit() {
     if (this.formData.valid) {
       debugger
@@ -102,7 +118,9 @@ export class CandidateComponent implements OnInit {
         this.formData.reset();
       } else {
         this.submitted = true;
-        
+        const indexOfS = Object.values(CandidateStatusEnum).indexOf(CandidateStatusEnum.pending as unknown as CandidateStatusEnum);
+        this.enum = Object.keys(CandidateStatusEnum)[indexOfS];
+        this.formData.get("status")?.setValue(this.enum);
         this.candidate.addCandidadte(this.formData.value,this.file).subscribe(data => {
           this.candiDateObjet = data;
           console.log(this.candiDateObjet);
@@ -111,6 +129,12 @@ export class CandidateComponent implements OnInit {
         this.formData.reset();
       }
     }
+  }
+  changeEmployeeStatus(name : any ){
+    const name2 = name.target.value;
+    const indexOfS = Object.values(CandidateStatusEnum).indexOf(name2 as unknown as CandidateStatusEnum);
+     this.enum = Object.keys(CandidateStatusEnum)[indexOfS];
+     this.formData.get("status")?.setValue(this.enum);
   }
   onChange(event: any) {
     this.file = event.target.files[0];

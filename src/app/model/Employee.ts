@@ -1,4 +1,5 @@
 import { Address } from "./Address";
+import { EmployeeStatus } from "./EmployeeStatus";
 
 export class Employee {
     id ?:number
@@ -15,4 +16,5 @@ export class Employee {
     adadharcard?:string;
     pancard?:string;
     marksheet?:string;
+    status?:EmployeeStatus
 }

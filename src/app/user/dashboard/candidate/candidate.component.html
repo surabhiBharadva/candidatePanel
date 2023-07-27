@@ -12,6 +12,7 @@
 
                     <select (change)="changePosition($event)" data-style="btn-default"
                         class="form-control selectpicker">
+                        <option selected disabled value="">Choose Position</option>
                         <option *ngFor="let name of enumKeys | keyvalue" [ngValue]="name">
                             {{positionEnum[name.value]}} </option>
                     </select>
@@ -41,11 +42,8 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Skills</label>
-                
-                <select data-style="btn-default" class="form-control selectpicker" multiselect multiple="multiple" data-live-search="true">
-                    <option *ngFor="let name of enumKeys | keyvalue" [ngValue]="name">
-                        {{positionEnum[name.value]}} </option>
-                </select>
+                <input type="text" formControlName="skills" class="form-control" />
+               
             </div>
             <div class="row">
                 <div class="col-6 mb-3">
@@ -56,6 +54,17 @@
                 <div class="col-6 mb-3">
                     <label class="form-label">Joining Date</label>
                     <input type="Date" formControlName="jDate" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+              
+                <div class="col-6 mb-3" *ngIf="updateCandidate">
+                    <label class="form-label">Status</label>
+                
+                    <select data-style="btn-default" (change)="changeEmployeeStatus($event)" class="form-control selectpicker" data-live-search="true">
+                        <option *ngFor="let name of enumKeyCandiddateStatus | keyvalue" [ngValue]="name">
+                            {{candidateStatus[name.value]}} </option>
+                    </select>
                 </div>
             </div>
             <div class="mb-3">

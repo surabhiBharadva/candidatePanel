@@ -1,14 +1,15 @@
 <div class="card mb-3 container2" style="width: 600px;">
     <div class="card-header d-flex justify-content-between align-items-center">
-
+        <h1></h1>
         <button type="button" class="btn-close" aria-label="Close" (click)="close()" style="color: black;"></button>
     </div>
     <div class="card-body">
         <form [formGroup]="formData" (ngSubmit)="onSubmit()">
             <div class="mb-3">
-                <label class="form-label">Employee Name</label><span>&nbsp;&nbsp;</span>
+                
+                <label class="form-label">Interviewer Name</label><span>&nbsp;&nbsp;</span>
                 <select (click)="changeName($event)" data-style="btn-default" class="form-control selectpicker">
-                    <option *ngFor="let i of employees" [ngValue]="i"> {{i.firstName}} </option>
+                    <option *ngFor="let i of employees" [ngValue]="i"> {{i.firstName}} {{i.lname}}</option>
                 </select>
             </div>
             <div class="mb-3">
@@ -24,6 +25,9 @@
                 <button class="btn text-dark" style="background-color: rgb(226, 226, 226);"
                     (click)="clearFrom()"><span></span>Clear</button>
             </div>
+            <div>
+                <h1>{{mymodel}}</h1>
+            </div>
         </form>
     </div>
 </div>
@@ -35,9 +39,9 @@
             <tr>
                 <th style="width: 10%">Position</th>
                 <th style="width: 15%">Name</th>
-                <th style="width: 15%">Employee Name</th>
+                <th style="width: 15%">Interviewer Name</th>
                 <th style="width: 10%;">Status</th>
-                <th style="width: 15%">SchduleDateTime</th>
+                <th style="width: 15%">Schedule Date Time</th>
                 <th style="width: 10%;">Action</th>
 
             </tr>
@@ -49,12 +53,14 @@
                 <td>{{interview.employeeName}}</td>
                 <td>{{getValue(interview.status)}}</td>
                 <td>{{interview?.schduleDateTime | date: 'medium'}}</td>
-                
-                    <td style="white-space: nowrap">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Open modal for @getbootstrap</button>
-                    </td>
+                <td style="white-space: nowrap">
+                    <img alt="" src="assets\image\pen.svg" width="20" height="20" routerLinkActive="active"
+                        routerLink="../interviewUpdate/{{interview.id}}" />
+                </td>
             
             </tr>
         </tbody>
     </table>
+    <router-outlet></router-outlet>
 </div>
+

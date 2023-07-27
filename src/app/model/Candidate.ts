@@ -1,6 +1,7 @@
 import { Interview } from "./Interview";
 import { PositionEnum } from "./PositionEnum";
 import { DocumentData } from "./DocumentData";
+import { CandidateStatusEnum } from "./CandidateEnum";
 
 export class Candidate{
     id?:number;
@@ -13,7 +14,7 @@ export class Candidate{
     fileUpload?: String;
     jDate?:Date;
     comment?:String;
-    status?:String;
+    status?:CandidateStatusEnum;
     hireOrNotHire?:boolean;
     interview ?: Interview;
     documentDetails?: DocumentData;
