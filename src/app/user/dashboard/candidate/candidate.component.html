@@ -8,63 +8,97 @@
         <form [formGroup]="formData" (ngSubmit)="onSubmit()">
             <div class="row">
                 <div class="d-flex justify-content-between align-items-center">
-                    <label class="form-label">Choose Position</label>
+                    <label class="form-label">Choose Position *</label>
 
-                    <select (change)="changePosition($event)" data-style="btn-default"
-                        class="form-control selectpicker">
-                        <option selected disabled value="">Choose Position</option>
+                    <select (change)="changePosition($event)" data-style="btn-default" class="form-control selectpicker"
+                        [ngClass]="{ 'is-invalid': submitted && f['position'].errors }">
+
+                        <option selected disabled value="">Select</option>
                         <option *ngFor="let name of enumKeys | keyvalue" [ngValue]="name">
                             {{positionEnum[name.value]}} </option>
+                        <div *ngIf="submitted && f['position'].errors" class="invalid-feedback">
+                            <div *ngIf="f['position'].errors['required']">Select Candidate Position is required</div>
+                        </div>
                     </select>
-                    
+
 
                 </div>
             </div>
             <div class="row">
-                <div class="col-6 mb-3">
-                    <label class="form-label">First Name</label>
-                    <input type="text" formControlName="firstName" class="form-control" />
-                </div>
-                <div class="col-6 mb-3">
-                    <label class="form-label">Last Name</label>
-                    <input type="text" formControlName="lname" class="form-control" />
+                <div class="col-12 mb-3">
+                    <label class="form-label">Candidate Name *</label>
+                    <input type="text" formControlName="candidateName" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f['candidateName'].errors }" />
+                    <div *ngIf="submitted && f['candidateName'].errors" class="invalid-feedback">
+                        <div *ngIf="f['candidateName'].errors['required']">Candidate Name is required</div>
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-6 mb-3">
-                    <label class="form-label">Email</label>
-                    <input type="email" formControlName="email" class="form-control" />
+                    <label class="form-label">Email *</label>
+                    <input type="email" formControlName="email" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
+                    <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                        <div *ngIf="f['email'].errors['required']">Candidate Email Number is required</div>
+                    </div>
                 </div>
                 <div class="col-6 mb-3">
-                    <label class="form-label">Phone No</label>
-                    <input type="number" formControlName="phone" class="form-control" />
+                    <label class="form-label">Phone No *</label>
+                    <input type="number" formControlName="phone" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }" />
+                    <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback">
+                        <div *ngIf="f['phone'].errors['required']">Candidate Phone Number is required</div>
+                    </div>
                 </div>
             </div>
             <div class="mb-3">
-                <label class="form-label">Skills</label>
-                <input type="text" formControlName="skills" class="form-control" />
-               
+                <label class="form-label">Skills *</label>
+                <input type="text" formControlName="skills" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f['skills'].errors }" />
+                <div *ngIf="submitted && f['skills'].errors" class="invalid-feedback">
+                    <div *ngIf="f['skills'].errors['required']">Candidate Skills is required</div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-6 mb-3">
-                    <label class="form-label">Upload Resume</label>
+                    <label class="form-label">Upload Resume *</label>
                     <input class="form-control" formControlName="fileUpload" accept=".pdf" type="file"
-                        (change)="onChange($event)" />
+                        (change)="onChange($event)" [ngClass]="{ 'is-invalid': submitted && f['fileUpload'].errors }" />
+                    <div *ngIf="submitted && f['fileUpload'].errors" class="invalid-feedback">
+                        <div *ngIf="f['fileUpload'].errors['required']">Candidate Resume is required</div>
+                    </div>
                 </div>
-                <div class="col-6 mb-3">
+                <div class="col-6 mb-3" *ngIf="updateCandidate">
                     <label class="form-label">Joining Date</label>
                     <input type="Date" formControlName="jDate" class="form-control" />
+
                 </div>
             </div>
+
             <div class="row">
-              
+
                 <div class="col-6 mb-3" *ngIf="updateCandidate">
                     <label class="form-label">Status</label>
-                
-                    <select data-style="btn-default" (change)="changeEmployeeStatus($event)" class="form-control selectpicker" data-live-search="true">
+
+                    <select data-style="btn-default" (change)="changeEmployeeStatus($event)"
+                        class="form-control selectpicker" data-live-search="true">
                         <option *ngFor="let name of enumKeyCandiddateStatus | keyvalue" [ngValue]="name">
                             {{candidateStatus[name.value]}} </option>
                     </select>
+                </div>
+                <div class="col-6 mb-3">
+                    <label class="form-label">Joining Availability *</label>
+                    <select (change)="changeAvailability($event)" data-style="btn-default"
+                        class="form-control selectpicker" [ngClass]="{ 'is-invalid': submitted && f['candidateAvailability'].errors }">
+                        <option selected disabled value="">Select</option>
+                        <option *ngFor="let name of keyAvailability | keyvalue" [ngValue]="name">
+                            {{cadidateAvailability[name.value]}} </option>
+                            <div *ngIf="submitted && f['candidateAvailability'].errors" class="invalid-feedback">
+                                <div *ngIf="f['candidateAvailability'].errors['required']">Select Candidate Availability is required</div>
+                            </div>
+                    </select>
+                    
                 </div>
             </div>
             <div class="mb-3">
@@ -73,8 +107,8 @@
             </div>
 
             <div>
-                <button [disabled]="loading" class="btn text-dark" style="background-color: rgb(226, 226, 226);">
-                    <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                <button [disabled]="submitting" class="btn text-dark" style="background-color: rgb(226, 226, 226);">
+                    <span *ngIf="submitting" class="spinner-border spinner-border-sm me-1"></span>
                     Submit
                 </button>
                 <span>&nbsp;&nbsp;</span>
@@ -83,4 +117,7 @@
             </div>
         </form>
     </div>
+</div>
+<div *ngIf="loading" class="text-center m-5">
+    <span class="spinner-border spinner-border-lg align-center"></span>
 </div>

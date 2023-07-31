@@ -41,6 +41,7 @@ export class candidateservice {
   }
 
   addCandidadte(candidate: any, file: any): Observable<Candidate> {
+    debugger
     const fileData = new FormData();
     if (file) {
       fileData.append("candidate", JSON.stringify(candidate))

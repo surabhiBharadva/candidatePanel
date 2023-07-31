@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EmployeeStatus } from 'src/app/model/EmployeeStatus';
+import { EmployeeStatus } from 'src/app/enum/EmployeeStatus';
 import { EmployeeService } from 'src/app/service/EmployeeService';
 import { NotificationService } from 'src/app/service/NotificationService';
 import { candidateservice } from 'src/app/service/candidateservice';

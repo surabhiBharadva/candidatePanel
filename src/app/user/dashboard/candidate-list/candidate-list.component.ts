@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { encode } from 'punycode';
 import { first } from 'rxjs';
+import { PositionEnum } from 'src/app/enum/PositionEnum';
 import { Candidate } from 'src/app/model/Candidate';
-import { CandidateStatusEnum } from 'src/app/model/CandidateEnum';
-import { PositionEnum } from 'src/app/model/PositionEnum';
+import { CandidateStatusEnum } from 'src/app/enum/CandidateEnum';
 import { DocumentService } from 'src/app/service/DocumentService';
 import { candidateservice } from 'src/app/service/candidateservice';
+import { CandidateAvailabilityEnum } from 'src/app/enum/CandidateAvailabilityEnum';
 
 @Component({
   selector: 'app-candidate-list',
@@ -24,6 +25,7 @@ export class CandidateListComponent implements OnInit {
   ngOnInit(): void {
     this.candidateService.getCandidateList().subscribe(
       data => {
+        debugger
         this.candidateList = data;
       }
     );
@@ -40,8 +42,14 @@ export class CandidateListComponent implements OnInit {
   }
 
   getStatusKey(id: any) {
+    debugger
     const indexOfS = Object.keys(CandidateStatusEnum).indexOf(id);
     return Object.values(CandidateStatusEnum)[indexOfS];
+  }
+
+  getAvailability(id : any){
+    const indexOfS = Object.keys(CandidateAvailabilityEnum).indexOf(id);
+    return Object.values(CandidateAvailabilityEnum)[indexOfS];
   }
   getpdf(document: any) {
     this.file = new Blob([document], {

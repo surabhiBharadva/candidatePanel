@@ -4,33 +4,36 @@
         <thead>
             <tr>
                 <th style="width: 10%">Position</th>
+                <th style="width: 10%">Application Date</th>
                 <th style="width: 10%">Name</th>
                 <th style="width: 10%">Email</th>
                 <th style="width: 10%">Phone No</th>
                 <th style="width: 10%">Resume</th>
+                <th style="width: 11%">Candidate Status</th>
+                <th style="width: 10%;">Action</th>
+                <th style="width: 12%">Joining Availability</th>
                 <th style="width: 10%">Joining Date</th>
-                <th style="width: 7%">Status</th>
-                <th style="width: 4%">Action</th>
-                <th style="width: 7%">Interview Schedule</th>
+               
               
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let candidate of candidateList">
                 <td>{{getKey(candidate.position)}}</td>
-                <td>{{candidate.firstName}} {{candidate.lname}} </td>
+                <td>{{candidate.candidateDate | date: 'dd-MM-yyyy'}}</td>
+                <td>{{candidate.candidateName}} </td>
                 <td>{{candidate.email}}</td>
                 <td>{{candidate.phone}}</td>
                 <td>{{candidate?.documentDetails?.name}}</td>
-                <td>{{candidate.jDate |  date: 'dd-MM-yyyy'}}</td>
-                <td>{{getStatusKey(candidate.status)}}</td>
+                <td>{{getStatusKey(candidate.candidateStatus)}}</td>
                 <td style="white-space: nowrap">
                     <img alt="" src="assets\image\pen.svg" width="20" height="20" routerLinkActive="active"
-                        routerLink="edit/{{candidate.id}}" />
-                </td>
-                <td style="white-space: nowrap">
+                        routerLink="edit/{{candidate.id}}" /><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                
                     <img  alt="" src="assets\image\interview-icon.svg" width="40" height="40" routerLinkActive="active" routerLink="interview/{{candidate.id}}" />
                 </td>
+               <td>{{getAvailability(candidate.candidateAvailability)}}</td>
+                <td>{{candidate.jDate | date: 'dd-MM-yyyy'}}</td>
             </tr>
 
         </tbody>

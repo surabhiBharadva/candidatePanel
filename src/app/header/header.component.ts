@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PositionEnum } from '../model/PositionEnum';
 
 @Component({
   selector: 'app-header',

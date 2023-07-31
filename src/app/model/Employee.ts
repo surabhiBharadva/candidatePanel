@@ -1,5 +1,5 @@
 import { Address } from "./Address";
-import { EmployeeStatus } from "./EmployeeStatus";
+import { EmployeeStatus } from "../enum/EmployeeStatus";
 
 export class Employee {
     id ?:number

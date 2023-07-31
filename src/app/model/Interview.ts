@@ -1,6 +1,6 @@
 import { Candidate } from "./Candidate";
 import { Employee } from "./Employee";
-import { StatusEnum } from "./StatusEnum";
+import { StatusEnum } from "../enum/StatusEnum";
 
 export class Interview{
     id?:number;

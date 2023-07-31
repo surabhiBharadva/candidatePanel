@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Candidate } from 'src/app/model/Candidate';
 import { Employee } from 'src/app/model/Employee';
 import { Interview } from 'src/app/model/Interview';
-import { StatusEnum } from 'src/app/model/StatusEnum';
+import { StatusEnum } from 'src/app/enum/StatusEnum';
 import { EmployeeService } from 'src/app/service/EmployeeService';
 import { Interviewsevice } from 'src/app/service/InterviewService';
 import { candidateservice } from 'src/app/service/candidateservice';
@@ -47,7 +47,7 @@ export class InterviewComponent implements OnInit {
     this.candidate.getCadidateById(this.candidateIdNum).subscribe(
       data => {
        this.candidateObject = data;
-       this.mymodel = this.candiDateObjet.firstName;
+      
       }
     )
     this.employeeService.getEmplyeeList().subscribe(

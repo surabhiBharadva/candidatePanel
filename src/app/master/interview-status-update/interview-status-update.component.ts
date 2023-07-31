@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StatusEnum } from 'src/app/model/StatusEnum';
+import { StatusEnum } from 'src/app/enum/StatusEnum';
 import { Interviewsevice } from 'src/app/service/InterviewService';
 
 @Component({

@@ -1,12 +1,12 @@
 import { Interview } from "./Interview";
-import { PositionEnum } from "./PositionEnum";
 import { DocumentData } from "./DocumentData";
-import { CandidateStatusEnum } from "./CandidateEnum";
+import { CandidateStatusEnum } from "../enum/CandidateEnum";
+import { PositionEnum } from "../enum/PositionEnum";
+import { CandidateAvailabilityEnum } from "../enum/CandidateAvailabilityEnum";
 
 export class Candidate{
     id?:number;
-    firstName ?: String;
-    lname ?: String;
+    candidateName ?: String;
     position?: PositionEnum;
     email ?: String;
     phone ?: String;
@@ -14,8 +14,12 @@ export class Candidate{
     fileUpload?: String;
     jDate?:Date;
     comment?:String;
-    status?:CandidateStatusEnum;
+    candidateStatus?:CandidateStatusEnum;
     hireOrNotHire?:boolean;
     interview ?: Interview;
     documentDetails?: DocumentData;
+    candidateAvailability?:CandidateAvailabilityEnum;
+    status?:boolean;
+    candidateDate?:Date;
+    
 }

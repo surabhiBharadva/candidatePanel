@@ -49,7 +49,7 @@
         <tbody>
             <tr *ngFor="let interview of interviewList">
                 <td>{{interview?.candidate?.position}}</td>
-                <td>{{interview?.candidate?.firstName}} {{interview?.candidate?.lname}}</td>
+                <td>{{interview?.candidate?.candidateName}}</td>
                 <td>{{interview.employeeName}}</td>
                 <td>{{getValue(interview.status)}}</td>
                 <td>{{interview?.schduleDateTime | date: 'medium'}}</td>
