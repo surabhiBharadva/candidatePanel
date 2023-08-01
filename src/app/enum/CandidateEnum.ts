@@ -1,10 +1,10 @@
 export enum CandidateStatusEnum{
-    pending="Pending",
-    interview="Interview",
-    InterviewSelected="Interview-Selected",
-    InterviewRejected="Interview-Rejected",
-    offerAccepted="Offer-Accepted",
-    offerRejected="Offer-Rejected",
-    Joining="Joining"
+    PENDING="Pending",
+    INTERVIEW="Interview",
+    INTERVIEWSELECTED="Interview-Selected",
+    INTERVIEWREJECTED="Interview-Rejected",
+    OFFERACCEPTED="Offer-Accepted",
+    OFFERREJECTED="Offer-Rejected",
+    JOINING="Joining"
    
 }

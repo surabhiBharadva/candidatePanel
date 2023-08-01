@@ -47,7 +47,7 @@ export class CandidateListComponent implements OnInit {
     return Object.values(CandidateStatusEnum)[indexOfS];
   }
 
-  getAvailability(id : any){
+  getAvailability(id: any) {
     const indexOfS = Object.keys(CandidateAvailabilityEnum).indexOf(id);
     return Object.values(CandidateAvailabilityEnum)[indexOfS];
   }

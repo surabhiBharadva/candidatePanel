@@ -1,6 +1,6 @@
 <div class="container">
     <img alt="" src="assets\image\plus.svg" width="40" height="40" routerLinkActive="active" routerLink="candidate" />
-    <table class="table table-striped w-200">
+    <table class="table thead-dark w-200">
         <thead>
             <tr>
                 <th style="width: 10%">Position</th>
@@ -10,30 +10,30 @@
                 <th style="width: 10%">Phone No</th>
                 <th style="width: 10%">Resume</th>
                 <th style="width: 11%">Candidate Status</th>
-                <th style="width: 10%;">Action</th>
                 <th style="width: 12%">Joining Availability</th>
                 <th style="width: 10%">Joining Date</th>
-               
-              
+                <th style="width: 10%;">Action</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let candidate of candidateList">
                 <td>{{getKey(candidate.position)}}</td>
-                <td>{{candidate.candidateDate | date: 'dd-MM-yyyy'}}</td>
+                <td>{{candidate.candidateDate | date: 'mediumDate'}}</td>
                 <td>{{candidate.candidateName}} </td>
                 <td>{{candidate.email}}</td>
                 <td>{{candidate.phone}}</td>
                 <td>{{candidate?.documentDetails?.name}}</td>
                 <td>{{getStatusKey(candidate.candidateStatus)}}</td>
+                <td>{{getAvailability(candidate.candidateAvailability)}}</td>
+                <td>{{candidate.jDate | date: 'mediumDate'}}</td>
                 <td style="white-space: nowrap">
                     <img alt="" src="assets\image\pen.svg" width="20" height="20" routerLinkActive="active"
                         routerLink="edit/{{candidate.id}}" /><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                
-                    <img  alt="" src="assets\image\interview-icon.svg" width="40" height="40" routerLinkActive="active" routerLink="interview/{{candidate.id}}" />
+
+                    <img alt="" src="assets\image\interview-icon.svg" width="40" height="40" routerLinkActive="active"
+                        routerLink="interview/{{candidate.id}}" />
                 </td>
-               <td>{{getAvailability(candidate.candidateAvailability)}}</td>
-                <td>{{candidate.jDate | date: 'dd-MM-yyyy'}}</td>
+
             </tr>
 
         </tbody>

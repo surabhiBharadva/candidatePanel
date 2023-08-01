@@ -47,8 +47,7 @@ export class candidateservice {
       fileData.append("candidate", JSON.stringify(candidate))
       fileData.append("file", file)
     }
-    return this.httpService.post<Candidate>(`${this.url}`, fileData).pipe(tap(data => console.log(data)),
-      catchError(this.handleError)
+    return this.httpService.post<Candidate>(`${this.url}`, fileData).pipe(tap(data => console.log(data))
     )
   }
   getCandidateList(): Observable<Candidate[]> {
@@ -59,8 +58,7 @@ export class candidateservice {
   }
   UpdateCandidate(id:number, candidat : any) :Observable<Candidate>{
     const url = `${this.url}/${id}`;
-    return this.httpService.put<Candidate>(url, candidat, this.httpOptions).pipe(tap(data => console.log(data)),
-      catchError(this.handleError)
+    return this.httpService.put<Candidate>(url, candidat, this.httpOptions).pipe(tap(data => console.log(data))
     );
   }
   UpdateCandidateList(id:number, interview : Interview) :Observable<Candidate>{

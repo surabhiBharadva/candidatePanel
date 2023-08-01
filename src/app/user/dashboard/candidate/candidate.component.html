@@ -7,30 +7,30 @@
     <div class="card-body">
         <form [formGroup]="formData" (ngSubmit)="onSubmit()">
             <div class="row">
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-center col-6 mb-3">
                     <label class="form-label">Choose Position *</label>
-
-                    <select (change)="changePosition($event)" data-style="btn-default" class="form-control selectpicker"
-                        [ngClass]="{ 'is-invalid': submitted && f['position'].errors }">
-
+                  
+                    <select [(ngModel)]="selectedPosition" data-style="btn-default" class="selectpicker form-select" formControlName="position">
+            
                         <option selected disabled value="">Select</option>
-                        <option *ngFor="let name of enumKeys | keyvalue" [ngValue]="name">
-                            {{positionEnum[name.value]}} </option>
-                        <div *ngIf="submitted && f['position'].errors" class="invalid-feedback">
-                            <div *ngIf="f['position'].errors['required']">Select Candidate Position is required</div>
-                        </div>
+                        <option *ngFor="let name of getPosition()" [value]="name">
+                            {{name}} </option>
+                            <div *ngIf="submitted && f['position'].errors">
+                                <div *ngIf="f['position'].errors['required'] || f['position'].touched">Select Candidate Position is
+                                    required</div>
+                            </div>
                     </select>
-
-
+            
+                    
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 mb-3">
                     <label class="form-label">Candidate Name *</label>
                     <input type="text" formControlName="candidateName" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f['candidateName'].errors }" />
-                    <div *ngIf="submitted && f['candidateName'].errors" class="invalid-feedback">
-                        <div *ngIf="f['candidateName'].errors['required']">Candidate Name is required</div>
+                        />
+                    <div *ngIf="submitted && f['candidateName'].errors ">
+                        <div *ngIf="f['candidateName'].errors['required'] || f['candidateName'].touched">Candidate Name is required</div>
                     </div>
                 </div>
             </div>
@@ -38,38 +38,38 @@
                 <div class="col-6 mb-3">
                     <label class="form-label">Email *</label>
                     <input type="email" formControlName="email" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
-                    <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
-                        <div *ngIf="f['email'].errors['required']">Candidate Email Number is required</div>
+                         />
+                    <div *ngIf="submitted && f['email'].errors">
+                        <div *ngIf="f['email'].errors['required'] || f['email'].touched">Candidate Email is required</div>
                     </div>
                 </div>
                 <div class="col-6 mb-3">
                     <label class="form-label">Phone No *</label>
                     <input type="number" formControlName="phone" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }" />
-                    <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback">
-                        <div *ngIf="f['phone'].errors['required']">Candidate Phone Number is required</div>
+                        />
+                    <div *ngIf="submitted && f['phone'].errors" >
+                        <div *ngIf="f['phone'].errors['required'] || f['phone'].touched" >Candidate Phone Number is required</div>
                     </div>
                 </div>
             </div>
             <div class="mb-3">
                 <label class="form-label">Skills *</label>
                 <input type="text" formControlName="skills" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f['skills'].errors }" />
-                <div *ngIf="submitted && f['skills'].errors" class="invalid-feedback">
-                    <div *ngIf="f['skills'].errors['required']">Candidate Skills is required</div>
+                    />
+                <div *ngIf="submitted && f['skills'].errors" >
+                    <div *ngIf="f['skills'].errors['required'] || f['skills'].touched">Candidate Skills is required</div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-6 mb-3">
                     <label class="form-label">Upload Resume *</label>
                     <input class="form-control" formControlName="fileUpload" accept=".pdf" type="file"
-                        (change)="onChange($event)" [ngClass]="{ 'is-invalid': submitted && f['fileUpload'].errors }" />
-                    <div *ngIf="submitted && f['fileUpload'].errors" class="invalid-feedback">
-                        <div *ngIf="f['fileUpload'].errors['required']">Candidate Resume is required</div>
+                        (change)="onChange($event)"  />
+                    <div *ngIf="submitted && f['fileUpload'].errors">
+                        <div *ngIf="f['fileUpload'].errors['required'] || f['fileUpload'].touched">Candidate Resume is required</div>
                     </div>
                 </div>
-                <div class="col-6 mb-3" *ngIf="updateCandidate">
+                <div class="col-6 mb-3" *ngIf="updateCandidate && selectedStatus === 'Offer-Accepted'">
                     <label class="form-label">Joining Date</label>
                     <input type="Date" formControlName="jDate" class="form-control" />
 
@@ -81,21 +81,21 @@
                 <div class="col-6 mb-3" *ngIf="updateCandidate">
                     <label class="form-label">Status</label>
 
-                    <select data-style="btn-default" (change)="changeEmployeeStatus($event)"
-                        class="form-control selectpicker" data-live-search="true">
-                        <option *ngFor="let name of enumKeyCandiddateStatus | keyvalue" [ngValue]="name">
-                            {{candidateStatus[name.value]}} </option>
+                    <select  data-style="btn-default" formControlName="candidateStatus"
+                        class="form-control selectpicker form-select" data-live-search="true">
+                        <option *ngFor="let name of getCandidateStatus()" [value]="name">
+                            {{name}} </option>
                     </select>
                 </div>
                 <div class="col-6 mb-3">
                     <label class="form-label">Joining Availability *</label>
                     <select (change)="changeAvailability($event)" data-style="btn-default"
-                        class="form-control selectpicker" [ngClass]="{ 'is-invalid': submitted && f['candidateAvailability'].errors }">
+                        class="form-control selectpicker form-select">
                         <option selected disabled value="">Select</option>
                         <option *ngFor="let name of keyAvailability | keyvalue" [ngValue]="name">
                             {{cadidateAvailability[name.value]}} </option>
-                            <div *ngIf="submitted && f['candidateAvailability'].errors" class="invalid-feedback">
-                                <div *ngIf="f['candidateAvailability'].errors['required']">Select Candidate Availability is required</div>
+                            <div *ngIf="submitted && f['candidateAvailability'].errors" >
+                                <div *ngIf="f['candidateAvailability'].errors['required'] || f['candidateAvailability'].touched">Select Candidate Availability is required</div>
                             </div>
                     </select>
                     
@@ -103,7 +103,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Comment</label>
-                <input type="text" formControlName="comment" class="form-control" />
+                <textarea type="textarea" formControlName="comment" class="form-control"></textarea>
             </div>
 
             <div>
@@ -116,8 +116,10 @@
                     (click)="clearFrom()"><span></span>Clear</button>
             </div>
         </form>
+       
     </div>
 </div>
+
 <div *ngIf="loading" class="text-center m-5">
     <span class="spinner-border spinner-border-lg align-center"></span>
 </div>

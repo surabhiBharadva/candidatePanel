@@ -6,3 +6,8 @@
 .closeButton{
     margin-left: 30px;
 }
+.form-group.is-invalid {
+    .invalid-feedback {
+        display: block;
+    }
+}

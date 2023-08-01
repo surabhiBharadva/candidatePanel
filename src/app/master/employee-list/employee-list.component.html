@@ -18,7 +18,7 @@
                 <td>{{employee.acardNum}}</td>
                 <td>{{employee.phone}}</td>
                 <td>{{employee.email}}</td>
-                <td>{{employee.jDate}}</td>
+                <td>{{employee.jDate | date: 'mediumDate'}}</td>
                 <td style="white-space: nowrap">
                     <img  alt="" src="assets\image\pen.svg" width="20" height="20" routerLinkActive="active" routerLink="../employeeUpdate/{{employee.id}}" />
                 </td>
