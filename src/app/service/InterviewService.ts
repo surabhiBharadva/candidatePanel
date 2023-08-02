@@ -25,9 +25,9 @@ export class Interviewsevice{
         return throwError(error);
       }
 
-    addInterview(candidateId : number,interview: Interview): Observable<Interview> {
-        
-        const url = `${this.apiurl}/${candidateId}`;
+    addInterview(candidateId : number,interview: Interview,employeeId : number): Observable<Interview> {
+        debugger
+        const url = `${this.apiurl}/${candidateId}/${employeeId}`;
         return this.httpService.post<Interview>(url, interview, this.httpOptions).pipe(tap(data => console.log(data)), catchError(this.handleError))
     }
 
@@ -38,7 +38,6 @@ export class Interviewsevice{
 
     updateInterview(id: number, interview: Interview): Observable<Interview> {
         const url = `${this.apiurl}/${id}`;
-        interview.id = 1;
         return this.httpService.put<Interview>(url, interview, this.httpOptions).pipe(tap(data => console.log(data)),
             catchError(this.handleError)
         );

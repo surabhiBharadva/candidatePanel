@@ -11,5 +11,6 @@ export class Interview{
     candidate ?: Candidate;
     candidateId?: number;
     feedback?:string;
-    employee?:Employee
+    employee?:Employee;
+   
 }

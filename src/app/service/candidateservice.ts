@@ -1,12 +1,9 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, throwError } from "rxjs";
+import { Observable, throwError } from "rxjs";
 import { catchError, map, tap } from 'rxjs/operators';
 import { Candidate } from "../model/Candidate";
-import { Router } from "@angular/router";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { environment } from "src/environments/environment";
 import { Interview } from "../model/Interview";
-import { json } from "stream/consumers";
 
 @Injectable({ providedIn: 'root' })
 export class candidateservice {
@@ -22,6 +19,7 @@ export class candidateservice {
   loginData: any;
   flag = false;
   candidateList: Candidate[] = [];
+  candidateListInterView : Candidate[] = [];
   candidateObject: Candidate = {};
   constructor(
     private httpService: HttpClient
@@ -76,4 +74,13 @@ export class candidateservice {
       catchError(this.handleError)
     );
   }
+
+  getCandidatePendingInterview() : Observable<Candidate[]> {
+    debugger
+      let url = this.url+"/candidateList";
+      return this.httpService.get<Candidate[]>(url).pipe(tap(
+        data => this.candidateListInterView = data),
+        catchError(this.handleError)
+      );
+    }
 }

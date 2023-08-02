@@ -19,10 +19,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./candidate.component.css']
 })
 export class CandidateComponent implements OnInit {
-  positionEnum = PositionEnum;
-  candidateStatus = CandidateStatusEnum;
-  cadidateAvailability = CandidateAvailabilityEnum;
-
+ 
   keyAvailability = {};
  
   formData!: FormGroup;
@@ -41,7 +38,7 @@ export class CandidateComponent implements OnInit {
   submitted = false;
   submitting = false;
   updateCandidate = false;
- 
+  patch = false;
   selectedPosition: string = '';
   candidateObj: Candidate[] = [];
   candiDateObjet: Candidate = {};
@@ -52,14 +49,13 @@ export class CandidateComponent implements OnInit {
     private router: Router,
     private httpService: HttpClient,
     private candidate: candidateservice,
-    private notification: NotificationService,public translateService: TranslateService) {
+    private notification: NotificationService) {
   }
 
   ngOnInit(): void {
 
     this.id2 = this.route.snapshot.params['id'];
    
-    this.keyAvailability = Object.keys(this.cadidateAvailability)
     this.formData = this.formBuilder.group({
       candidateName: [null, Validators.required],
       position: ['', Validators.required],
@@ -86,11 +82,13 @@ export class CandidateComponent implements OnInit {
             skills: data.skills,
             email: data.email,
             phone: data.phone,
-            jDate: data.jDate,
+            jDate: data.joiningDate,
             comment: data.comment,
             position: this.patchPosition(data.position),
             candidateStatus : this.patchCandidateStatusData(data.candidateStatus),
-            candidateAvailability : this.patchValueAvailability(data.candidateAvailability)
+            candidateAvailability : this.patchValueAvailability(data.candidateAvailability),
+            fileUpload : data.fileUpload
+
           });
 
         }
@@ -102,6 +100,7 @@ export class CandidateComponent implements OnInit {
 
 
   patchValueAvailability(status : any){
+    
     const indexOfS = Object.keys(CandidateAvailabilityEnum).indexOf(status);
     return Object.values(CandidateAvailabilityEnum)[indexOfS];
   }

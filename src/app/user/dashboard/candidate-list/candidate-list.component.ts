@@ -20,7 +20,7 @@ export class CandidateListComponent implements OnInit {
   candidateList?: Candidate[] = []
   candiDateData: any;
   file!: Blob;
-  constructor(private candidateService: candidateservice, private route: ActivatedRoute, private http: HttpClient, private documentService: DocumentService) { }
+  constructor(private candidateService: candidateservice, private route: ActivatedRoute, private http: HttpClient, private documentService: DocumentService, private router: Router,) { }
 
   ngOnInit(): void {
     this.candidateService.getCandidateList().subscribe(
@@ -66,5 +66,4 @@ export class CandidateListComponent implements OnInit {
     }
     return bytes.buffer;
   }
-
 }

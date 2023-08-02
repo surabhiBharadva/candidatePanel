@@ -12,7 +12,7 @@ export class Candidate{
     phone ?: String;
     skills ?: String;
     fileUpload?: String;
-    jDate?:Date;
+    joiningDate?:Date;
     comment?:String;
     candidateStatus?:CandidateStatusEnum;
     hireOrNotHire?:boolean;
@@ -21,5 +21,6 @@ export class Candidate{
     candidateAvailability?:CandidateAvailabilityEnum;
     status?:boolean;
     candidateDate?:Date;
+    deleteFlag?:string;
     
 }

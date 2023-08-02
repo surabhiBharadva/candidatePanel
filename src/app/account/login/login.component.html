@@ -13,15 +13,6 @@
                 <label class="form-label">Password</label>
                 <input type="password" formControlName="password" class="form-control" />
             </div>
-            <div class="mb-3">
-            <label class="form-label">Language</label>
-
-            <select data-style="btn-default" formControlName="language" #langSelect (change)="translate.use(langSelect.value)"
-                class="form-control selectpicker form-select" data-live-search="true">
-                <option *ngFor="let name of getLanguage()" [value]="name">
-                    {{name}} </option>
-            </select>
-            </div>
             <div>
                 <button [disabled]="loading" class="btn text-dark" style="background-color: rgb(226, 226, 226);">
                     <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>

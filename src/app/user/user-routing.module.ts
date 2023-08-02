@@ -7,6 +7,9 @@ import { CandidateListComponent } from './dashboard/candidate-list/candidate-lis
 import { EmployeeComponent } from '../master/employee/employee.component';
 import { InterviewStatusUpdateComponent } from '../master/interview-status-update/interview-status-update.component';
 import { EmployeeListComponent } from '../master/employee-list/employee-list.component';
+import { CandidateViewComponent } from './dashboard/candidate-view/candidate-view.component';
+import { InterviewListComponent } from '../master/interview-list/interview-list.component';
+
 const routes: Routes = [ 
   {
     path: '', component: DashboardComponent,
@@ -16,6 +19,7 @@ const routes: Routes = [
       { path: 'candidate', component: CandidateComponent },
       { path: 'edit/:id', component: CandidateComponent },
       { path: 'interview', component: InterviewComponent },
+      { path: 'view/:candidate', component: CandidateViewComponent },
       { path: 'employeeEdit/:id', component: EmployeeComponent}, 
       { path: 'interview/:id', component: InterviewComponent  }, 
       { path: 'employeeList', component: EmployeeListComponent
@@ -25,10 +29,15 @@ const routes: Routes = [
       }, 
       { path: 'employeeUpdate/:id', component: EmployeeComponent},
       { 
-        path: 'interviewUpdate/:id', component: InterviewStatusUpdateComponent}
+        path: 'interviewUpdate/:id', component: InterviewStatusUpdateComponent},
+        { 
+          path: 'interviewList', component: InterviewListComponent},
+          { path: 'interviewUpdate', component: InterviewComponent },
     ]
   },
-  
+  { 
+    path: 'interviewList', component: InterviewListComponent},
+  { path: 'interviewUpdate', component: InterviewComponent },
   { path: 'employee', component: EmployeeComponent },
   { path: 'candidate', component: CandidateComponent },
   { path : 'interviewUpdate/:id' , component : InterviewStatusUpdateComponent},

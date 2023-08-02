@@ -22,7 +22,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private httpService: HttpClient,
     private notification : NotificationService,
-    private candidate : candidateservice
+    private candidate : candidateservice,
+    
     ) {
    
     }

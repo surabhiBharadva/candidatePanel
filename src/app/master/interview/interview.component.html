@@ -1,15 +1,22 @@
 <div class="card mb-3 container2" style="width: 600px;">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h1></h1>
-        <button type="button" class="btn-close" aria-label="Close" (click)="close()" style="color: black;"></button>
+        <h2>{{candidateObject?.candidateName}}
+        </h2>
+        <button type="button" class="btn-close" aria-label="Close" routerLinkActive="active" routerLink="../interviewList/" style="color: black;"></button>
     </div>
     <div class="card-body">
         <form [formGroup]="formData" (ngSubmit)="onSubmit()">
+            <div class="mb-3" *ngIf="candidateSelect">
+              
+                <label class="form-label">Candidate Name</label><span>&nbsp;&nbsp;</span>
+                <select data-style="btn-default" class="form-control selectpicker">
+                    <option *ngFor="let name of candidate" [ngValue]="name.id" [id]="name.id"> {{name.candidateName}}</option>
+                </select>
+            </div>
             <div class="mb-3">
-                
                 <label class="form-label">Interviewer Name</label><span>&nbsp;&nbsp;</span>
-                <select (click)="changeName($event)" data-style="btn-default" class="form-control selectpicker">
-                    <option *ngFor="let i of employees" [ngValue]="i"> {{i.firstName}} {{i.lname}}</option>
+                <select formControlName="employeeId"   data-style="btn-default" class="form-control selectpicker">
+                    <option *ngFor="let i of employees" [ngValue]="i.id" [id]="i.id"> {{i.firstName}}</option>
                 </select>
             </div>
             <div class="mb-3">
@@ -25,42 +32,7 @@
                 <button class="btn text-dark" style="background-color: rgb(226, 226, 226);"
                     (click)="clearFrom()"><span></span>Clear</button>
             </div>
-            <div>
-                <h1>{{mymodel}}</h1>
-            </div>
+           
         </form>
     </div>
 </div>
-
-<div class="container">
-    <h2>Scheduled Interview</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th style="width: 10%">Position</th>
-                <th style="width: 15%">Name</th>
-                <th style="width: 15%">Interviewer Name</th>
-                <th style="width: 10%;">Status</th>
-                <th style="width: 15%">Schedule Date Time</th>
-                <th style="width: 10%;">Action</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let interview of interviewList">
-                <td>{{interview?.candidate?.position}}</td>
-                <td>{{interview?.candidate?.candidateName}}</td>
-                <td>{{interview.employeeName}}</td>
-                <td>{{getValue(interview.status)}}</td>
-                <td>{{interview?.schduleDateTime | date: 'medium'}}</td>
-                <td style="white-space: nowrap">
-                    <img alt="" src="assets\image\pen.svg" width="20" height="20" routerLinkActive="active"
-                        routerLink="../interviewUpdate/{{interview.id}}" />
-                </td>
-            
-            </tr>
-        </tbody>
-    </table>
-    <router-outlet></router-outlet>
-</div>
-

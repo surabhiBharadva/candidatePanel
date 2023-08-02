@@ -1,0 +1,38 @@
+
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="title">Scheduled Interview</div>
+        <button type="submit" class="btn text-dark border border-dark fw-bold" style="background-color: rgb(226, 226, 226);"
+            routerLinkActive="active" routerLink="../interviewUpdate/">Add Interview <img alt="" src="assets\image\schedule-icon.svg" width="30"
+                height="30" routerLinkActive="active" routerLink="../interviewUpdate/" /></button>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width: 10%">Position</th>
+                <th style="width: 15%">Name</th>
+                <th style="width: 15%">Interviewer Name</th>
+                <th style="width: 10%;">Status</th>
+                <th style="width: 15%">Schedule Date Time</th>
+                <th style="width: 10%;">Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let interview of interviewList">
+                <td>{{getPosition(interview?.candidate?.position)}}</td>
+                <td>{{interview?.candidate?.candidateName}}</td>
+                <td>{{interview.employeeName}}</td>
+                <td>{{getValue(interview.status)}}</td>
+                <td>{{interview?.schduleDateTime | date: 'medium'}}</td>
+                <td style="white-space: nowrap">
+                    <img alt="" src="assets\image\pen.svg" width="20" height="20" routerLinkActive="active"
+                        routerLink="../interviewUpdate/{{interview.id}}" />
+                </td>
+            
+            </tr>
+        </tbody>
+    </table>
+    <router-outlet></router-outlet>
+</div>

@@ -8,6 +8,7 @@ import { StatusEnum } from 'src/app/enum/StatusEnum';
 import { EmployeeService } from 'src/app/service/EmployeeService';
 import { Interviewsevice } from 'src/app/service/InterviewService';
 import { candidateservice } from 'src/app/service/candidateservice';
+import { NotificationService } from 'src/app/service/NotificationService';
 
 @Component({
   selector: 'app-interview',
@@ -19,34 +20,44 @@ export class InterviewComponent implements OnInit {
   loading = false;
   submitted = false;
   employees?: Employee[] = []
-  candidat?: Candidate[] = [];
+  candidate?: Candidate[] = [];
   interviewList?: Interview[] = [];
   candidateObject?: Candidate = {};
   todayDate = new Date();
   candidateId: string = "null";
-  candiDateObjet: Candidate = {};
   candidateIdNum  : number = 0;
   enum: any;
   id: number = 0;
   mymodel : any;
+  candidateSelect = false;
+  
   constructor(
-    private candidate: candidateservice,
+    private candidateService: candidateservice,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private employeeService: EmployeeService,
-    private interviewSevice: Interviewsevice
+    private interviewSevice: Interviewsevice,
+    private notification : NotificationService
   ) {
   }
 
   ngOnInit(): void {
     this.candidateId = this.route.snapshot.params['id'];
     this.candidateIdNum = parseInt(this.candidateId);
-    
-    this.candidate.getCadidateById(this.candidateIdNum).subscribe(
+    debugger
+    if(!this.candidateId){
+    this.candidateService.getCandidatePendingInterview().subscribe(
       data => {
-       this.candidateObject = data;
-      
+        debugger
+       this.candidateSelect = true
+        this.candidate = data;
+      }  
+    )
+    }
+    this.candidateService.getCadidateById(this.candidateIdNum).subscribe(
+      data => {
+       this.candidateObject = data
       }
     )
     this.employeeService.getEmplyeeList().subscribe(
@@ -56,11 +67,12 @@ export class InterviewComponent implements OnInit {
     );
     this.interviewSevice.getInterview().subscribe(
       data => {
+        debugger
         this.interviewList = data;
       }
     );
     this.formData = this.formBuilder.group({
-      employeeName: ['null', Validators.required],
+      employeeId: ['null', Validators.required],
       schduleDateTime: ['null', Validators.required],
       status : ['']
     });
@@ -70,34 +82,36 @@ export class InterviewComponent implements OnInit {
   }
   onSubmit() {
     if (this.formData.valid) {
+      debugger
       const indexOfS = Object.values(StatusEnum).indexOf(StatusEnum.scheduled as unknown as StatusEnum);
       this.enum = Object.keys(StatusEnum)[indexOfS];
       this.formData.get("status")?.setValue(this.enum);
-      this.interviewSevice.addInterview(this.candidateIdNum,this.formData.value).subscribe(data => {
-        console.log(data);
-      })
+      this.interviewSevice.addInterview(this.candidateIdNum,this.formData.value,this.formData.get('employeeId')?.value)
+      .subscribe(
+        (response: any) => {
+          if(response.status.error){
+            this.notification.error(response.status.error)
+          }else{
+          this.notification.success(response.message);
+          }
+        },
+        (error: any) => {
+          this.notification.error(error.error)
+        }
+      )
+
     }
   }
 
-  changeName(name: any) {
-    this.formData.get("employeeName")?.setValue(name.target.value);
-  }
+  
 
   clearFrom() {
     this.formData.reset();
   }
 
-  close() {
-    this.router.navigate(["./dashboard/"]);
-  }
-
   getValue(id : any){
     const indexOfS = Object.keys(StatusEnum).indexOf(id);
     return Object.values(StatusEnum)[indexOfS];
-  }
-
-  view(id : any){
-    this.router.navigate(["/interviewUpdate"]);
   }
 
 }
