@@ -41,7 +41,6 @@ export class InterviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.candidateId = this.route.snapshot.params['id'];
-    debugger
     this.candidateIdNum = parseInt(this.candidateId);
     
     this.candidate.getCadidateById(this.candidateIdNum).subscribe(

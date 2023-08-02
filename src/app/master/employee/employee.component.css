@@ -6,3 +6,19 @@
 .closeButton{
     margin-left: 30px;
 }
+@media screen and (max-width:768px) {
+
+    input .contact .col-md-6{
+        width:40.5%;
+        margin: 15px 15px 0 58px;
+    }
+    
+    textarea .contact .col-md-12 {
+         margin: 15px 15px 0 58px;
+    }
+    
+    button #submit .contact .submit{
+        margin: 15px 15px 0 42px;
+    }
+    
+    }

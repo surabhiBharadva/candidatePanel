@@ -53,7 +53,6 @@ export class EmployeeComponent implements OnInit {
       ststus:['']
     })
     if (this.id2) {
-      debugger
       this.loading = true;
       this.num = parseInt(this.id2);
       this.employeeService.getEmployeeById(this.num).subscribe(

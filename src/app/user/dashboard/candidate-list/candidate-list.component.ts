@@ -25,7 +25,6 @@ export class CandidateListComponent implements OnInit {
   ngOnInit(): void {
     this.candidateService.getCandidateList().subscribe(
       data => {
-        debugger
         this.candidateList = data;
       }
     );
@@ -42,7 +41,6 @@ export class CandidateListComponent implements OnInit {
   }
 
   getStatusKey(id: any) {
-    debugger
     const indexOfS = Object.keys(CandidateStatusEnum).indexOf(id);
     return Object.values(CandidateStatusEnum)[indexOfS];
   }

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup ,FormBuilder, Validators,FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first, pipe } from 'rxjs';
+import { Languageenum } from 'src/app/enum/LanguageEnum';
 import { NotificationService } from 'src/app/service/NotificationService';
 import { candidateservice } from 'src/app/service/candidateservice';
 @Component({
@@ -29,7 +30,8 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       email : [null, Validators.required],
-      password : [null , Validators.required]
+      password : [null , Validators.required],
+      language : [null] 
     });
 
   }
@@ -38,11 +40,9 @@ export class LoginComponent implements OnInit {
   }
   onSubmit(){
     if(this.form.valid){
-     debugger
       this.submitted = true;
       this.httpService.get('./assets/login.json').subscribe({ 
         next: data => {
-          debugger
             this.login = data as string [];	          
          }})
          if(this.login){
@@ -60,6 +60,10 @@ export class LoginComponent implements OnInit {
         }
         this.router.navigate(["./dashboard/"]);
       }
+    }
+
+    getLanguage(){
+      return Object.values(Languageenum).filter((k) => isNaN(Number(k)));
     }
 
   }

@@ -12,6 +12,7 @@ import { NotificationService } from 'src/app/service/NotificationService';
 import { candidateservice } from 'src/app/service/candidateservice';
 import { CandidateAvailabilityEnum } from 'src/app/enum/CandidateAvailabilityEnum';
 import { error } from 'console';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-candidate',
   templateUrl: './candidate.component.html',
@@ -23,9 +24,7 @@ export class CandidateComponent implements OnInit {
   cadidateAvailability = CandidateAvailabilityEnum;
 
   keyAvailability = {};
-  enumKeys = {};
-  enumKeyStatus = {};
-  enumKeyCandiddateStatus = {};
+ 
   formData!: FormGroup;
   
   login: any;
@@ -53,14 +52,13 @@ export class CandidateComponent implements OnInit {
     private router: Router,
     private httpService: HttpClient,
     private candidate: candidateservice,
-    private notification: NotificationService) {
+    private notification: NotificationService,public translateService: TranslateService) {
   }
 
   ngOnInit(): void {
 
     this.id2 = this.route.snapshot.params['id'];
-    this.enumKeys = Object.keys(this.positionEnum);
-    this.enumKeyCandiddateStatus = Object.keys(this.candidateStatus)
+   
     this.keyAvailability = Object.keys(this.cadidateAvailability)
     this.formData = this.formBuilder.group({
       candidateName: [null, Validators.required],
@@ -82,7 +80,6 @@ export class CandidateComponent implements OnInit {
       this.num = parseInt(this.id2);
       this.candidate.getCadidateById(this.num).subscribe(
         data => {
-          debugger
           this.formData.patchValue({
             
             candidateName: data.candidateName,
@@ -91,9 +88,11 @@ export class CandidateComponent implements OnInit {
             phone: data.phone,
             jDate: data.jDate,
             comment: data.comment,
-            position: this.getData(data.position),
-            candidateStatus : this.candidateStatusData(data.candidateStatus)
+            position: this.patchPosition(data.position),
+            candidateStatus : this.patchCandidateStatusData(data.candidateStatus),
+            candidateAvailability : this.patchValueAvailability(data.candidateAvailability)
           });
+
         }
       )
       this.loading = false;
@@ -101,17 +100,21 @@ export class CandidateComponent implements OnInit {
     }
   }
 
-  candidateStatusData(status : any){
+
+  patchValueAvailability(status : any){
+    const indexOfS = Object.keys(CandidateAvailabilityEnum).indexOf(status);
+    return Object.values(CandidateAvailabilityEnum)[indexOfS];
+  }
+  patchCandidateStatusData(status : any){
     const indexOfS = Object.keys(CandidateStatusEnum).indexOf(status);
     return Object.values(CandidateStatusEnum)[indexOfS];
   }
-  getData(position: any) {
-    debugger
+  patchPosition(position: any) {
     const indexOfS = Object.keys(PositionEnum).indexOf(position);
     return Object.values(PositionEnum)[indexOfS];
-    
-    
   }
+
+
   get f() {
     return this.formData.controls;
   }
@@ -119,15 +122,12 @@ export class CandidateComponent implements OnInit {
     return this.formData.get("position");
   }
 
-  changePosition(name: any) {
-    const indexOfS = Object.values(PositionEnum).indexOf(name as unknown as PositionEnum);
-    return this.enum = Object.keys(PositionEnum)[indexOfS];
-   
-  }
+
 
   onSubmit() {
-    debugger
     if (this.updateCandidate) {
+
+      //update Code 
       this.submitted = true;
       if (this.formData.invalid) {
         return;
@@ -140,14 +140,19 @@ export class CandidateComponent implements OnInit {
       let position = this.changeEmployeeStatus(this.formData.get("candidateStatus")?.value);
       this.formData.get("candidateStatus")?.setValue(position);
 
+      let candidateAvailability = this.changeAvailability(this.formData.get("candidateAvailability")?.value);
+      this.formData.get("candidateAvailability")?.setValue(candidateAvailability);
+
+
       this.candidate.UpdateCandidate(this.num, this.formData.value).subscribe(
         (response: any) => {
-          debugger
-          console.log(response)
+          if(response.status === 'Error'){
+            this.notification.error(response.message)
+          }else{
           this.notification.success(response.message);
+          }
         },
         (error: any) => {
-          debugger
           this.notification.error(error.error)
         }
       )
@@ -156,29 +161,31 @@ export class CandidateComponent implements OnInit {
       this.submitted = false;
 
     } else {
+
+      //add here 
       this.submitted = true;
       if (this.formData.invalid) {
         return;
       }
       this.submitting = true;
 
-      let date = this.formData.get("position")?.value;
-      let value = this.changePosition(date);
+      let value = this.changePosition(this.formData.get("position")?.value);
       this.formData.get("position")?.setValue(value)
 
+      let candidateAvailability = this.changeAvailability(this.formData.get("candidateAvailability")?.value);
+      this.formData.get("candidateAvailability")?.setValue(candidateAvailability)
 
 
       const indexOfS = Object.values(CandidateStatusEnum).indexOf(CandidateStatusEnum.PENDING as unknown as CandidateStatusEnum);
       this.enum = Object.keys(CandidateStatusEnum)[indexOfS];
       this.formData.get("candidateStatus")?.setValue(this.enum);
       this.candidate.addCandidadte(this.formData.value, this.file).subscribe(
-
-
-        // Verified this things... 
-
         (response: any) => {
-
-          this.notification.success(response.body);
+          if(response.status.error){
+            this.notification.error(response.status.error)
+          }else{
+          this.notification.success(response.message);
+          }
         },
         (error: any) => {
           this.notification.error(error.error)
@@ -194,10 +201,21 @@ export class CandidateComponent implements OnInit {
     }
 
   }
-  changeEmployeeStatus(name: any) {
+  changeAvailability(name: any) {
+    const indexOfS = Object.values(CandidateAvailabilityEnum).indexOf(name as unknown as CandidateAvailabilityEnum);
+    return this.enum = Object.keys(CandidateAvailabilityEnum)[indexOfS];
+  }
+
+  changePosition(name: any) {
     const indexOfS = Object.values(PositionEnum).indexOf(name as unknown as PositionEnum);
     return this.enum = Object.keys(PositionEnum)[indexOfS];
+   
   }
+  changeEmployeeStatus(name: any) {
+    const indexOfS = Object.values(CandidateStatusEnum).indexOf(name as unknown as CandidateStatusEnum);
+    return this.enum = Object.keys(CandidateStatusEnum)[indexOfS];
+  }
+
   onChange(event: any) {
     this.file = event.target.files[0];
   }
@@ -207,11 +225,10 @@ export class CandidateComponent implements OnInit {
   close() {
     this.router.navigate(["./dashboard/"]);
   }
-  changeAvailability(name: any) {
-    const name2 = name.target.value;
-    const indexOfS = Object.values(CandidateAvailabilityEnum).indexOf(name2 as unknown as CandidateAvailabilityEnum);
-    this.enum = Object.keys(CandidateAvailabilityEnum)[indexOfS];
-    this.formData.get("candidateAvailability")?.setValue(this.enum);
+
+  getAvailability(): string[] {
+    return Object.values(CandidateAvailabilityEnum).filter((k) => isNaN(Number(k)));
+    
   }
   getPosition(): string[] {
     return Object.values(PositionEnum).filter((k) => isNaN(Number(k)));

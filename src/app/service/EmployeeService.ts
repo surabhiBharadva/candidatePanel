@@ -26,7 +26,6 @@ export class EmployeeService {
   }
 
   addEmployee(employee: any, file: any): Observable<Employee> {
-    debugger
     const fileData = new FormData();
     if (file) {
       fileData.append("employee", JSON.stringify(employee))

@@ -81,7 +81,7 @@
                 <div class="col-6 mb-3" *ngIf="updateCandidate">
                     <label class="form-label">Status</label>
 
-                    <select  data-style="btn-default" formControlName="candidateStatus"
+                    <select [(ngModel)]="selectedStatus"  data-style="btn-default" formControlName="candidateStatus"
                         class="form-control selectpicker form-select" data-live-search="true">
                         <option *ngFor="let name of getCandidateStatus()" [value]="name">
                             {{name}} </option>
@@ -89,11 +89,11 @@
                 </div>
                 <div class="col-6 mb-3">
                     <label class="form-label">Joining Availability *</label>
-                    <select (change)="changeAvailability($event)" data-style="btn-default"
-                        class="form-control selectpicker form-select">
+                    <select  data-style="btn-default"
+                        class="form-control selectpicker form-select" formControlName="candidateAvailability">
                         <option selected disabled value="">Select</option>
-                        <option *ngFor="let name of keyAvailability | keyvalue" [ngValue]="name">
-                            {{cadidateAvailability[name.value]}} </option>
+                        <option *ngFor="let name of getAvailability()" [value]="name">
+                            {{name}} </option>
                             <div *ngIf="submitted && f['candidateAvailability'].errors" >
                                 <div *ngIf="f['candidateAvailability'].errors['required'] || f['candidateAvailability'].touched">Select Candidate Availability is required</div>
                             </div>

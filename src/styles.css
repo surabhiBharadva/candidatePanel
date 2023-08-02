@@ -1,1 +1,41 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    --primary: #f28250;
+    --secondary: #2C97BD;
+    --accent: #384b5e;
+    --warn: #D34E4E;
+    --margin-button-icon: 0 0.3em;
+    --grid-default-gap: 2em;
+    /*header*/
+    --header-height: 60px;
+    /* Footer */
+    --footer-height: 40px;
+  }
+  
+  html,
+  body {
+    height: 100%;
+  }
+  
+  body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+  }
+  
+  @media (min-width: 800px) {
+      :root {
+        /* ScrollbarFirefox */
+        scrollbar-color: var(--primary) grey;
+        scrollbar-width: 7px;
+      }
+  
+      /* ScrollBar Style */
+      ::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 7px;
+      }
+  
+      ::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: var(--primary);
+      }
+  }

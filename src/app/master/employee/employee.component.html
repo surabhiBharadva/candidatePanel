@@ -7,11 +7,11 @@
     <div class="card-body">
         <form [formGroup]="formData" (ngSubmit)="onSubmit()">
             <div class="row">
-                <div class="col-6 mb-3">
+                <div class="col-6 col-md-3 col-sm-12 col-xs-12">
                     <label class="form-label">Aadhar Card</label>
                     <input type="text" formControlName="acardNum" class="form-control" />
                 </div>
-                <div class="col-3 mb-3">
+                <div class="col-3 col-mb-3 col-mb-4">
                     <label class="form-label">Status</label>
                 
                     <select data-style="btn-default" class="form-control selectpicker" (change)="changeStatus($event)"  data-live-search="true">
@@ -22,62 +22,62 @@
                 
             </div>
             <div class="row">
-                <div class="col-6 mb-3">
+                <div class="col-6 col-mb-3 col-mb-4">
                     <label class="form-label">First Name</label>
                     <input type="text" formControlName="firstName" class="form-control" />
                 </div>
-                <div class="col-6 mb-3">
+                <div class="col-6 col-mb-3 col-mb-4">
                     <label class="form-label">Last Name</label>
                     <input type="text" formControlName="lname" class="form-control" />
                 </div>
             </div>
             <div class="row">
-                <div class="col-6 mb-3">
+                <div class="col-6 col-mb-3 col-mb-4">
                     <label class="form-label">Email</label>
                     <input type="email" formControlName="email" class="form-control" />
                 </div>
-                <div class="col-6 mb-3">
+                <div class="col-6 col-mb-3 col-mb-4">
                     <label class="form-label">Phone No</label>
                     <input type="number" formControlName="phone" class="form-control" />
                 </div>
             </div>
             <div class="row">
-                <div class="col-6 mb-3">
+                <div class="col-6 col-mb-3 col-mb-4">
                     <label class="form-label">Joining date</label>
                     <input type="Date" formControlName="jDate" class="form-control" />
                 </div>
-                <div class="col-6 mb-3">
+                <div class="col-6 col-mb-3 col-mb-4">
                     <label class="form-label">Date of Birth</label>
                     <input type="Date" formControlName="dob" class="form-control" />
                 </div>
             </div>
             <div class="row">
-                <div class="col-4 mb-3">
+                <div class="col-4 col-mb-3 col-mb-4">
                     <label class="form-label">Country</label>
                     <input type="text" formControlName="country" class="form-control" />
                 </div>
-                <div class="col-4 mb-3">
+                <div class="col-4 col-mb-3 col-mb-4">
                     <label class="form-label">State</label>
                     <input type="text" formControlName="state" class="form-control" />
                 </div>
-                <div class="col-4 mb-3">
+                <div class="col-4 col-mb-3 col-mb-4">
                     <label class="form-label">City</label>
                     <input type="text" formControlName="city" class="form-control" />
                 </div>
             </div>
             <div class="row">
             
-                <div class="col-4 mb-3">
+                <div class="col-4 col-mb-3 col-mb-4">
                     <label class="form-label">Aadhar Card</label>
                 <input class="form-control" formControlName="adadharcard" accept=".pdf" type="file"
                     (change)="onChange($event)" />
                 </div>
-                <div class="col-4 mb-3">
+                <div class="col-4 col-mb-3 col-mb-4">
                     <label class="form-label">Pan Card</label>
                     <input class="form-control" formControlName="pancard" accept=".pdf" type="file"
                         (change)="onChange($event)" />
                 </div>
-                <div class="col-4 mb-3">
+                <div class="col-4 col-mb-3 col-mb-4">
                     <label class="form-label">Marksheet</label>
                     <input class="form-control" formControlName="marksheet" accept=".pdf" type="file"
                         (change)="onChange($event)" />
