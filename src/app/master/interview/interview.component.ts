@@ -19,8 +19,8 @@ export class InterviewComponent implements OnInit {
   formData!: FormGroup;
   loading = false;
   submitted = false;
-  employees?: Employee[] = []
-  candidate?: Candidate[] = [];
+  employeesList?: Employee[] = []
+  candidateList?: Candidate[] = [];
   interviewList?: Interview[] = [];
   candidateObject?: Candidate = {};
   todayDate = new Date();
@@ -35,7 +35,6 @@ export class InterviewComponent implements OnInit {
     private candidateService: candidateservice,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router,
     private employeeService: EmployeeService,
     private interviewSevice: Interviewsevice,
     private notification : NotificationService
@@ -51,7 +50,7 @@ export class InterviewComponent implements OnInit {
       data => {
         debugger
        this.candidateSelect = true
-        this.candidate = data;
+        this.candidateList = data;
       }  
     )
     }
@@ -62,7 +61,7 @@ export class InterviewComponent implements OnInit {
     )
     this.employeeService.getEmplyeeList().subscribe(
       data => {
-        this.employees = data;
+        this.employeesList = data;
       }
     );
     this.interviewSevice.getInterview().subscribe(
@@ -72,12 +71,17 @@ export class InterviewComponent implements OnInit {
       }
     );
     this.formData = this.formBuilder.group({
+      candidateId : ['null', Validators.required],
       employeeId: ['null', Validators.required],
       schduleDateTime: ['null', Validators.required],
-      status : ['']
+      status:['null']
     });
   }
   get f() {
+    if(!this.candidateSelect){
+      this.formData.get('candidateId')?.updateValueAndValidity();
+      this.formData.get('candidateId')?.clearValidators();
+    }
     return this.formData.controls;
   }
   onSubmit() {
@@ -86,6 +90,7 @@ export class InterviewComponent implements OnInit {
       const indexOfS = Object.values(StatusEnum).indexOf(StatusEnum.scheduled as unknown as StatusEnum);
       this.enum = Object.keys(StatusEnum)[indexOfS];
       this.formData.get("status")?.setValue(this.enum);
+      if(!this.candidateSelect){
       this.interviewSevice.addInterview(this.candidateIdNum,this.formData.value,this.formData.get('employeeId')?.value)
       .subscribe(
         (response: any) => {
@@ -100,7 +105,23 @@ export class InterviewComponent implements OnInit {
         }
       )
 
+    }else{
+      this.interviewSevice.addInterview(this.formData.get('candidateId')?.value,this.formData.value,this.formData.get('employeeId')?.value)
+        .subscribe(
+          (response: any) => {
+            if(response.status.error){
+              this.notification.error(response.status.error)
+            }else{
+            this.notification.success(response.message);
+            }
+          },
+          (error: any) => {
+            this.notification.error(error.error)
+          }
+        )
+  
     }
+  }
   }
 
   

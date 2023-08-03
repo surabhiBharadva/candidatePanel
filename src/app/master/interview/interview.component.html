@@ -9,14 +9,14 @@
             <div class="mb-3" *ngIf="candidateSelect">
               
                 <label class="form-label">Candidate Name</label><span>&nbsp;&nbsp;</span>
-                <select data-style="btn-default" class="form-control selectpicker">
-                    <option *ngFor="let name of candidate" [ngValue]="name.id" [id]="name.id"> {{name.candidateName}}</option>
+                <select data-style="btn-default" formControlName="candidateId" class="form-control selectpicker">
+                    <option *ngFor="let name of candidateList" [ngValue]="name.id" [id]="name.id"> {{name.candidateName}}</option>
                 </select>
             </div>
             <div class="mb-3">
                 <label class="form-label">Interviewer Name</label><span>&nbsp;&nbsp;</span>
                 <select formControlName="employeeId"   data-style="btn-default" class="form-control selectpicker">
-                    <option *ngFor="let i of employees" [ngValue]="i.id" [id]="i.id"> {{i.firstName}}</option>
+                    <option *ngFor="let i of employeesList" [ngValue]="i.id" [id]="i.id"> {{i.firstName}}</option>
                 </select>
             </div>
             <div class="mb-3">
@@ -35,4 +35,6 @@
            
         </form>
     </div>
+    <router-outlet></router-outlet>
 </div>
+<router-outlet></router-outlet>

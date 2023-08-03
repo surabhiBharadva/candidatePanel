@@ -42,6 +42,13 @@ export class Interviewsevice{
             catchError(this.handleError)
         );
     }
+    getByIdCandidate(id : number) : Observable<Interview> {
+    const url = `${this.apiurl}/${id}`;
+    return this.httpService.get<Interview>(url).pipe(
+        catchError(this.handleError)
+    );
+
+    }
 
     
 }

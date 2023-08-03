@@ -14,6 +14,7 @@ import { CandidateAvailabilityEnum } from 'src/app/enum/CandidateAvailabilityEnu
 import { error } from 'console';
 import { TranslateService } from '@ngx-translate/core';
 @Component({
+  
   selector: 'app-candidate',
   templateUrl: './candidate.component.html',
   styleUrls: ['./candidate.component.css']
@@ -21,7 +22,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class CandidateComponent implements OnInit {
  
   keyAvailability = {};
- 
+  positionEnum!: PositionEnum;
   formData!: FormGroup;
   
   login: any;
@@ -63,9 +64,9 @@ export class CandidateComponent implements OnInit {
       phone: [null, Validators.required],
       skills: [null, Validators.required],
       fileUpload: [null, Validators.required],
-      jDate: [null],
+      joiningDate: [null, Validators.required],
       comment: [null],
-      candidateStatus: [''],
+      candidateStatus: ['', Validators.required],
       candidateAvailability: ['', Validators.required]
     });
 
@@ -76,13 +77,14 @@ export class CandidateComponent implements OnInit {
       this.num = parseInt(this.id2);
       this.candidate.getCadidateById(this.num).subscribe(
         data => {
+          debugger
           this.formData.patchValue({
             
             candidateName: data.candidateName,
             skills: data.skills,
             email: data.email,
             phone: data.phone,
-            jDate: data.joiningDate,
+            joiningDate: data.joiningDate,
             comment: data.comment,
             position: this.patchPosition(data.position),
             candidateStatus : this.patchCandidateStatusData(data.candidateStatus),
@@ -99,9 +101,9 @@ export class CandidateComponent implements OnInit {
   }
 
 
-  patchValueAvailability(status : any){
+  patchValueAvailability(availability : any){
     
-    const indexOfS = Object.keys(CandidateAvailabilityEnum).indexOf(status);
+    const indexOfS = Object.keys(CandidateAvailabilityEnum).indexOf(availability);
     return Object.values(CandidateAvailabilityEnum)[indexOfS];
   }
   patchCandidateStatusData(status : any){
@@ -115,15 +117,33 @@ export class CandidateComponent implements OnInit {
 
 
   get f() {
+    debugger
+    if(!this.updateCandidate){
+      debugger
+      this.formData.get('joiningDate')?.updateValueAndValidity();
+      this.formData.get('joiningDate')?.clearValidators();
+      this.formData.get('candidateStatus')?.updateValueAndValidity();
+      this.formData.get('candidateStatus')?.clearValidators();
+    }else{
+      if(this.selectedStatus != 'Offer-Accepted'){
+      this.formData.get('joiningDate')?.updateValueAndValidity();
+      this.formData.get('joiningDate')?.clearValidators();
+      this.formData.get('fileUpload')?.updateValueAndValidity();
+      this.formData.get('fileUpload')?.clearValidators();
+      }else{
+        this.formData.get('fileUpload')?.updateValueAndValidity();
+        this.formData.get('fileUpload')?.clearValidators();
+      }
+    }
     return this.formData.controls;
+
   }
-  get position() {
-    return this.formData.get("position");
-  }
+  
 
 
 
   onSubmit() {
+    debugger
     if (this.updateCandidate) {
 
       //update Code 
@@ -149,6 +169,7 @@ export class CandidateComponent implements OnInit {
             this.notification.error(response.message)
           }else{
           this.notification.success(response.message);
+          this.close();
           }
         },
         (error: any) => {
@@ -158,7 +179,7 @@ export class CandidateComponent implements OnInit {
       this.loading = false;
       this.submitting = false;
       this.submitted = false;
-
+      
     } else {
 
       //add here 
@@ -178,6 +199,7 @@ export class CandidateComponent implements OnInit {
       const indexOfS = Object.values(CandidateStatusEnum).indexOf(CandidateStatusEnum.PENDING as unknown as CandidateStatusEnum);
       this.enum = Object.keys(CandidateStatusEnum)[indexOfS];
       this.formData.get("candidateStatus")?.setValue(this.enum);
+      
       this.candidate.addCandidadte(this.formData.value, this.file).subscribe(
         (response: any) => {
           if(response.status.error){
@@ -194,9 +216,8 @@ export class CandidateComponent implements OnInit {
       this.loading = false;
       this.submitting = false;
       this.submitted = false;
-      this.formData.updateValueAndValidity();
-
       this.formData.reset();
+     
     }
 
   }

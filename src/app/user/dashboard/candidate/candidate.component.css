@@ -14,3 +14,9 @@
 .fw-bold{
     font-weight: 100px;
 }
+
+@media(max-width: 768px) {
+    .card {
+      width: 330px;
+    }
+  }

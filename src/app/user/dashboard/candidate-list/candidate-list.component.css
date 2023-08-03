@@ -1,22 +1,59 @@
 .container{
-    margin-top: 70px;
-    margin-left: 100px;
-    max-width: 1700px
+    max-width: 1700px;
 }
-/* .btnimage{
-
-    background-image: url('D:\Developer\new Project\candidate-panel\src\assets\image\pdfView.svg') !important;
-    width:"40";
-    height:"40";
-} */
 .title{
     font-size: 30px;
     font-weight: 500px;
+   
+}
+.title2{
+    margin-top: 70px;
 }
 .table{
     margin-top: 10px; 
+    
 }
 .tr{
     font-weight: 100px;
 }
+
+@media only screen and (max-width:800px) {
+    .container{
+    margin-top: 50px;
+    margin-left: 0px; 
+   
+    }
+    .title2{
+        margin-top: 0px;
+    margin-left: 0px;  
+    }
+    #no-more-tables tbody,
+    #no-more-tables tr,
+    #no-more-tables td {
+        display: block;
+    }
+    #no-more-tables thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    #no-more-tables td {
+        position: relative;
+        padding-left: 50%;
+        border: black;
+        border-bottom: 1px solid #eee;
+    }
+    #no-more-tables td:before {
+        content: attr(data-title);
+        position: absolute;
+        left: 6px;
+        font-weight: bold;
+    }
+    #no-more-tables tr {
+        border-bottom: 1px solid #ccc;
+    }
+   
+}
+
+
 

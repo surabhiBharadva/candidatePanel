@@ -1,11 +1,14 @@
 <div class="container">
+    <div class="title2">
     <div class="d-flex justify-content-between align-items-center">
         <div class="title">Candidate Details</div>
         <button type="submit" class="btn text-dark border border-dark fw-bold" style="background-color: rgb(226, 226, 226);"
-            routerLinkActive="active" routerLink="candidate"> Add Candidate <img alt="" src="assets\image\plus.svg" width="40"
-                height="40" routerLinkActive="active" routerLink="candidate" /></button>
+            routerLinkActive="active" routerLink="candidate"> Add Candidate <img alt="" src="assets\image\plus.svg" width="30"
+                height="30" routerLinkActive="active" routerLink="candidate" /></button>
        
     </div>
+</div>
+    <div class="table-responsive" id="no-more-tables">
     <table class="table thead-dark w-200">
         <thead>
             <tr>
@@ -33,9 +36,10 @@
                 <td>{{getAvailability(candidate.candidateAvailability)}}</td>
                 <td>{{candidate.joiningDate | date: 'mediumDate'}}</td>
                 <td style="white-space: nowrap">
-
-                    <img alt="" src="assets\image\interview-icon.svg" width="30" height="30" routerLinkActive="active"
+                   
+                    <img  alt="" src="assets\image\interview-icon.svg" width="30" height="30" routerLinkActive="active"
                         routerLink="interview/{{candidate.id}}" /><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                   
                     <img alt="" src="assets\image\pen.svg" width="20" height="20" routerLinkActive="active"
                         routerLink="edit/{{candidate.id}}" /><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <img alt="" src="assets\image\see-icon.svg" width="30" height="30" routerLinkActive="active"
@@ -46,5 +50,6 @@
 
         </tbody>
     </table>
+    </div>
     <router-outlet></router-outlet>
 </div>

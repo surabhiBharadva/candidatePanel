@@ -28,15 +28,13 @@ const routes: Routes = [
         ]
       }, 
       { path: 'employeeUpdate/:id', component: EmployeeComponent},
-      { 
-        path: 'interviewUpdate/:id', component: InterviewStatusUpdateComponent},
-        { 
-          path: 'interviewList', component: InterviewListComponent},
-          { path: 'interviewUpdate', component: InterviewComponent },
+      { path: 'interviewUpdate/:id', component: InterviewStatusUpdateComponent},
+      { path: 'interviewList', component: InterviewListComponent},
+      { path: 'interviewUpdate', component: InterviewComponent },
     ]
   },
-  { 
-    path: 'interviewList', component: InterviewListComponent},
+  
+  { path: 'interviewList', component: InterviewListComponent},
   { path: 'interviewUpdate', component: InterviewComponent },
   { path: 'employee', component: EmployeeComponent },
   { path: 'candidate', component: CandidateComponent },

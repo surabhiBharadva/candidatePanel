@@ -21,7 +21,8 @@ import { InterviewListComponent } from '../master/interview-list/interview-list.
     CommonModule,
     UserRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    
   ]
 })
 export class UserModule { }

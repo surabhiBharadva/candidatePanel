@@ -9,11 +9,13 @@ import { LoginComponent } from './account/login/login.component';
 import { NotificationComponent } from './notification/notification.component';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { candiddateSer } from './service/candidateSer';
+import { EnumToArrayPipe } from './pipe/EnumToArrayPipe ';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     NotificationComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -22,6 +24,9 @@ import { candiddateSer } from './service/candidateSer';
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(candiddateSer,{ delay: 1000, passThruUnknownUrl: true })
    
+  ],
+  exports:[
+
   ],
   providers: [],
   bootstrap: [AppComponent]

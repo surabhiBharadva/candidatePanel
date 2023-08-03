@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StatusEnum } from 'src/app/enum/StatusEnum';
+import { Candidate } from 'src/app/model/Candidate';
 import { Interviewsevice } from 'src/app/service/InterviewService';
+import { NotificationService } from 'src/app/service/NotificationService';
 
 @Component({
   selector: 'app-interview-status-update',
@@ -17,32 +19,61 @@ export class InterviewStatusUpdateComponent implements OnInit {
   loading = false;
   submitted = false;
   enum: string = "null";
-  interviewIdNum :number = 0;
-  constructor(private route: ActivatedRoute,private router: Router,private interviewSevice : Interviewsevice,private formBuilder: FormBuilder,) { }
+  interviewId :number = 0;
+  candidateObject?: Candidate = {};
+
+  constructor(private route: ActivatedRoute,private router: Router,private interviewSevice : Interviewsevice,private formBuilder: FormBuilder,
+   private notification : NotificationService) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
     this.interviewStatus = Object.keys(this.statusEnum)
-    this.interviewIdNum = parseInt(this.id) 
+    this.interviewId = parseInt(this.id) 
     this.formData = this.formBuilder.group({
       feedback: [''],
-      status : ['null']
+      status : ['null',Validators.required]
     });
+    this.interviewSevice.getByIdCandidate(this.interviewId).subscribe(
+      data => {
+        this.candidateObject = data.candidate;
+       this.formData.patchValue({
+        status : this.patchStatus(data.status)
+       })
+      }
+    )
   }
-
+  patchStatus(status : any){
+    const indexOfS = Object.keys(StatusEnum).indexOf(status);
+    return Object.values(StatusEnum)[indexOfS];
+  }
   onSubmit() {
     if (this.formData.valid) {
-      
-      this.interviewSevice.updateInterview(this.interviewIdNum,this.formData.value).subscribe(data => {
-        console.log(data);
-      })
+      let candidateAvailability = this.changeStatus(this.formData.get("status")?.value);
+      this.formData.get("status")?.setValue(candidateAvailability);
+
+      this.interviewSevice.updateInterview(this.interviewId, this.formData.value).subscribe((response: any) => {
+        if (response.status.error) {
+          this.notification.error(response.status.error)
+        } else {
+          this.notification.success(response.message);
+          this.close();
+        }
+      },
+        (error: any) => {
+          this.notification.error(error.error)
+        })
+
     }
   }
-  changeStatus(name : any){
-    const name2 = name.target.value;
-    const indexOfS = Object.values(StatusEnum).indexOf(name2 as unknown as StatusEnum);
-     this.enum = Object.keys(StatusEnum)[indexOfS];
-     this.formData.get("status")?.setValue(this.enum);
+  changeStatus(status : any){
+    const indexOfS = Object.values(StatusEnum).indexOf(status as unknown as StatusEnum);
+    return this.enum = Object.keys(StatusEnum)[indexOfS];
+  }
+  get f() {
+    return this.formData.controls;
+  }
+  getStatus(){
+    return Object.values(StatusEnum).filter((k) => isNaN(Number(k)));
   }
 
   clearFrom() {
@@ -51,5 +82,4 @@ export class InterviewStatusUpdateComponent implements OnInit {
   close() {
     this.router.navigate(["./dashboard/"]);
   }
-
 }

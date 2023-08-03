@@ -6,10 +6,10 @@
     </div>
     <div class="card-body border-dark">
         <form [formGroup]="formData" (ngSubmit)="onSubmit()">
+            
             <div class="row">
-                <div class="d-flex justify-content-between align-items-center col-6 mb-3">
-                    <label class="form-label">Choose Position *</label>
-                  
+                <div class="col-6 mb-3">
+                    <label class="form-label">Position *</label>
                     <select [(ngModel)]="selectedPosition" data-style="btn-default" class="selectpicker form-select" formControlName="position">
             
                         <option selected disabled value="">Select</option>
@@ -17,32 +17,34 @@
                             {{name}} </option>
                            
                     </select>
-                    <span>
-                        <div *ngIf="submitted && f['position'].errors">
-                            <div *ngIf="f['position'].errors['required'] || f['position'].touched" style="color: rgb(194, 17, 17);">Select Candidate Position is
-                                required</div>
-                        </div>
-                    </span>
+                   
+                    <span *ngIf="submitted && f['position'].errors">
+                        <span *ngIf="f['position'].errors['required'] || f['position'].touched" style="color: rgb(194, 17, 17);">Select Candidate Position is
+                            Required</span>
+                        </span>
+                   
                     
                 </div>
             </div>
+            
             <div class="row">
                 <div class="col-12 mb-3">
-                    <label class="form-label">Candidate Name *</label>
+                    <label class="form-label">Name *</label>
                     <input type="text" formControlName="candidateName" class="form-control"
                         />
                     <div *ngIf="submitted && f['candidateName'].errors ">
-                        <div *ngIf="f['candidateName'].errors['required'] || f['candidateName'].touched" style="color: rgb(194, 17, 17); ">Candidate Name is required</div>
+                        <div *ngIf="f['candidateName'].errors['required'] || f['candidateName'].touched" style="color: rgb(194, 17, 17); ">Candidate Name is Required</div>
                     </div>
                 </div>
             </div>
+            
             <div class="row">
                 <div class="col-6 mb-3">
                     <label class="form-label">Email *</label>
                     <input type="email" formControlName="email" class="form-control"
                          />
                     <div *ngIf="submitted && f['email'].errors">
-                        <div *ngIf="f['email'].errors['required'] || f['email'].touched" style="color: rgb(194, 17, 17);">Candidate Email is required</div>
+                        <div *ngIf="f['email'].errors['required'] || f['email'].touched" style="color: rgb(194, 17, 17);">Candidate Email is Required</div>
                     </div>
                 </div>
                 <div class="col-6 mb-3">
@@ -50,7 +52,7 @@
                     <input type="number" formControlName="phone" class="form-control"
                         />
                     <div *ngIf="submitted && f['phone'].errors" >
-                        <div *ngIf="f['phone'].errors['required'] || f['phone'].touched" style="color: rgb(194, 17, 17);" >Candidate Phone No is required</div>
+                        <div *ngIf="f['phone'].errors['required'] || f['phone'].touched" style="color: rgb(194, 17, 17);" >Candidate Phone No is Required</div>
                     </div>
                 </div>
             </div>
@@ -59,16 +61,18 @@
                 <input type="text" formControlName="skills" class="form-control"
                     />
                 <div *ngIf="submitted && f['skills'].errors" >
-                    <div *ngIf="f['skills'].errors['required'] || f['skills'].touched" style="color: rgb(194, 17, 17);">Candidate Skills is required</div>
+                    <div *ngIf="f['skills'].errors['required'] || f['skills'].touched" style="color: rgb(194, 17, 17);">Candidate Skills is Required</div>
                 </div>
             </div>
+            
+            
             <div class="row">
                 <div class="col-6 mb-3">
                     <label class="form-label">Upload Resume *</label>
                     <input class="form-control" formControlName="fileUpload" accept=".pdf" type="file"
                         (change)="onChange($event)"  />
                     <div *ngIf="submitted && f['fileUpload'].errors">
-                        <div *ngIf="f['fileUpload'].errors['required'] || f['fileUpload'].touched" style="color: rgb(194, 17, 17);">Candidate Resume is required</div>
+                        <div *ngIf="f['fileUpload'].errors['required'] || f['fileUpload'].touched" style="color: rgb(194, 17, 17);">Candidate Resume is Required</div>
                     </div>
                 </div>
                 <div class="col-6 mb-3">
@@ -77,18 +81,16 @@
                         class="form-control selectpicker form-select" formControlName="candidateAvailability">
                         <option selected disabled value="">Select</option>
                         <option *ngFor="let name of getAvailability()" [value]="name">
-                            {{name}} </option>
-                            <div *ngIf="submitted && f['candidateAvailability'].errors" >
-                                <div *ngIf="f['candidateAvailability'].errors['required'] || f['candidateAvailability'].touched" style="color: rgb(194, 17, 17);">Select Candidate Availability is required</div>
-                            </div>
+                            {{name}} </option>         
                     </select>
-                    
+                    <span *ngIf="submitted && f['candidateAvailability'].errors" >
+                        <span *ngIf="f['candidateAvailability'].errors['required'] || f['candidateAvailability'].touched" style="color: rgb(194, 17, 17);">Select Candidate Availability is Required</span>
+                    </span>
                 </div>
                 
             </div>
 
             <div class="row">
-
                 <div class="col-6 mb-3" *ngIf="updateCandidate">
                     <label class="form-label">Status</label>
 
@@ -97,11 +99,16 @@
                         <option *ngFor="let name of getCandidateStatus()" [value]="name">
                             {{name}} </option>
                     </select>
+                    <div *ngIf="submitted && f['candidateStatus'].errors">
+                        <div *ngIf="f['candidateStatus'].errors['required'] || f['candidateStatus'].touched" style="color: rgb(194, 17, 17);">Candidate Status is Required</div>
+                    </div>
                 </div>
                 <div class="col-6 mb-3" *ngIf="updateCandidate && selectedStatus === 'Offer-Accepted'">
                     <label class="form-label">Joining Date</label>
-                    <input type="Date" formControlName="jDate" class="form-control" />
-
+                    <input type="Date" formControlName="joiningDate" class="form-control" />
+                    <div *ngIf="submitted && f['joiningDate'].errors">
+                        <div *ngIf="f['joiningDate'].errors['required'] || f['joiningDate'].touched" style="color: rgb(194, 17, 17);">Joining Date is Required</div>
+                    </div>
                 </div>
             </div>
             <div class="mb-3">

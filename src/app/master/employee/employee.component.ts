@@ -84,7 +84,7 @@ export class EmployeeComponent implements OnInit {
     this.formData.reset();
   }
   close() {
-    this.router.navigate(["/dashboard/"]);
+    this.router.navigate(["interviewList"]);
   }
 
   changeStatus(name : any){

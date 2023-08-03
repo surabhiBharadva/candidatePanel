@@ -1,0 +1,12 @@
+.card{
+    margin-top: 200px;
+    width: 600px;
+    margin-left: 400px;
+}
+
+@media screen and (max-width: 800px) {
+    .card {
+      width: 100%;
+      margin-left: 0px; /* The width is 100%, when the viewport is 800px or smaller */
+    }
+  }
