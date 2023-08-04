@@ -38,8 +38,8 @@ export class EmployeeComponent implements OnInit {
     this.employeeStatusList = Object.keys(this.employeeStatus);
     this.formData = this.formBuilder.group({
       firstName : ['', Validators.required],
-      lname : ['', Validators.required],
-      jDate : [''],
+      lastName : ['', Validators.required],
+      joiningDate : [''],
       phone : [''],
       email : [''],
       acardNum : [''],

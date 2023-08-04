@@ -1,6 +1,6 @@
 <div class="card mb-3 container2" style="width: 600px;">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h2>{{candidateObject?.candidateName}}
+        <h2>{{candidateObject?.firstName}} {{candidateObject?.lastName}}
         </h2>
         <button type="button" class="btn-close" aria-label="Close" routerLinkActive="active" routerLink="../interviewList/" style="color: black;"></button>
     </div>
@@ -10,7 +10,7 @@
               
                 <label class="form-label">Candidate Name</label><span>&nbsp;&nbsp;</span>
                 <select data-style="btn-default" formControlName="candidateId" class="form-control selectpicker">
-                    <option *ngFor="let name of candidateList" [ngValue]="name.id" [id]="name.id"> {{name.candidateName}}</option>
+                    <option *ngFor="let name of candidateList" [ngValue]="name.id" [id]="name.id"> {{name.firstName}} {{name.lastName}}</option>
                 </select>
             </div>
             <div class="mb-3">

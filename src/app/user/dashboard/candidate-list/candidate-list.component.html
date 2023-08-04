@@ -3,37 +3,36 @@
     <div class="d-flex justify-content-between align-items-center">
         <div class="title">Candidate Details</div>
         <button type="submit" class="btn text-dark border border-dark fw-bold" style="background-color: rgb(226, 226, 226);"
-            routerLinkActive="active" routerLink="candidate"> Add Candidate <img alt="" src="assets\image\plus.svg" width="30"
-                height="30" routerLinkActive="active" routerLink="candidate" /></button>
+            routerLinkActive="active" routerLink="candidate"> Add Candidate </button>
        
     </div>
 </div>
     <div class="table-responsive" id="no-more-tables">
-    <table class="table thead-dark w-200">
+    <table class="table table-striped w-200">
         <thead>
             <tr>
                 <th style="width: 10%;">Position</th>
                 <th style="width: 10%">Application Date</th>
-                <th style="width: 10%">Name</th>
+                <th style="width: 10%">Full Name</th>
                 <th style="width: 10%">Email</th>
                 <th style="width: 10%">Phone No</th>
                 <th style="width: 10%">Resume</th>
-                <th style="width: 11%">Candidate Status</th>
                 <th style="width: 12%">Joining Availability</th>
+                <th style="width: 11%">Candidate Status</th>
                 <th style="width: 10%">Joining Date</th>
                 <th style="width: 10%;">Action</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let candidate of candidateList">
-                <td>{{getKey(candidate.position)}}</td>
+                <td>{{candidate.position}}</td>
                 <td>{{candidate.candidateDate | date: 'mediumDate'}}</td>
-                <td>{{candidate.candidateName}} </td>
+                <td>{{candidate.firstName}} {{candidate.lastName}} </td>
                 <td>{{candidate.email}}</td>
                 <td>{{candidate.phone}}</td>
                 <td>{{candidate?.documentDetails?.name}}</td>
-                <td>{{getStatusKey(candidate.candidateStatus)}}</td>
-                <td>{{getAvailability(candidate.candidateAvailability)}}</td>
+                <td>{{candidate.joiningAvailability}}</td>
+                <td>{{candidate.candidateStatus}}</td>
                 <td>{{candidate.joiningDate | date: 'mediumDate'}}</td>
                 <td style="white-space: nowrap">
                    

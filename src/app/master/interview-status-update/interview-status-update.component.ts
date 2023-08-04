@@ -37,7 +37,7 @@ export class InterviewStatusUpdateComponent implements OnInit {
       data => {
         this.candidateObject = data.candidate;
        this.formData.patchValue({
-        status : this.patchStatus(data.status)
+        status : data.status
        })
       }
     )
@@ -48,9 +48,6 @@ export class InterviewStatusUpdateComponent implements OnInit {
   }
   onSubmit() {
     if (this.formData.valid) {
-      let candidateAvailability = this.changeStatus(this.formData.get("status")?.value);
-      this.formData.get("status")?.setValue(candidateAvailability);
-
       this.interviewSevice.updateInterview(this.interviewId, this.formData.value).subscribe((response: any) => {
         if (response.status.error) {
           this.notification.error(response.status.error)

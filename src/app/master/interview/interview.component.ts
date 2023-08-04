@@ -87,9 +87,7 @@ export class InterviewComponent implements OnInit {
   onSubmit() {
     if (this.formData.valid) {
       debugger
-      const indexOfS = Object.values(StatusEnum).indexOf(StatusEnum.scheduled as unknown as StatusEnum);
-      this.enum = Object.keys(StatusEnum)[indexOfS];
-      this.formData.get("status")?.setValue(this.enum);
+     
       if(!this.candidateSelect){
       this.interviewSevice.addInterview(this.candidateIdNum,this.formData.value,this.formData.get('employeeId')?.value)
       .subscribe(

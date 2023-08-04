@@ -1,6 +1,6 @@
 <div class="card mb-3 container2" style="width: 600px;">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h2>Interview Update <h5>{{candidateObject?.candidateName}}</h5></h2>
+        <h2>Interview Update <h5>{{candidateObject?.firstName}}{{candidateObject?.lastName}}</h5></h2>
         <button type="button" class="btn-close" aria-label="Close"  routerLinkActive="active" routerLink="../interviewList" style="color: black;"></button>
     </div>
     <div class="card-body">
@@ -15,7 +15,7 @@
                         {{name}} </option>         
                 </select>
                 <span *ngIf="submitted && f['status'].errors" >
-                    <span *ngIf="f['status'].errors['required'] || f['status'].touched" style="color: rgb(194, 17, 17);">Select Candidate Availability is required</span>
+                    <span *ngIf="f['status'].errors['required'] || f['status'].touched" style="color: rgb(194, 17, 17);">Candidate Availability is required</span>
                 </span>
               
             </div>

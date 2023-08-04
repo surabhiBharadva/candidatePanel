@@ -58,16 +58,17 @@ export class CandidateComponent implements OnInit {
     this.id2 = this.route.snapshot.params['id'];
    
     this.formData = this.formBuilder.group({
-      candidateName: [null, Validators.required],
+      firstName: [null, Validators.required],
+      lastName: [null, Validators.required],
       position: ['', Validators.required],
       email: [null, Validators.required],
       phone: [null, Validators.required],
       skills: [null, Validators.required],
-      fileUpload: [null, Validators.required],
+      resume : [null, Validators.required],
       joiningDate: [null, Validators.required],
       comment: [null],
       candidateStatus: ['', Validators.required],
-      candidateAvailability: ['', Validators.required]
+      joiningAvailability: ['', Validators.required]
     });
 
     // edit mode
@@ -79,17 +80,17 @@ export class CandidateComponent implements OnInit {
         data => {
           debugger
           this.formData.patchValue({
-            
-            candidateName: data.candidateName,
+            firstName: data.firstName,
+            lastName: data.lastName ,
             skills: data.skills,
             email: data.email,
             phone: data.phone,
             joiningDate: data.joiningDate,
             comment: data.comment,
-            position: this.patchPosition(data.position),
-            candidateStatus : this.patchCandidateStatusData(data.candidateStatus),
-            candidateAvailability : this.patchValueAvailability(data.candidateAvailability),
-            fileUpload : data.fileUpload
+            position: data.position,
+            candidateStatus : data.candidateStatus,
+            joiningAvailability : data.joiningAvailability,
+            fileUpload : data.resume
 
           });
 
@@ -98,26 +99,13 @@ export class CandidateComponent implements OnInit {
       this.loading = false;
       this.updateCandidate = true;
     }
+    this.resetAndUpdate();
   }
 
 
-  patchValueAvailability(availability : any){
-    
-    const indexOfS = Object.keys(CandidateAvailabilityEnum).indexOf(availability);
-    return Object.values(CandidateAvailabilityEnum)[indexOfS];
-  }
-  patchCandidateStatusData(status : any){
-    const indexOfS = Object.keys(CandidateStatusEnum).indexOf(status);
-    return Object.values(CandidateStatusEnum)[indexOfS];
-  }
-  patchPosition(position: any) {
-    const indexOfS = Object.keys(PositionEnum).indexOf(position);
-    return Object.values(PositionEnum)[indexOfS];
-  }
+ 
 
-
-  get f() {
-    debugger
+  resetAndUpdate(){
     if(!this.updateCandidate){
       debugger
       this.formData.get('joiningDate')?.updateValueAndValidity();
@@ -135,6 +123,10 @@ export class CandidateComponent implements OnInit {
         this.formData.get('fileUpload')?.clearValidators();
       }
     }
+  }
+  get f() {
+    debugger
+   
     return this.formData.controls;
 
   }
@@ -152,17 +144,8 @@ export class CandidateComponent implements OnInit {
         return;
       }
       this.submitting = true;
-     
-      let value = this.changePosition(this.formData.get("position")?.value);
-      this.formData.get("position")?.setValue(value);
 
-      let position = this.changeEmployeeStatus(this.formData.get("candidateStatus")?.value);
-      this.formData.get("candidateStatus")?.setValue(position);
-
-      let candidateAvailability = this.changeAvailability(this.formData.get("candidateAvailability")?.value);
-      this.formData.get("candidateAvailability")?.setValue(candidateAvailability);
-
-
+  
       this.candidate.UpdateCandidate(this.num, this.formData.value).subscribe(
         (response: any) => {
           if(response.status === 'Error'){
@@ -188,17 +171,6 @@ export class CandidateComponent implements OnInit {
         return;
       }
       this.submitting = true;
-
-      let value = this.changePosition(this.formData.get("position")?.value);
-      this.formData.get("position")?.setValue(value)
-
-      let candidateAvailability = this.changeAvailability(this.formData.get("candidateAvailability")?.value);
-      this.formData.get("candidateAvailability")?.setValue(candidateAvailability)
-
-
-      const indexOfS = Object.values(CandidateStatusEnum).indexOf(CandidateStatusEnum.PENDING as unknown as CandidateStatusEnum);
-      this.enum = Object.keys(CandidateStatusEnum)[indexOfS];
-      this.formData.get("candidateStatus")?.setValue(this.enum);
       
       this.candidate.addCandidadte(this.formData.value, this.file).subscribe(
         (response: any) => {
@@ -221,20 +193,7 @@ export class CandidateComponent implements OnInit {
     }
 
   }
-  changeAvailability(name: any) {
-    const indexOfS = Object.values(CandidateAvailabilityEnum).indexOf(name as unknown as CandidateAvailabilityEnum);
-    return this.enum = Object.keys(CandidateAvailabilityEnum)[indexOfS];
-  }
 
-  changePosition(name: any) {
-    const indexOfS = Object.values(PositionEnum).indexOf(name as unknown as PositionEnum);
-    return this.enum = Object.keys(PositionEnum)[indexOfS];
-   
-  }
-  changeEmployeeStatus(name: any) {
-    const indexOfS = Object.values(CandidateStatusEnum).indexOf(name as unknown as CandidateStatusEnum);
-    return this.enum = Object.keys(CandidateStatusEnum)[indexOfS];
-  }
 
   onChange(event: any) {
     this.file = event.target.files[0];

@@ -5,9 +5,9 @@ export class Employee {
     id ?:number
     acardNum?:number
     firstName?: string;
-    lname?: string;
+    lastName?: string;
     email?:string;
-    jDate?:string;
+    joiningDate?:string;
     phone?:number;
     dob?: Date;
     country?:string

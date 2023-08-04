@@ -1,9 +1,9 @@
 export enum StatusEnum{
     
-    scheduled="Scheduled",
-    select="Selected",
-    reject="Rejected",
-    complet="completed",
+    Scheduled="Scheduled",
+    Selected="Selected",
+    Rejected="Rejected",
+   
 
    
 

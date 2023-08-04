@@ -6,19 +6,20 @@ import { CandidateAvailabilityEnum } from "../enum/CandidateAvailabilityEnum";
 
 export class Candidate{
     id?:number;
-    candidateName ?: String;
-    position?: PositionEnum;
+    firstName ?: String;
+    lastName ?: String;
+    position?: String;
     email ?: String;
     phone ?: String;
     skills ?: String;
-    fileUpload?: String;
+    resume?: String;
     joiningDate?:Date;
     comment?:String;
     candidateStatus?:CandidateStatusEnum;
     hireOrNotHire?:boolean;
     interview ?: Interview;
     documentDetails?: DocumentData;
-    candidateAvailability?:CandidateAvailabilityEnum;
+    joiningAvailability?:String;
     status?:boolean;
     candidateDate?:Date;
     deleteFlag?:string;

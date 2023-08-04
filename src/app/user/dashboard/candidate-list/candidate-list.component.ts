@@ -30,25 +30,15 @@ export class CandidateListComponent implements OnInit {
     );
 
   }
-  getKey(id: any) {
-    const indexOfS = Object.keys(PositionEnum).indexOf(id);
-    return Object.values(PositionEnum)[indexOfS];
-  }
+ 
   getpdfview(id: any) {
     this.documentService.getpdf(id).subscribe(data =>
       console.log(data)
     );
   }
 
-  getStatusKey(id: any) {
-    const indexOfS = Object.keys(CandidateStatusEnum).indexOf(id);
-    return Object.values(CandidateStatusEnum)[indexOfS];
-  }
-
-  getAvailability(id: any) {
-    const indexOfS = Object.keys(CandidateAvailabilityEnum).indexOf(id);
-    return Object.values(CandidateAvailabilityEnum)[indexOfS];
-  }
+ 
+  
   getpdf(document: any) {
     this.file = new Blob([document], {
       type: "application/pdf"
