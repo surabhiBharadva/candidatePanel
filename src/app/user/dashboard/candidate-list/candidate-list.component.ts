@@ -56,4 +56,19 @@ export class CandidateListComponent implements OnInit {
     }
     return bytes.buffer;
   }
+  getPosition(name: any) {
+    const indexOfS = Object.keys(PositionEnum).indexOf(name);
+    return Object.values(PositionEnum)[indexOfS];
+  }
+  
+  getStatus(name: any) {
+    const indexOfS = Object.keys(CandidateStatusEnum).indexOf(name);
+    return Object.values(CandidateStatusEnum)[indexOfS];
+  }
+ 
+  getAvailability(name: any) {
+    const indexOfS = Object.keys(CandidateAvailabilityEnum).indexOf(name);
+    return Object.values(CandidateAvailabilityEnum)[indexOfS];
+  }
+
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PositionEnum } from 'src/app/enum/PositionEnum';
 import { StatusEnum } from 'src/app/enum/StatusEnum';
 import { Candidate } from 'src/app/model/Candidate';
 import { Interviewsevice } from 'src/app/service/InterviewService';
@@ -48,6 +49,10 @@ export class InterviewStatusUpdateComponent implements OnInit {
   }
   onSubmit() {
     if (this.formData.valid) {
+      let status = this.changeStatus(this.formData.get("status")?.value);
+      
+      this.formData.get("status")?.setValue(status);
+
       this.interviewSevice.updateInterview(this.interviewId, this.formData.value).subscribe((response: any) => {
         if (response.status.error) {
           this.notification.error(response.status.error)
@@ -61,6 +66,11 @@ export class InterviewStatusUpdateComponent implements OnInit {
         })
 
     }
+  }
+
+  patchPosition(position: any) {
+    const indexOfS = Object.keys(PositionEnum).indexOf(position);
+    return Object.values(PositionEnum)[indexOfS];
   }
   changeStatus(status : any){
     const indexOfS = Object.values(StatusEnum).indexOf(status as unknown as StatusEnum);
@@ -77,6 +87,6 @@ export class InterviewStatusUpdateComponent implements OnInit {
     this.formData.reset();
   }
   close() {
-    this.router.navigate(["./dashboard/"]);
+    this.router.navigate(["./dashboard/interviewList"]);
   }
 }

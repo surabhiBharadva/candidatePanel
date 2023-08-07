@@ -16,5 +16,10 @@ export class Employee {
     adadharcard?:string;
     pancard?:string;
     marksheet?:string;
-    status?:EmployeeStatus
+    status?:EmployeeStatus;
+    address?:string;
+    createBy?:string;
+    craeteDate?:Date;
+    modifiedBy?:string;
+    modifiedDate?:Date;
 }

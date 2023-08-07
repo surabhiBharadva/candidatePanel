@@ -5,59 +5,84 @@
         <button type="button" class="btn-close" aria-label="Close" (click)="close()" style="color: black;"></button>
     </div>
     <div class="card-body">
-       
-            <div class="row">
-                <div class="col-4 mb-3">
-                    <label class="form-label">Choose Position : </label>&nbsp;
+        <div class="row">
+            <div class="col-6 mb-3">
+                <label class="form-label">Application Date : </label>&nbsp;
+                <label>{{candidateObject.applicationDate | date:'dd-MMM-yyyy'}}</label>
+            </div>
+            </div>
+        <div class="row">
+            <div class="col-4 mb-3">
+                <label class="form-label">Choose Position : </label>&nbsp;
                     <label>{{getPosition(candidateObject.position)}}</label>
-                </div>
-                <div class="col-4 mb-3">
-                    <label class="form-label">Candidate Name : </label>&nbsp;
-                    <label>{{candidateObject.firstName}} {{candidateObject.lastName}}</label>
-                </div>
-                <div class="col-4 mb-3">
-                    <label class="form-label">Email : </label>&nbsp;
-                    <label>{{candidateObject.email}}</label>
-                </div>
             </div>
-            <div class="row">
-                <div class="col-4 mb-3">
-                    <label class="form-label">Phone : </label>&nbsp;
-                    <label>{{candidateObject.phone}}</label>
-                </div>
-                <div class="col-4 mb-3">
-                    <label class="form-label">Skills : </label>&nbsp;
-                    <label>{{candidateObject.skills}}</label>
-                </div>
-                <div class="col-4 mb-3">
-                    <label class="form-label">Joining Availability : </label>&nbsp;
+            <div class="col-4 mb-3">
+                <label class="form-label">Candidate Name : </label>&nbsp;
+                <label>{{candidateObject.firstName}} {{candidateObject.lastName}}</label>
+            </div>
+            <div class="col-4 mb-3">
+                <label class="form-label">Email : </label>&nbsp;
+                <label>{{candidateObject.email}}</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 mb-3">
+                <label class="form-label">Phone : </label>&nbsp;
+                <label>{{candidateObject.phoneNo}}</label>
+            </div>
+            <div class="col-4 mb-3">
+                <label class="form-label">Skills : </label>&nbsp;
+                <label>{{candidateObject.skills}}</label>
+            </div>
+            <div class="col-4 mb-3">
+                <label class="form-label">Joining Availability : </label>&nbsp;
                     <label>{{getAvailability(candidateObject.joiningAvailability)}}</label>
-                </div>
             </div>
-            <div class="row">
-                <div class="col-4 mb-3">
-                    <label class="form-label">Candidate Status : </label>&nbsp;
-                    <label>{{getStatus(candidateObject.candidateStatus)}}</label>
-                </div>
-                <div class="col-4 mb-3">
-                    <label class="form-label">Joining Date : </label>&nbsp;
-                    <label>{{candidateObject.joiningDate | date: 'mediumDate'}}</label>
-                </div>
-                <div class="col-4 mb-3">
-                    <label class="form-label">Comment/Remarks : </label>&nbsp;
-                    <label>{{candidateObject.comment}}</label>
-                </div>
+        </div>
+        <div class="row">
+            <div class="col-4 mb-3">
+                <label class="form-label">Candidate Status : </label>&nbsp;
+                <label>{{candidateObject.candidateStatus}}</label>
             </div>
-            <div class="row">
-                <div class="col-4 mb-3">
-                    <label class="form-label">Activate/InActive : </label>&nbsp;
-                    <label>{{candidateObject.deleteFlag}}</label>
-                </div>
-               
-            </div> 
-           
-
-            
-       
+            <div class="col-4 mb-3">
+                <label class="form-label">Joining Date : </label>&nbsp;
+                <label>{{candidateObject.joiningDate | date:'dd-MMM-yyyy'}}</label>
+            </div>
+            <div class="col-4 mb-3">
+                <label class="form-label">Comment/Remarks : </label>&nbsp;
+                <label>{{candidateObject.comment}}</label>
+            </div>
+        </div>
     </div>
+
+</div>
+<div class="card mb-3 container2" style="width: 1000px;">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4>View Interview Details</h4>
+
+    </div>
+    <div class="card-body">
+        <div class="row">
+        <div class="col-6 mb-3">
+            <label class="form-label">Interview Date And Time : </label>&nbsp;
+            <label>{{interviewObject.schduleDateTime}}</label>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-4 mb-3">
+                <label class="form-label">Interviewer : </label>&nbsp;
+                <label>{{interviewObject.employeeName}}</label>
+            </div>
+            <div class="col-4 mb-3">
+                <label class="form-label">InterView Status : </label>&nbsp;
+                <label>{{interviewObject.status}}</label>
+            </div>
+            <div class="col-4 mb-3">
+                <label class="form-label">Feedback : </label>&nbsp;
+                <label>{{interviewObject.feedback}}</label>
+            </div>
+        </div>
+
+    </div>
+
 </div>

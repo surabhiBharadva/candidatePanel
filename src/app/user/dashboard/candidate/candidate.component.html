@@ -2,7 +2,8 @@
     <div class="card-header bg-transparent border-success d-flex justify-content-between align-items-center">
         <h4>{{title}} Candidate Details</h4>
 
-        <button type="button" class="btn-close" aria-label="Close" (click)="close()" style="color: black;"></button>
+      
+        <button  type="button" class="btn-close" aria-label="Close" (click)="close()" style="color: black;"></button>
     </div>
     <div class="card-body border-dark">
         <form [formGroup]="formData" (ngSubmit)="onSubmit()">
@@ -57,10 +58,10 @@
                 </div>
                 <div class="col-6 mb-3">
                     <label class="form-label">Phone No *</label>
-                    <input type="number" formControlName="phone" class="form-control"
+                    <input type="number" formControlName="phoneNo" class="form-control"
                         />
-                    <div *ngIf="submitted && f['phone'].errors" >
-                        <div *ngIf="f['phone'].errors['required'] || f['phone'].touched" style="color: rgb(194, 17, 17);" >Candidate Phone No is Required</div>
+                    <div *ngIf="submitted && f['phoneNo'].errors" >
+                        <div *ngIf="f['phoneNo'].errors['required'] || f['phoneNo'].touched" style="color: rgb(194, 17, 17);" >Candidate Phone No is Required</div>
                     </div>
                 </div>
             </div>
@@ -104,7 +105,8 @@
 
                     <select [(ngModel)]="selectedStatus"  data-style="btn-default" formControlName="candidateStatus"
                         class="form-control selectpicker form-select" data-live-search="true">
-                        <option *ngFor="let name of getCandidateStatus()" [value]="name">
+                        <option selected disabled value="">Select</option>
+                        <option *ngFor="let name of getCandidateStatus()" [value]="name" >
                             {{name}} </option>
                     </select>
                     <div *ngIf="submitted && f['candidateStatus'].errors">

@@ -14,8 +14,9 @@ const routes: Routes = [
   {
     path: '', component: DashboardComponent,
     children: [
-      { path: '', component: CandidateListComponent },
-      { path: '', component: EmployeeListComponent },
+      
+      { path: 'candidateList', component: CandidateListComponent },
+     
       { path: 'candidate', component: CandidateComponent },
       { path: 'edit/:id', component: CandidateComponent },
       { path: 'interview', component: InterviewComponent },

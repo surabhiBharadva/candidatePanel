@@ -46,13 +46,13 @@
                     <label class="form-label">Joining date</label>
                     <input type="Date" formControlName="joiningDate" class="form-control" />
                 </div>
-                <div class="col-6 col-mb-3 col-mb-4">
+                <div class="col-6 mb-3 ">
                     <label class="form-label">Date of Birth</label>
                     <input type="Date" formControlName="dob" class="form-control" />
                 </div>
             </div>
             <div class="row">
-                <div class="col-4 col-mb-3 col-mb-4">
+                <div class="col-4 col-mb-3 ">
                     <label class="form-label">Country</label>
                     <input type="text" formControlName="country" class="form-control" />
                 </div>
@@ -65,19 +65,26 @@
                     <input type="text" formControlName="city" class="form-control" />
                 </div>
             </div>
+            
+            <div class="row">
+                <div class="col-12 col-mb-3 col-mb-4">
+                    <label class="form-label">Address</label>
+                    <textarea type="textarea" formControlName="address" class="form-control"></textarea>
+                </div>
+            </div>
             <div class="row">
             
-                <div class="col-4 col-mb-3 col-mb-4">
+                <div class="col-4 mb-3 ">
                     <label class="form-label">Aadhar Card</label>
                 <input class="form-control" formControlName="adadharcard" accept=".pdf" type="file"
                     (change)="onChange($event)" />
                 </div>
-                <div class="col-4 col-mb-3 col-mb-4">
+                <div class="col-4 mb-3 ">
                     <label class="form-label">Pan Card</label>
                     <input class="form-control" formControlName="pancard" accept=".pdf" type="file"
                         (change)="onChange($event)" />
                 </div>
-                <div class="col-4 col-mb-3 col-mb-4">
+                <div class="col-4 mb-3 ">
                     <label class="form-label">Marksheet</label>
                     <input class="form-control" formControlName="marksheet" accept=".pdf" type="file"
                         (change)="onChange($event)" />
@@ -85,7 +92,8 @@
                
             </div>
            
-            <div>
+            <div class="row">
+                <div class="col-4 col-mb-3 col-mb-4">
                 <button [disabled]="loading" class="btn text-dark" style="background-color: rgb(226, 226, 226);">
                     <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
                     Submit
@@ -93,6 +101,7 @@
                 <span>&nbsp;&nbsp;</span>
                 <button class="btn text-dark" style="background-color: rgb(226, 226, 226);"
                     (click)="clearFrom()"><span></span>Clear</button>
+                    </div>
             </div>
         </form>
     </div>

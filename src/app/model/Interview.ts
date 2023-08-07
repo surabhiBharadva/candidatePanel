@@ -12,5 +12,8 @@ export class Interview{
     candidateId?: number;
     feedback?:string;
     employee?:Employee;
-   
+    createBy?:string;
+    craeteDate?:Date;
+    modifiedBy?:string;
+    modifiedDate?:Date;
 }

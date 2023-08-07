@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-between align-items-center">
         <div class="title">Candidate Details</div>
         <button type="submit" class="btn text-dark border border-dark fw-bold" style="background-color: rgb(226, 226, 226);"
-            routerLinkActive="active" routerLink="candidate"> Add Candidate </button>
+            routerLinkActive="active" routerLink="../candidate/"> Add Candidate </button>
        
     </div>
 </div>
@@ -25,26 +25,25 @@
         </thead>
         <tbody>
             <tr *ngFor="let candidate of candidateList">
-                <td>{{candidate.position}}</td>
-                <td>{{candidate.candidateDate | date: 'mediumDate'}}</td>
+                <td>{{getPosition(candidate.position)}}</td>
+                <td>{{candidate.applicationDate | date:'dd-MMM-yyyy'}}</td>
                 <td>{{candidate.firstName}} {{candidate.lastName}} </td>
                 <td>{{candidate.email}}</td>
-                <td>{{candidate.phone}}</td>
+                <td>{{candidate.phoneNo}}</td>
                 <td>{{candidate?.documentDetails?.name}}</td>
-                <td>{{candidate.joiningAvailability}}</td>
-                <td>{{candidate.candidateStatus}}</td>
-                <td>{{candidate.joiningDate | date: 'mediumDate'}}</td>
+                <td>{{getAvailability(candidate.joiningAvailability)}}</td>
+                <td>{{getStatus(candidate.candidateStatus)}}</td>
+                <td>{{candidate.joiningDate | date:'dd-MMM-yyyy'}}</td>
                 <td style="white-space: nowrap">
-                   
-                    <img  alt="" src="assets\image\interview-icon.svg" width="30" height="30" routerLinkActive="active"
-                        routerLink="interview/{{candidate.id}}" /><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                   
-                    <img alt="" src="assets\image\pen.svg" width="20" height="20" routerLinkActive="active"
-                        routerLink="edit/{{candidate.id}}" /><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <img alt="" src="assets\image\see-icon.svg" width="30" height="30" routerLinkActive="active"
-                        routerLink="view/{{candidate.id}}" />
+                        routerLink="../view/{{candidate.id}}/" /><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <img alt="" src="assets\image\pen.svg" width="20" height="20" routerLinkActive="active"
+                        routerLink="../edit/{{candidate.id}}/" /><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <img alt="" src="assets\image\interview-icon.svg" width="30" height="30" routerLinkActive="active"
+                        routerLink="../interview/{{candidate.id}}/" />
+            
                 </td>
-
+            
             </tr>
 
         </tbody>

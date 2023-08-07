@@ -9,6 +9,7 @@ import { EmployeeService } from 'src/app/service/EmployeeService';
 import { Interviewsevice } from 'src/app/service/InterviewService';
 import { candidateservice } from 'src/app/service/candidateservice';
 import { NotificationService } from 'src/app/service/NotificationService';
+import { PositionEnum } from 'src/app/enum/PositionEnum';
 
 @Component({
   selector: 'app-interview',
@@ -23,6 +24,7 @@ export class InterviewComponent implements OnInit {
   candidateList?: Candidate[] = [];
   interviewList?: Interview[] = [];
   candidateObject?: Candidate = {};
+  interviewObejct?: Interview = {};
   todayDate = new Date();
   candidateId: string = "null";
   candidateIdNum  : number = 0;
@@ -30,14 +32,16 @@ export class InterviewComponent implements OnInit {
   id: number = 0;
   mymodel : any;
   candidateSelect = false;
-  
+  candidateView =false
+  interviewSchedule = false;
   constructor(
     private candidateService: candidateservice,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private employeeService: EmployeeService,
     private interviewSevice: Interviewsevice,
-    private notification : NotificationService
+    private notification : NotificationService,
+    private router: Router,
   ) {
   }
 
@@ -48,7 +52,6 @@ export class InterviewComponent implements OnInit {
     if(!this.candidateId){
     this.candidateService.getCandidatePendingInterview().subscribe(
       data => {
-        debugger
        this.candidateSelect = true
         this.candidateList = data;
       }  
@@ -56,6 +59,7 @@ export class InterviewComponent implements OnInit {
     }
     this.candidateService.getCadidateById(this.candidateIdNum).subscribe(
       data => {
+        this.candidateView = true
        this.candidateObject = data
       }
     )
@@ -70,21 +74,28 @@ export class InterviewComponent implements OnInit {
         this.interviewList = data;
       }
     );
+   
     this.formData = this.formBuilder.group({
-      candidateId : ['null', Validators.required],
-      employeeId: ['null', Validators.required],
+      candidateId : ['', Validators.required],
+      employeeId: ['', Validators.required],
       schduleDateTime: ['null', Validators.required],
       status:['null']
     });
+    this.validationClear();
   }
-  get f() {
+  validationClear(){
     if(!this.candidateSelect){
+      this.formData.get('candidateId')?.setValidators(null);
       this.formData.get('candidateId')?.updateValueAndValidity();
       this.formData.get('candidateId')?.clearValidators();
     }
+  }
+  get f() {
+   
     return this.formData.controls;
   }
   onSubmit() {
+    debugger
     if (this.formData.valid) {
       debugger
      
@@ -121,8 +132,13 @@ export class InterviewComponent implements OnInit {
     }
   }
   }
-
-  
+  patchPosition(position: any) {
+    const indexOfS = Object.keys(PositionEnum).indexOf(position);
+    return Object.values(PositionEnum)[indexOfS];
+  }
+  close(){
+    this.router.navigate(["./dashboard/interviewList"]);
+  }
 
   clearFrom() {
     this.formData.reset();

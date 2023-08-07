@@ -9,22 +9,28 @@
     <table class="table thead-dark w-200">
         <thead>
             <tr>
+                <th style="width: 15%">Interview Date Time</th>
                 <th style="width: 10%">Position</th>
                 <th style="width: 15%">Candidate</th>
-                <th style="width: 15%">Interviewer</th>
+                <th style="width: 10%">Email</th>
+                <th style="width: 10%">Phone</th>
+                <th style="width: 10%;">Resume</th>
+                <th style="width: 10%">Interviewer</th>
                 <th style="width: 10%;">Interview Status</th>
-                <th style="width: 15%">Schedule Date Time</th>
                 <th style="width: 10%;">Action</th>
 
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let interview of interviewList">
-                <td>{{getPosition(interview?.candidate?.position)}}</td>
+                <td>{{interview?.schduleDateTime | date: 'medium'}}</td>
+                <td>{{interview?.candidate?.position}}</td>
                 <td>{{interview?.candidate?.firstName}} {{interview.candidate?.lastName}}</td>
+                <td>{{interview?.candidate?.email}}</td>
+                <td>{{interview?.candidate?.phoneNo}}</td>
+                <td>{{interview?.candidate?.documentDetails?.name}}</td>
                 <td>{{interview.employeeName}}</td> 
                 <td>{{interview.status}}</td>
-                <td>{{interview?.schduleDateTime | date: 'medium'}}</td>
                 <td style="white-space: nowrap">
                     <img alt="" src="assets\image\pen.svg" width="20" height="20" routerLinkActive="active"
                         routerLink="../interviewUpdate/{{interview.id}}" />

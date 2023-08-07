@@ -1,27 +1,28 @@
 import { Interview } from "./Interview";
 import { DocumentData } from "./DocumentData";
-import { CandidateStatusEnum } from "../enum/CandidateEnum";
-import { PositionEnum } from "../enum/PositionEnum";
-import { CandidateAvailabilityEnum } from "../enum/CandidateAvailabilityEnum";
 
 export class Candidate{
     id?:number;
-    firstName ?: String;
-    lastName ?: String;
-    position?: String;
-    email ?: String;
-    phone ?: String;
-    skills ?: String;
-    resume?: String;
+    firstName ?: string;
+    lastName ?: string;
+    position?: string;
+    email ?: string;
+    phoneNo ?: string;
+    skills ?: string;
+    resume?: string;
     joiningDate?:Date;
-    comment?:String;
-    candidateStatus?:CandidateStatusEnum;
+    comment?:string;
+    candidateStatus?:string;
     hireOrNotHire?:boolean;
     interview ?: Interview;
     documentDetails?: DocumentData;
     joiningAvailability?:String;
     status?:boolean;
-    candidateDate?:Date;
+    applicationDate?:Date;
     deleteFlag?:string;
+    createBy?:string;
+    craeteDate?:Date;
+    modifiedBy?:string;
+    modifiedDate?:Date;
     
 }

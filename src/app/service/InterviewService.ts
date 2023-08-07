@@ -5,6 +5,7 @@ import { Interview } from "../model/Interview";
 
 @Injectable({ providedIn: 'root' })
 export class Interviewsevice{
+   
     
     private apiurl = 'http://localhost:8080/api/v1/interview';
     headers = new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json');
@@ -49,6 +50,13 @@ export class Interviewsevice{
     );
 
     }
-
+    getInterviewBycandidateId(candidateId: number) : Observable<Interview> {
+        debugger
+        const url = "http://localhost:8080/api/v1/interviewGet"
+        const seturl = `${url}/${candidateId}`;
+        return this.httpService.get<Interview>(seturl).pipe(
+            catchError(this.handleError)
+        );
+      }
     
 }

@@ -4,6 +4,8 @@ import { CandidateAvailabilityEnum } from 'src/app/enum/CandidateAvailabilityEnu
 import { CandidateStatusEnum } from 'src/app/enum/CandidateEnum';
 import { PositionEnum } from 'src/app/enum/PositionEnum';
 import { Candidate } from 'src/app/model/Candidate';
+import { Interview } from 'src/app/model/Interview';
+import { Interviewsevice } from 'src/app/service/InterviewService';
 import { candidateservice } from 'src/app/service/candidateservice';
 
 @Component({
@@ -15,29 +17,36 @@ export class CandidateViewComponent implements OnInit {
 
   candidateId: any;
   candidateObject : Candidate ={}
-  constructor(private route: ActivatedRoute, private candidateService : candidateservice,  private router: Router,) { }
+  interviewObject :Interview = {}
+  constructor(private route: ActivatedRoute, private candidateService : candidateservice,  private router: Router,private intrviewService : Interviewsevice) { }
 
   ngOnInit(): void {
+    debugger
     this.candidateId = this.route.snapshot.params['candidate'];
     this.candidateService.getCadidateById(parseInt(this.candidateId)).subscribe(
       data => {
         this.candidateObject = data;
       })
+    this.intrviewService.getInterviewBycandidateId(parseInt(this.candidateId)).subscribe(
+      data => {
+        this.interviewObject = data;
+      })
+
   }
   close() {
-    this.router.navigate(["./dashboard/"]);
+    this.router.navigate(["./dashboard/candidateList"]);
   }
 
   getPosition(name: any) {
     const indexOfS = Object.keys(PositionEnum).indexOf(name);
     return Object.values(PositionEnum)[indexOfS];
   }
-
+  
   getStatus(name: any) {
     const indexOfS = Object.keys(CandidateStatusEnum).indexOf(name);
     return Object.values(CandidateStatusEnum)[indexOfS];
   }
-
+ 
   getAvailability(name: any) {
     const indexOfS = Object.keys(CandidateAvailabilityEnum).indexOf(name);
     return Object.values(CandidateAvailabilityEnum)[indexOfS];
