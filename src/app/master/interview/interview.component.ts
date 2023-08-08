@@ -35,6 +35,7 @@ export class InterviewComponent implements OnInit {
   candidateView =false
   interviewSchedule = false;
   interviewReschdule = false;
+  interviewId : any;
   constructor(
     private candidateService: candidateservice,
     private formBuilder: FormBuilder,
@@ -53,15 +54,19 @@ export class InterviewComponent implements OnInit {
     if(!this.candidateId){
     this.candidateService.getCandidatePendingInterview().subscribe(
       data => {
-       this.candidateSelect = true
-        this.candidateList = data;
+        if (data != null) {
+          this.candidateSelect = true
+          this.candidateList = data;
+        }
       }  
     )
     }
     this.candidateService.getCadidateById(this.candidateIdNum).subscribe(
       data => {
-        this.candidateView = true
-       this.candidateObject = data
+        if (data != null) {
+          this.candidateView = true
+          this.candidateObject = data
+        }
       }
     )
     this.employeeService.getEmplyeeList().subscribe(
@@ -81,6 +86,7 @@ export class InterviewComponent implements OnInit {
       debugger
       if(data != null){
       this.interviewObejct = data;
+      this.interviewId = this.interviewObejct.id;
       this.interviewReschdule = true;
       }
     })
@@ -108,22 +114,39 @@ export class InterviewComponent implements OnInit {
     debugger
     if (this.formData.valid) {
       debugger
-     
-      if(!this.candidateSelect){
-      this.interviewSevice.addInterview(this.candidateIdNum,this.formData.value,this.formData.get('employeeId')?.value)
-      .subscribe(
-        (response: any) => {
-          if(response.status.error){
-            this.notification.error(response.status.error)
-          }else{
-          this.notification.success(response.message);
-          }
-        },
-        (error: any) => {
-          this.notification.error(error.error)
-        }
-      )
 
+      if (!this.candidateSelect) {
+        debugger
+        if (this.interviewReschdule) {
+          this.interviewSevice.updateInterviewResuchdule(this.candidateIdNum,this.interviewId, this.formData.value, this.formData.get('employeeId')?.value)
+          .subscribe(
+            (response: any) => {
+              if (response.status.error) {
+                this.notification.error(response.status.error)
+              } else {
+                this.notification.success(response.message);
+              }
+            },
+            (error: any) => {
+              this.notification.error(error.error)
+            }
+          )
+        } else {
+
+          this.interviewSevice.addInterview(this.candidateIdNum, this.formData.value, this.formData.get('employeeId')?.value)
+            .subscribe(
+              (response: any) => {
+                if (response.status.error) {
+                  this.notification.error(response.status.error)
+                } else {
+                  this.notification.success(response.message);
+                }
+              },
+              (error: any) => {
+                this.notification.error(error.error)
+              }
+            )
+        }
     }else{
       this.interviewSevice.addInterview(this.formData.get('candidateId')?.value,this.formData.value,this.formData.get('employeeId')?.value)
         .subscribe(

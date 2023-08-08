@@ -69,7 +69,8 @@ export class CandidateComponent implements OnInit {
       joiningDate: [null, Validators.required],
       comment: [null],
       candidateStatus: ['', Validators.required],
-      joiningAvailability: ['', Validators.required]
+      joiningAvailability: ['', Validators.required],
+      id: ['']
     });
 
     // edit mode
@@ -91,8 +92,8 @@ export class CandidateComponent implements OnInit {
             position: this.patchPosition(data.position),
             candidateStatus : this.patchCandidateStatusData(data.candidateStatus),
             joiningAvailability : this.patchValueAvailability(data.joiningAvailability),
-            fileUpload : data.resume
-
+            fileUpload : data.resume,
+            id : data.id
           });
 
         }
@@ -153,7 +154,7 @@ export class CandidateComponent implements OnInit {
       let candidateAvailability = this.changeAvailability(this.formData.get("joiningAvailability")?.value);
       this.formData.get("joiningAvailability")?.setValue(candidateAvailability);
 
-      this.candidate.UpdateCandidate(this.num, this.formData.value).subscribe(
+      this.candidate.addCandidadte(this.formData.value, this.file).subscribe(
         (response: any) => {
           if (response.status === 'Error') {
             this.notification.error(response.message)
@@ -213,6 +214,7 @@ export class CandidateComponent implements OnInit {
   }
   clearFrom() {
     if(!this.updateCandidate){
+      this.formData.setValidators(null);
       this.formData.updateValueAndValidity();
       this.formData.clearValidators();
       this.formData.reset();

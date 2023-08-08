@@ -5,6 +5,7 @@ import { Interview } from "../model/Interview";
 
 @Injectable({ providedIn: 'root' })
 export class Interviewsevice{
+  
    
     
     private apiurl = 'http://localhost:8080/api/v1/interview';
@@ -49,6 +50,14 @@ export class Interviewsevice{
         catchError(this.handleError)
     );
 
+    }
+
+    updateInterviewResuchdule(candidateId: number, interviewId: number, interview : any, employeeId: any) {
+        debugger
+        const url = `${this.apiurl}/${interviewId}/${candidateId}/${employeeId}`;
+        return this.httpService.put<Interview>(url, interview, this.httpOptions).pipe(tap(data => console.log(data)),
+            catchError(this.handleError)
+        );
     }
     getInterviewBycandidateId(candidateId: number) : Observable<Interview> {
         debugger

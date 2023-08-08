@@ -7,13 +7,12 @@ export class Interview{
     comment?: string;
     schduleDateTime?: string;
     status?:StatusEnum;
-    employeeName?: string;
     candidate ?: Candidate;
     candidateId?: number;
     feedback?:string;
     employee?:Employee;
-    createBy?:string;
-    craeteDate?:Date;
+    createdBy?:string;
+    createdDate?:Date;
     modifiedBy?:string;
     modifiedDate?:Date;
 }

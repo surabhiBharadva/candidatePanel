@@ -1,6 +1,6 @@
 export class DocumentData{
     id?:number;
-    name?:String;
+    fileName?:String;
     createBy?:string;
     craeteDate?:Date;
     modifiedBy?:string;

@@ -30,7 +30,8 @@
                 <td>{{candidate.firstName}} {{candidate.lastName}} </td>
                 <td>{{candidate.email}}</td>
                 <td>{{candidate.phoneNo}}</td>
-                <td>{{candidate?.documentDetails?.name}}</td>
+                <td>{{candidate?.documentDetails?.fileName}} 
+                   </td>
                 <td>{{getAvailability(candidate.joiningAvailability)}}</td>
                 <td>{{getStatus(candidate.candidateStatus)}}</td>
                 <td>{{candidate.joiningDate | date:'dd-MMM-yyyy'}}</td>

@@ -39,6 +39,7 @@ export class candidateservice {
   }
 
   addCandidadte(candidate: any, file: any): Observable<Candidate> {
+    debugger
     const fileData = new FormData();
     if (file) {
       fileData.append("candidate", JSON.stringify(candidate))
@@ -53,28 +54,8 @@ export class candidateservice {
       catchError(this.handleError)
     );
   }
-  UpdateCandidate(id:number, candidat : any) :Observable<Candidate>{
-    const url = `${this.url}/${id}`;
-    return this.httpService.put<Candidate>(url, candidat, this.httpOptions).pipe(tap(data => console.log(data))
-    );
-  }
-  UpdateCandidateList(id:number, interview : Interview) :Observable<Candidate>{
-    const url = `${this.url}/${id}`;
-    interview.id = 1;
-    this.getCadidateById(id).subscribe(data => this.candidateObject = data);
-    let interviewObj = {
-      "id" : 1,
-      "interview" : {
-        "id" : interview.id,
-        "schduleDateTime" : interview.schduleDateTime,
-        "employeeName" : interview.employeeName
-      }
-    }
-    return this.httpService.put<Candidate>(url, interviewObj, this.httpOptions).pipe(tap(data => console.log(data)),
-      catchError(this.handleError)
-    );
-  }
-
+  
+ 
   getCandidatePendingInterview() : Observable<Candidate[]> {
     debugger
       let url = this.url+"/candidateList";
@@ -82,5 +63,9 @@ export class candidateservice {
         data => this.candidateListInterView = data),
         catchError(this.handleError)
       );
+    }
+    downloadFile(fileName: string): Observable<any> {
+      debugger
+      return this.httpService.get("http://localhost:8080/api/v1/candidate/download/" + fileName, { observe: 'response', responseType: 'blob' });
     }
 }

@@ -29,4 +29,8 @@ export class InterviewListComponent implements OnInit {
     const indexOfS = Object.keys(PositionEnum).indexOf(name);
     return Object.values(PositionEnum)[indexOfS];
   }
+  getInetviewStatus(name : any){
+    const indexOfS = Object.keys(StatusEnum).indexOf(name);
+    return Object.values(StatusEnum)[indexOfS];
+  }
 }

@@ -1,6 +1,6 @@
 export enum CandidateStatusEnum{
     UnderScreening="Under-Screening",
-    PendingInterview="Pending-Interview",
+    InterviewScheduled="Interview-Scheduled",
     InterviewSelected="Interview-Selected",
     InterviewRejected="Interview-Rejected",
     OfferAccepted="Offer-Accepted",

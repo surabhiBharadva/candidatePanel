@@ -16,12 +16,12 @@ export class Candidate{
     hireOrNotHire?:boolean;
     interview ?: Interview;
     documentDetails?: DocumentData;
-    joiningAvailability?:String;
+    joiningAvailability?:string;
     status?:boolean;
     applicationDate?:Date;
     deleteFlag?:string;
-    createBy?:string;
-    craeteDate?:Date;
+    createdBy?:string;
+    createdDate?:Date;
     modifiedBy?:string;
     modifiedDate?:Date;
     

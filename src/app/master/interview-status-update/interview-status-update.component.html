@@ -6,14 +6,14 @@
     <div class="card-body">
         <form [formGroup]="formData" (ngSubmit)="onSubmit()">
             <div class="mb-3" >
-                <label class="form-label titelView" >Candidate Name : </label>&nbsp;
+                <label class="form-label titelView" >Interviewer Name : </label>&nbsp;
                 <label class="form-label titelView">{{candidateObject?.firstName}} {{candidateObject?.lastName}} ( {{(patchPosition(candidateObject?.position))}} )
                 </label>
             </div>
             
             <div class="mb-3">
                 
-                <label class="form-label">Interviewer Name *</label>
+                <label class="form-label">Interviewer Update Status *</label>
                 <select  data-style="btn-default"
                     class="form-control selectpicker form-select" formControlName="status">
                     <option selected disabled value="">Select</option>
@@ -27,7 +27,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Feedback</label>
-                <input type="text" formControlName="feedback" class="form-control" />
+                <textarea type="text" formControlName="feedback" class="form-control" ></textarea>
             </div>
             <div>
                 <button [disabled]="loading" class="btn text-dark" style="background-color: rgb(226, 226, 226);">

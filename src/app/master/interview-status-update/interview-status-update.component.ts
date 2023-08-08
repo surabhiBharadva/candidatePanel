@@ -36,9 +36,10 @@ export class InterviewStatusUpdateComponent implements OnInit {
     });
     this.interviewSevice.getByIdCandidate(this.interviewId).subscribe(
       data => {
+        debugger
         this.candidateObject = data.candidate;
        this.formData.patchValue({
-        status : data.status
+        status : this.patchStatus(data.status)
        })
       }
     )
@@ -72,6 +73,8 @@ export class InterviewStatusUpdateComponent implements OnInit {
     const indexOfS = Object.keys(PositionEnum).indexOf(position);
     return Object.values(PositionEnum)[indexOfS];
   }
+
+
   changeStatus(status : any){
     const indexOfS = Object.values(StatusEnum).indexOf(status as unknown as StatusEnum);
     return this.enum = Object.keys(StatusEnum)[indexOfS];

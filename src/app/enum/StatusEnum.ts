@@ -1,9 +1,8 @@
 export enum StatusEnum{
     
-    Scheduled="Scheduled",
-    Selected="Selected",
-    Rejected="Rejected",
-   
+    InterviewScheduled="Interview-Scheduled",
+    InterviewSelected="Interview-Selected",
+    InterviewRejected="Interview-Rejected",
 
    
 
