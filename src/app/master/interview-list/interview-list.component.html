@@ -24,7 +24,7 @@
         <tbody>
             <tr *ngFor="let interview of interviewList">
                 <td>{{interview?.schduleDateTime | date: 'medium'}}</td>
-                <td>{{interview?.candidate?.position}}</td>
+                <td>{{getPosition(interview?.candidate?.position)}}</td>
                 <td>{{interview?.candidate?.firstName}} {{interview.candidate?.lastName}}</td>
                 <td>{{interview?.candidate?.email}}</td>
                 <td>{{interview?.candidate?.phoneNo}}</td>

@@ -34,6 +34,7 @@ export class InterviewComponent implements OnInit {
   candidateSelect = false;
   candidateView =false
   interviewSchedule = false;
+  interviewReschdule = false;
   constructor(
     private candidateService: candidateservice,
     private formBuilder: FormBuilder,
@@ -74,7 +75,16 @@ export class InterviewComponent implements OnInit {
         this.interviewList = data;
       }
     );
-   
+   if(this.candidateIdNum){
+    debugger
+    this.interviewSevice.getInterviewBycandidateId(this.candidateIdNum).subscribe(data =>{
+      debugger
+      if(data != null){
+      this.interviewObejct = data;
+      this.interviewReschdule = true;
+      }
+    })
+   }
     this.formData = this.formBuilder.group({
       candidateId : ['', Validators.required],
       employeeId: ['', Validators.required],
