@@ -5,7 +5,7 @@ import { Interview } from "../model/Interview";
 
 @Injectable({ providedIn: 'root' })
 export class Interviewsevice{
-  
+   
    
     
     private apiurl = 'http://localhost:8080/api/v1/interview';
@@ -34,7 +34,23 @@ export class Interviewsevice{
     }
 
     getInterview() : Observable<Interview[]>{
+        
         return this.httpService.get<Interview[]>(this.apiurl,this.httpOptions).pipe(tap(data => console.log(data)), catchError(this.handleError))
+    }
+    allInterviewList(): Observable<Interview[]> {
+        debugger
+        let url = this.apiurl+"/allInterviewList";
+        return this.httpService.get<Interview[]>(url, this.httpOptions).pipe(tap(data => console.log(data)), catchError(this.handleError))
+    }
+    previousInterviewList(): Observable<Interview[]> {
+        debugger
+        let url = this.apiurl+"/previousInterviewList";
+        return this.httpService.get<Interview[]>(url, this.httpOptions).pipe(tap(data => console.log(data)), catchError(this.handleError))
+    }
+    tommorowInterviewList(): Observable<Interview[]> {
+        debugger
+        let url = this.apiurl+"/tommorowInterviewList";
+        return this.httpService.get<Interview[]>(url, this.httpOptions).pipe(tap(data => console.log(data)), catchError(this.handleError))
     }
 
 

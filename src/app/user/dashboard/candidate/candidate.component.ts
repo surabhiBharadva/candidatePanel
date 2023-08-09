@@ -62,8 +62,8 @@ export class CandidateComponent implements OnInit {
       firstName: [null, Validators.required],
       lastName: [null, Validators.required],
       position: ['', Validators.required],
-      email: [null, Validators.required],
-      phoneNo : [null, Validators.required],
+      email: [null,[Validators.required, Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
+      phoneNo : [null,[Validators.required, Validators.minLength(10)]],
       skills: [null, Validators.required],
       resume : [null, Validators.required],
       joiningDate: [null, Validators.required],
@@ -78,6 +78,8 @@ export class CandidateComponent implements OnInit {
       this.title = "Edit";
       this.loading = true;
       this.num = parseInt(this.id2);
+      let reader = new FileReader();
+      
       this.candidate.getCadidateById(this.num).subscribe(
         data => {
           debugger
@@ -89,6 +91,8 @@ export class CandidateComponent implements OnInit {
             phoneNo: data.phoneNo,
             joiningDate: data.joiningDate,
             comment: data.comment,
+            
+            //resume : reader.data.documentDetails,
             position: this.patchPosition(data.position),
             candidateStatus : this.patchCandidateStatusData(data.candidateStatus),
             joiningAvailability : this.patchValueAvailability(data.joiningAvailability),
@@ -103,26 +107,28 @@ export class CandidateComponent implements OnInit {
     }
     this.resetAndUpdate();
   }
+  patchFile(documentDetails: import("../../../model/DocumentData").DocumentData | undefined): any {
+   
+ 
+  }
 
 
  
 
-  resetAndUpdate(){
-    if(!this.updateCandidate){
+  resetAndUpdate() {
+    if (!this.updateCandidate) {
       debugger
+      this.formData.get('joiningDate')?.setValidators(null);
       this.formData.get('joiningDate')?.updateValueAndValidity();
       this.formData.get('joiningDate')?.clearValidators();
+      this.formData.get('candidateStatus')?.setValidators(null);
       this.formData.get('candidateStatus')?.updateValueAndValidity();
       this.formData.get('candidateStatus')?.clearValidators();
-    }else{
-      if(this.selectedStatus != 'Offer-Accepted'){
-      this.formData.get('joiningDate')?.updateValueAndValidity();
-      this.formData.get('joiningDate')?.clearValidators();
-      this.formData.get('fileUpload')?.updateValueAndValidity();
-      this.formData.get('fileUpload')?.clearValidators();
-      }else{
-        this.formData.get('fileUpload')?.updateValueAndValidity();
-        this.formData.get('fileUpload')?.clearValidators();
+    } else {
+      if (this.selectedStatus != 'Offer-Accepted') {
+        this.formData.get('joiningDate')?.setValidators(null);
+        this.formData.get('joiningDate')?.updateValueAndValidity();
+        this.formData.get('joiningDate')?.clearValidators();
       }
     }
   }

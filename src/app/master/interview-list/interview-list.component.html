@@ -3,6 +3,26 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center">
         <div class="title">Scheduled Interview</div>
+        <div class="dropdown">
+            <select data-style="btn-default"
+                    class="form-control selectpicker form-select" data-style="btn-default" class="selectpicker form-select">
+                   
+                        <option selected disabled value="">-- Select --</option>
+                        <option><a class="btn text-dark border border-dark fw-bold" style="background-color: rgb(226, 226, 226);"
+                        (click)="previousInterview()">Previous Interview</a></option>
+                        <option><a class="btn text-dark border border-dark fw-bold" style="background-color: rgb(226, 226, 226);"
+                        (click)="allInterview()">All Interview</a></option>
+                        <option><button class="btn text-dark border border-dark fw-bold" style="background-color: rgb(226, 226, 226);"
+                        (click)="tommorowInterview()">Tommorow Interview</button></option>
+                      
+                </select>
+          </div>
+          <button type="submit" class="btn text-dark border border-dark fw-bold" style="background-color: rgb(226, 226, 226);"
+                        (click)="previousInterview()">Previous Interview</button>
+                        <button type="submit" class="btn text-dark border border-dark fw-bold" style="background-color: rgb(226, 226, 226);"
+                        (click)="allInterview()">All Interview</button>
+                        <button type="submit" class="btn text-dark border border-dark fw-bold" style="background-color: rgb(226, 226, 226);"
+                        (click)="tommorowInterview()">Tommorow Interview</button>
         <button type="submit" class="btn text-dark border border-dark fw-bold" style="background-color: rgb(226, 226, 226);"
             routerLinkActive="active" routerLink="../interviewUpdate/">Schedule Interview </button>
     </div>
@@ -28,7 +48,10 @@
                 <td>{{interview?.candidate?.firstName}} {{interview.candidate?.lastName}}</td>
                 <td>{{interview?.candidate?.email}}</td>
                 <td>{{interview?.candidate?.phoneNo}}</td>
-                <td>{{interview?.candidate?.documentDetails?.fileName}}</td>
+                <td>{{interview?.candidate?.documentDetails?.fileName}}
+                    <img alt="" src="assets\image\resume.svg" width="30" height="30" (click)="download(interview?.candidate?.documentDetails?.fileName)" />
+                  
+                </td>
                 <td>{{interview?.employee?.firstName}} {{interview?.employee?.lastName}}</td> 
                 <td>{{getInetviewStatus(interview.status)}}</td>
                 <td style="white-space: nowrap">

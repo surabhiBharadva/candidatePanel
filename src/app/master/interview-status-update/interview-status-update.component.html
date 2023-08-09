@@ -16,7 +16,7 @@
                 <label class="form-label">Interviewer Update Status *</label>
                 <select  data-style="btn-default"
                     class="form-control selectpicker form-select" formControlName="status">
-                    <option selected disabled value="">Select</option>
+                    <option selected disabled value="">-- Select --</option>
                     <option *ngFor="let name of getStatus()" [value]="name" [id]="name">
                         {{name}} </option>         
                 </select>

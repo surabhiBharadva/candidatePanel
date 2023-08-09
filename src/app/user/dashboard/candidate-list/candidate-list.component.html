@@ -30,7 +30,7 @@
                 <td>{{candidate.firstName}} {{candidate.lastName}} </td>
                 <td>{{candidate.email}}</td>
                 <td>{{candidate.phoneNo}}</td>
-                <td>{{candidate?.documentDetails?.fileName}} 
+                <td>{{candidate?.documentDetails?.fileName}} <img alt="" src="assets\image\resume.svg" width="30" height="30" (click)="download(candidate?.documentDetails?.fileName)" />
                    </td>
                 <td>{{getAvailability(candidate.joiningAvailability)}}</td>
                 <td>{{getStatus(candidate.candidateStatus)}}</td>

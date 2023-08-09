@@ -71,16 +71,11 @@ export class CandidateListComponent implements OnInit {
     return Object.values(CandidateAvailabilityEnum)[indexOfS];
   }
 
-  download(filename: any) {    
+  download(filename: any) {  
+    debugger  
     this.candidateService.downloadFile(filename).subscribe(event => {
       debugger
       let blob: Blob = event.body as Blob;
-      let a: any = document.createElement('a');
-      a.download = filename;
-      a.text = filename;
-
-      a.href = window.URL.createObjectURL(blob);
-      a.click();
 
       var urlOpean = URL.createObjectURL(blob);
       window.open(urlOpean, '_blank');

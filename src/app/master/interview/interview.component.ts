@@ -36,6 +36,7 @@ export class InterviewComponent implements OnInit {
   interviewSchedule = false;
   interviewReschdule = false;
   interviewId : any;
+  interviewCounter:number = 0;
   constructor(
     private candidateService: candidateservice,
     private formBuilder: FormBuilder,
@@ -95,7 +96,7 @@ export class InterviewComponent implements OnInit {
       candidateId : ['', Validators.required],
       employeeId: ['', Validators.required],
       schduleDateTime: ['null', Validators.required],
-      status:['null']
+      status:['null'],
     });
     this.validationClear();
   }

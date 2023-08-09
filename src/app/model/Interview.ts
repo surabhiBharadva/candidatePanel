@@ -15,4 +15,5 @@ export class Interview{
     createdDate?:Date;
     modifiedBy?:string;
     modifiedDate?:Date;
+    interviewCount?:number;
 }
