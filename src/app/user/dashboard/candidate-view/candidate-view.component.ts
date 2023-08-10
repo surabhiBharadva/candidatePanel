@@ -3,6 +3,7 @@ import { ActivatedRoute, Route, Router, RouterLinkActive } from '@angular/router
 import { CandidateAvailabilityEnum } from 'src/app/enum/CandidateAvailabilityEnum';
 import { CandidateStatusEnum } from 'src/app/enum/CandidateEnum';
 import { PositionEnum } from 'src/app/enum/PositionEnum';
+import { StatusEnum } from 'src/app/enum/StatusEnum';
 import { Candidate } from 'src/app/model/Candidate';
 import { Interview } from 'src/app/model/Interview';
 import { Interviewsevice } from 'src/app/service/InterviewService';
@@ -25,11 +26,16 @@ export class CandidateViewComponent implements OnInit {
     this.candidateId = this.route.snapshot.params['candidate'];
     this.candidateService.getCadidateById(parseInt(this.candidateId)).subscribe(
       data => {
-        this.candidateObject = data;
+        debugger
+        if (data) {
+          this.candidateObject = data;
+        }
       })
     this.intrviewService.getInterviewBycandidateId(parseInt(this.candidateId)).subscribe(
       data => {
-        this.interviewObject = data;
+        if (data) {
+          this.interviewObject = data;
+        }
       })
 
   }
@@ -50,6 +56,10 @@ export class CandidateViewComponent implements OnInit {
   getAvailability(name: any) {
     const indexOfS = Object.keys(CandidateAvailabilityEnum).indexOf(name);
     return Object.values(CandidateAvailabilityEnum)[indexOfS];
+  }
+  patchStatus(name : any){
+    const indexOfS = Object.keys(StatusEnum).indexOf(name);
+    return Object.values(StatusEnum)[indexOfS];
   }
 
 }

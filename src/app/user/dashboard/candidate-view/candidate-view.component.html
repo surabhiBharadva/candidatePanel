@@ -1,85 +1,119 @@
 <div class="card mb-3 container2" style="width: 1000px;">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h4>View Candidate Details</h4>
+        <h4>Candidate Details</h4>
 
         <button type="button" class="btn-close" aria-label="Close" (click)="close()" style="color: black;"></button>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="col-6 mb-3">
-                <label class="form-label">Application Date : </label>&nbsp;
-                <label>{{candidateObject.applicationDate | date:'dd-MMM-yyyy'}}</label>
+                <label class="form-label" style="display: inline-block;">Application Date : </label>&nbsp;
+                <label class="form-label" style="display: inline-block;">{{candidateObject.applicationDate | date:'dd-MMM-yyyy'}}</label>
             </div>
             </div>
         <div class="row">
             <div class="col-4 mb-3">
-                <label class="form-label">Choose Position : </label>&nbsp;
-                    <label>{{getPosition(candidateObject.position)}}</label>
+                <label  class="form-label" style="display: inline-block;">Job Requirement : </label>&nbsp;
+                    <label class="form-label" style="display: inline-block;">{{getPosition(candidateObject.position)}}</label>
             </div>
             <div class="col-4 mb-3">
-                <label class="form-label">Candidate Name : </label>&nbsp;
-                <label>{{candidateObject.firstName}} {{candidateObject.lastName}}</label>
+                
+                <label class="form-label" style="display: inline-block;">Candidate Name : </label>&nbsp;
+                <label class="form-label" style="display: inline-block;">{{candidateObject.firstName}} {{candidateObject.lastName}}</label>
             </div>
             <div class="col-4 mb-3">
-                <label class="form-label">Email : </label>&nbsp;
-                <label>{{candidateObject.email}}</label>
+                <label class="form-label" style="display: inline-block;">Email : </label>&nbsp;
+                <label class="form-label" style="display: inline-block;">{{candidateObject.email}}</label>
             </div>
         </div>
         <div class="row">
             <div class="col-4 mb-3">
-                <label class="form-label">Phone : </label>&nbsp;
-                <label>{{candidateObject.phoneNo}}</label>
+                <label class="form-label" style="display: inline-block;">Phone : </label>&nbsp;
+                <label class="form-label" style="display: inline-block;">{{candidateObject.phoneNo}}</label>
             </div>
             <div class="col-4 mb-3">
-                <label class="form-label">Skills : </label>&nbsp;
-                <label>{{candidateObject.skills}}</label>
+                <label class="form-label" style="display: inline-block;">Skills : </label>&nbsp;
+                <label class="form-label" style="display: inline-block;">{{candidateObject.skills}}</label>
             </div>
             <div class="col-4 mb-3">
-                <label class="form-label">Joining Availability : </label>&nbsp;
-                    <label>{{getAvailability(candidateObject.joiningAvailability)}}</label>
+                <label class="form-label" style="display: inline-block;">Joining Availability : </label>&nbsp;
+                    <label class="form-label" style="display: inline-block;">{{getAvailability(candidateObject.joiningAvailability)}}</label>
             </div>
         </div>
         <div class="row">
             <div class="col-4 mb-3">
-                <label class="form-label">Candidate Status : </label>&nbsp;
-                <label>{{candidateObject.candidateStatus}}</label>
+                <label class="form-label" style="display: inline-block;">Candidate Status : </label>&nbsp;
+                <label class="form-label" style="display: inline-block;">{{getStatus(candidateObject.candidateStatus)}}</label>
             </div>
-            <div class="col-4 mb-3">
-                <label class="form-label">Joining Date : </label>&nbsp;
-                <label>{{candidateObject.joiningDate | date:'dd-MMM-yyyy'}}</label>
+            <div class="col-4 mb-3" *ngIf="candidateObject.joiningDate">
+                <label class="form-label" style="display: inline-block;">Joining Date : </label>&nbsp;
+                <label class="form-label" style="display: inline-block;">{{candidateObject.joiningDate | date:'dd-MMM-yyyy'}}</label>
             </div>
-            <div class="col-4 mb-3">
+            <div class="col-4 mb-3" *ngIf="candidateObject.comment">
                 <label class="form-label">Comment/Remarks : </label>&nbsp;
-                <label>{{candidateObject.comment}}</label>
+                <label class="form-label" style="display: inline-block;">{{candidateObject.comment}}</label>
             </div>
         </div>
     </div>
 
 </div>
-<div class="card mb-3 container2" style="width: 1000px;">
+
+<div class="card mb-3 container3" style="width: 1000px;">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h4>View Interview Details</h4>
+        <h4>Interview Details</h4>
 
     </div>
     <div class="card-body">
         <div class="row">
         <div class="col-6 mb-3">
-            <label class="form-label">Interview Slot : </label>&nbsp;
-            <label>{{interviewObject.schduleDateTime}}</label>
+            <label class="form-label" style="display: inline-block;">Interview Slot : </label>&nbsp;
+            <label class="form-label" style="display: inline-block;">{{interviewObject.schduleDateTime | date:'dd-MMM-yyyy'}}</label>
         </div>
         </div>
         <div class="row">
             <div class="col-4 mb-3">
-                <label class="form-label">Interviewer : </label>&nbsp;
-                <label>{{interviewObject?.employee?.firstName}} {{interviewObject?.employee?.lastName}}</label>
+                <label class="form-label" style="display: inline-block;">Interviewer : </label>&nbsp;
+                <label class="form-label" style="display: inline-block;">{{interviewObject?.employee?.firstName}} {{interviewObject?.employee?.lastName}}</label>
             </div>
             <div class="col-4 mb-3">
-                <label class="form-label">InterView Status : </label>&nbsp;
-                <label>{{interviewObject.status}}</label>
+                <label class="form-label" style="display: inline-block;">InterView Status : </label>&nbsp;
+                <label class="form-label" style="display: inline-block;">{{patchStatus(interviewObject.status)}}</label>
             </div>
             <div class="col-4 mb-3">
-                <label class="form-label">Feedback : </label>&nbsp;
-                <label>{{interviewObject.feedback}}</label>
+                <label class="form-label" style="display: inline-block;">Feedback : </label>&nbsp;
+                <label class="form-label" style="display: inline-block;">{{interviewObject.feedback}}</label>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card mb-3 container3" style="width: 1000px;">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4>Requirement Point of Details</h4>
+
+    </div>
+    <div class="card-body">
+        <div class="row">
+        <div class="col-6 mb-3">
+            <label class="form-label" style="display: inline-block;">Created By : </label>&nbsp;
+            <label class="form-label" style="display: inline-block;">{{candidateObject.createdBy}}</label>
+        </div>
+        <div class="col-6 mb-3">
+            <label class="form-label" style="display: inline-block;">Created Date : </label>&nbsp;
+            <label class="form-label" style="display: inline-block;">{{candidateObject.createdDate | date:'dd-MMM-yyyy hh:mm a'}}</label>
+        </div>
+        </div>
+        <div class="row">
+          
+            <div class="col-6 mb-3">
+                <label class="form-label" style="display: inline-block;">Updated By : </label>&nbsp;
+                <label class="form-label" style="display: inline-block;">{{candidateObject.modifiedBy}}</label>
+            </div>
+            <div class="col-6 mb-3">
+                <label class="form-label" style="display: inline-block;">Updated Date : </label>&nbsp;
+                <label class="form-label" style="display: inline-block;">{{candidateObject.modifiedDate | date:'dd-MMM-yyyy hh:mm a'}}</label>
             </div>
         </div>
 

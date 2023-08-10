@@ -10,18 +10,21 @@ import { NotificationComponent } from './notification/notification.component';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { candiddateSer } from './service/candidateSer';
 import { EnumToArrayPipe } from './pipe/EnumToArrayPipe ';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     NotificationComponent,
-
+    
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
+    PaginationModule,
     HttpClientInMemoryWebApiModule.forRoot(candiddateSer,{ delay: 1000, passThruUnknownUrl: true })
    
   ],

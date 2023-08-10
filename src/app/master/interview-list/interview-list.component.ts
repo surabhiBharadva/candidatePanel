@@ -39,7 +39,12 @@ export class InterviewListComponent implements OnInit {
       return "Selected";
     }else if(status === "Interview-Rejected"){
       return "Rejected"
+    }else if (status === "Interview-Rescheduled"){
+      return "Resuchduled";
+    }else if(status === "Interview-Cancelled"){
+      return "Cancelled"
     }
+
     return ;
   }
   allInterview(){

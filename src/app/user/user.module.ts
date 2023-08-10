@@ -15,6 +15,7 @@ import { EmployeeListComponent } from '../master/employee-list/employee-list.com
 import { InterviewStatusUpdateComponent } from '../master/interview-status-update/interview-status-update.component';
 import { CandidateViewComponent } from './dashboard/candidate-view/candidate-view.component';
 import { InterviewListComponent } from '../master/interview-list/interview-list.component';
+
 @NgModule({
   declarations: [EmployeeComponent, InterviewListComponent ,EmployeeListComponent, DashboardComponent, CandidateComponent, InterviewComponent, CandidateListComponent, HeaderComponent, FooterComponent, InterviewStatusUpdateComponent, CandidateViewComponent],
   imports: [

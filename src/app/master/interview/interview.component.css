@@ -11,4 +11,9 @@
 .titelView{
     font-size: 17px;
     font-weight: 500;
+    color: rgb(255, 100, 100);
+}
+
+.title{
+    font-size: 23px;
 }

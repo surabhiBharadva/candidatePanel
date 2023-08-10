@@ -5,12 +5,27 @@
     </div>
     <div class="card-body">
         <form [formGroup]="formData" (ngSubmit)="onSubmit()">
-            <div class="mb-3" >
-                <label class="form-label titelView" >Interviewer Name : </label>&nbsp;
-                <label class="form-label titelView">{{candidateObject?.firstName}} {{candidateObject?.lastName}} ( {{(patchPosition(candidateObject?.position))}} )
-                </label>
+            <div>
+                <div>
+                    <label class="form-label title">Candidate Details</label>
+                </div>
+                <div>
+                    <label class="form-label">Candidate Name : </label>&nbsp;
+                    <label class="form-label">{{candidateObject?.firstName}} {{candidateObject?.lastName}} (
+                        {{(patchPosition(candidateObject?.position))}} )
+                    </label>
+                </div>
+                <div>
+                    <label class="form-label">Email : </label>&nbsp;
+                    <label class="form-label">{{candidateObject?.email}}
+                    </label>
+                </div>
+                <div>
+                    <label class="form-label">Phone :</label>&nbsp;
+                    <label class="form-label">{{candidateObject?.phoneNo}}
+                    </label>
+                </div>
             </div>
-            
             <div class="mb-3">
                 
                 <label class="form-label">Interviewer Update Status *</label>
@@ -20,8 +35,9 @@
                     <option *ngFor="let name of getStatus()" [value]="name" [id]="name">
                         {{name}} </option>         
                 </select>
-                <span *ngIf="submitted && f['status'].errors" >
-                    <span *ngIf="f['status'].errors['required'] || f['status'].touched" style="color: rgb(194, 17, 17);">Candidate Availability is required</span>
+                <span *ngIf="f['status'].errors" >
+                    <span *ngIf="f['status'].touched || submitted"></span>
+                    <span *ngIf="f['status'].errors['required']" style="color: rgb(194, 17, 17);">Candidate Availability is required</span>
                 </span>
               
             </div>

@@ -88,6 +88,15 @@ export class InterviewStatusUpdateComponent implements OnInit {
 
   clearFrom() {
     this.formData.reset();
+    this.interviewSevice.getByIdCandidate(this.interviewId).subscribe(
+      data => {
+        debugger
+        this.candidateObject = data.candidate;
+       this.formData.patchValue({
+        status : this.patchStatus(data.status)
+       })
+      }
+    )
   }
   close() {
     this.router.navigate(["./dashboard/interviewList"]);

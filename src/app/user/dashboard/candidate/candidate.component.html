@@ -10,7 +10,7 @@
             
             <div class="row">
                 <div class="col-6 mb-3">
-                    <label class="form-label">Position *</label>
+                    <label class="form-label">Job Requirement *</label>
                     <select [(ngModel)]="selectedPosition" data-style="btn-default" class="selectpicker form-select" formControlName="position">
             
                         <option selected disabled value="">-- Select --</option>
@@ -67,7 +67,7 @@
                 </div>
                 <div class="col-6 mb-3">
                     <label class="form-label">Phone No *</label>
-                    <input type="number" formControlName="phoneNo" class="form-control"
+                    <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" formControlName="phoneNo" class="form-control"
                         />
                     <div *ngIf="f['phoneNo'].errors" >
                         <div *ngIf="f['phoneNo'].touched || submitted">
@@ -94,7 +94,7 @@
                     <input class="form-control" formControlName="resume" accept=".pdf" type="file"
                         (change)="onChange($event)"  />
                     <div *ngIf="f['resume'].errors">
-                        <div *ngIf="f['resume'].touched || submitted">
+                        <div *ngIf="submitted">
                             <div *ngIf="f['resume'].errors['required']" style="color: rgb(194, 17, 17);">Candidate Resume is Required</div>
                         </div>
                     </div>

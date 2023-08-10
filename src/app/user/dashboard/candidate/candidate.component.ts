@@ -63,7 +63,7 @@ export class CandidateComponent implements OnInit {
       lastName: [null, Validators.required],
       position: ['', Validators.required],
       email: [null,[Validators.required, Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
-      phoneNo : [null,[Validators.required, Validators.minLength(10)]],
+      phoneNo : [null,Validators.required],
       skills: [null, Validators.required],
       resume : [null, Validators.required],
       joiningDate: [null, Validators.required],
@@ -124,12 +124,6 @@ export class CandidateComponent implements OnInit {
       this.formData.get('candidateStatus')?.setValidators(null);
       this.formData.get('candidateStatus')?.updateValueAndValidity();
       this.formData.get('candidateStatus')?.clearValidators();
-    } else {
-      if (this.selectedStatus != 'Offer-Accepted') {
-        this.formData.get('joiningDate')?.setValidators(null);
-        this.formData.get('joiningDate')?.updateValueAndValidity();
-        this.formData.get('joiningDate')?.clearValidators();
-      }
     }
   }
   get f() {
@@ -149,7 +143,16 @@ export class CandidateComponent implements OnInit {
       //update Code 
       this.submitted = true;
       if (this.formData.invalid) {
-        return;
+        if (this.selectedStatus === "Offer-Accepted") {
+          if (this.formData.invalid) {
+            return;
+          }
+        } else {
+          if (this.formData.invalid) {
+            return;
+          }
+        }
+
       }
       this.submitting = true;
       let value = this.changePosition(this.formData.get("position")?.value);
@@ -163,7 +166,27 @@ export class CandidateComponent implements OnInit {
       this.candidate.addCandidadte(this.formData.value, this.file).subscribe(
         (response: any) => {
           if (response.status === 'Error') {
-            this.notification.error(response.message)
+            this.notification.error(response.message);
+            this.candidate.getCadidateById(this.num).subscribe(
+              data => {
+                debugger
+                this.formData.patchValue({
+                  firstName: data.firstName,
+                  lastName: data.lastName ,
+                  skills: data.skills,
+                  email: data.email,
+                  phoneNo: data.phoneNo,
+                  joiningDate: data.joiningDate,
+                  comment: data.comment,
+                  position: this.patchPosition(data.position),
+                  candidateStatus : this.patchCandidateStatusData(data.candidateStatus),
+                  joiningAvailability : this.patchValueAvailability(data.joiningAvailability),
+                  fileUpload : data.resume
+      
+                });
+      
+              }
+            )
           } else {
             this.notification.success(response.message);
             this.close();

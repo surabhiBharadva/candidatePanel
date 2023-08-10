@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { encode } from 'punycode';
-import { first } from 'rxjs';
+import { Observable, first } from 'rxjs';
 import { PositionEnum } from 'src/app/enum/PositionEnum';
 import { Candidate } from 'src/app/model/Candidate';
 import { CandidateStatusEnum } from 'src/app/enum/CandidateEnum';
