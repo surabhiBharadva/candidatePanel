@@ -10,6 +10,8 @@ import { Interviewsevice } from 'src/app/service/InterviewService';
 import { candidateservice } from 'src/app/service/candidateservice';
 import { NotificationService } from 'src/app/service/NotificationService';
 import { PositionEnum } from 'src/app/enum/PositionEnum';
+import { InterviewRescheduledHistoryService } from 'src/app/service/InterviewRescheduledHistoryService';
+import { InterviewRescheduledHistory } from 'src/app/model/InterviewRescheduledHistory';
 
 @Component({
   selector: 'app-interview',
@@ -23,6 +25,7 @@ export class InterviewComponent implements OnInit {
   employeesList?: Employee[] = []
   candidateList?: Candidate[] = [];
   interviewList?: Interview[] = [];
+  interviewRescheduledHistory?: InterviewRescheduledHistory[] = [];
   candidateObject?: Candidate = {};
   interviewObejct?: Interview = {};
   todayDate = new Date();
@@ -37,6 +40,8 @@ export class InterviewComponent implements OnInit {
   interviewReschdule = false;
   interviewId : any;
   interviewCounter:number = 0;
+  selectedStatus : string = '';
+  message : string ='';
   constructor(
     private candidateService: candidateservice,
     private formBuilder: FormBuilder,
@@ -45,13 +50,13 @@ export class InterviewComponent implements OnInit {
     private interviewSevice: Interviewsevice,
     private notification : NotificationService,
     private router: Router,
+    private interviewReschduled : InterviewRescheduledHistoryService
   ) {
   }
 
   ngOnInit(): void {
     this.candidateId = this.route.snapshot.params['id'];
     this.candidateIdNum = parseInt(this.candidateId);
-    debugger
     if(!this.candidateId){
     this.candidateService.getCandidatePendingInterview().subscribe(
       data => {
@@ -77,27 +82,49 @@ export class InterviewComponent implements OnInit {
     );
     this.interviewSevice.getInterview().subscribe(
       data => {
-        debugger
         this.interviewList = data;
       }
     );
-   if(this.candidateIdNum){
-    debugger
-    this.interviewSevice.getInterviewBycandidateId(this.candidateIdNum).subscribe(data =>{
-      debugger
-      if(data != null){
-      this.interviewObejct = data;
-      this.interviewId = this.interviewObejct.id;
-      this.interviewReschdule = true;
+  
+    if (this.interviewReschduled) {
+      if (this.interviewId) {
+        this.interviewReschduled.getReScheduleInterviewById(this.interviewId).subscribe(data => {
+          this.interviewRescheduledHistory = data;
+        })
       }
-    })
-   }
+    }
+    if (this.candidateIdNum) {
+      this.interviewSevice.getInterviewBycandidateId(this.candidateIdNum).subscribe(data => {
+        if (data != null) {
+          this.interviewObejct = data;
+          this.interviewId = this.interviewObejct.id;
+          this.interviewReschdule = true;
+        }
+      })
+    }
     this.formData = this.formBuilder.group({
-      candidateId : ['', Validators.required],
-      employeeId: ['', Validators.required],
+      candidateId : ['null', Validators.required],
+      employeeId: ['null', Validators.required],
       schduleDateTime: ['null', Validators.required],
-      status:['null'],
+      status:['null', Validators.required],
+      feedback: ['',Validators.required],
+      
     });
+    if (this.candidateIdNum) {
+      this.interviewSevice.getInterviewBycandidateId(this.candidateIdNum).subscribe(data => {
+        debugger
+        if (data != null) {
+          debugger
+          this.formData.patchValue({
+            status : this.patchStatus(data.status),
+            employeeId : data.employee?.id,
+            schduleDateTime : data.schduleDateTime,
+            feedback : data.feedback
+          })
+        }
+      })
+    }
+    
     this.validationClear();
   }
   validationClear(){
@@ -106,20 +133,69 @@ export class InterviewComponent implements OnInit {
       this.formData.get('candidateId')?.updateValueAndValidity();
       this.formData.get('candidateId')?.clearValidators();
     }
+    if(!this.interviewReschdule){
+      this.formData.get('status')?.setValidators(null);
+      this.formData.get('status')?.updateValueAndValidity();
+      this.formData.get('status')?.clearValidators();
+      this.formData.get('feedback')?.setValidators(null);
+      this.formData.get('feedback')?.updateValueAndValidity();
+      this.formData.get('feedback')?.clearValidators();
+    }
+  }
+  getStatus(){
+    return Object.values(StatusEnum).filter((k) => isNaN(Number(k)));
   }
   get f() {
    
     return this.formData.controls;
   }
   onSubmit() {
-    debugger
     if (this.formData.valid) {
-      debugger
 
       if (!this.candidateSelect) {
-        debugger
         if (this.interviewReschdule) {
-          this.interviewSevice.updateInterviewResuchdule(this.candidateIdNum,this.interviewId, this.formData.value, this.formData.get('employeeId')?.value)
+
+          let status = this.changeStatus(this.formData.get("status")?.value);
+          this.formData.get("status")?.setValue(status);
+
+          this.interviewSevice.updateInterviewResuchdule(this.candidateIdNum, this.interviewId, this.formData.value, this.formData.get('employeeId')?.value)
+            .subscribe(
+              (response: any) => {
+                if (response.status.error) {
+                  this.message = response.status.error
+                 
+                } else {
+                  this.message = response.message
+                  
+                }
+              },
+              (error: any) => {
+                this.message = error.error
+                
+              }
+            )
+
+
+        } else {
+
+          this.interviewSevice.addInterview(this.candidateIdNum, this.formData.value, this.formData.get('employeeId')?.value)
+            .subscribe(
+              (response: any) => {
+                if (response.status.error) {
+                  this.message = response.status.error
+                } else {
+                  this.message = response.message
+                  
+                }
+              },
+              (error: any) => {
+                this.message = error.error
+              
+              }
+            )
+        }
+      } else {
+        this.interviewSevice.addInterview(this.formData.get('candidateId')?.value, this.formData.value, this.formData.get('employeeId')?.value)
           .subscribe(
             (response: any) => {
               if (response.status.error) {
@@ -132,55 +208,49 @@ export class InterviewComponent implements OnInit {
               this.notification.error(error.error)
             }
           )
-        } else {
 
-          this.interviewSevice.addInterview(this.candidateIdNum, this.formData.value, this.formData.get('employeeId')?.value)
-            .subscribe(
-              (response: any) => {
-                if (response.status.error) {
-                  this.notification.error(response.status.error)
-                } else {
-                  this.notification.success(response.message);
-                }
-              },
-              (error: any) => {
-                this.notification.error(error.error)
-              }
-            )
-        }
-    }else{
-      this.interviewSevice.addInterview(this.formData.get('candidateId')?.value,this.formData.value,this.formData.get('employeeId')?.value)
-        .subscribe(
-          (response: any) => {
-            if(response.status.error){
-              this.notification.error(response.status.error)
-            }else{
-            this.notification.success(response.message);
-            }
-          },
-          (error: any) => {
-            this.notification.error(error.error)
-          }
-        )
-  
+      }
     }
   }
+  changeStatus(status : any){
+    const indexOfS = Object.values(StatusEnum).indexOf(status as unknown as StatusEnum);
+    return this.enum = Object.keys(StatusEnum)[indexOfS];
   }
   patchPosition(position: any) {
     const indexOfS = Object.keys(PositionEnum).indexOf(position);
     return Object.values(PositionEnum)[indexOfS];
   }
-  close(){
+  close() {
     this.router.navigate(["./dashboard/interviewList"]);
   }
 
   clearFrom() {
     this.formData.reset();
   }
-
-  getValue(id : any){
-    const indexOfS = Object.keys(StatusEnum).indexOf(id);
+  patchStatus(status : any){
+    const indexOfS = Object.keys(StatusEnum).indexOf(status);
     return Object.values(StatusEnum)[indexOfS];
   }
 
+  getValue(id: any) {
+    const indexOfS = Object.keys(StatusEnum).indexOf(id);
+    return Object.values(StatusEnum)[indexOfS];
+  }
+  getInetviewStatus(name: any) {
+    const indexOfS = Object.keys(StatusEnum).indexOf(name);
+    let status = Object.values(StatusEnum)[indexOfS];
+    if (status === "Interview-Scheduled") {
+      return "Scheduled";
+    } else if (status === "Interview-Selected") {
+      return "Selected";
+    } else if (status === "Interview-Rejected") {
+      return "Rejected"
+    } else if (status === "Interview-Rescheduled") {
+      return "Resuchduled";
+    } else if (status === "Interview-Cancelled") {
+      return "Cancelled"
+    }
+
+    return;
+  }
 }

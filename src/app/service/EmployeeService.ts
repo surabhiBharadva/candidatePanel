@@ -29,27 +29,32 @@ export class EmployeeService {
     const fileData = new FormData();
     if (file) {
       fileData.append("employee", JSON.stringify(employee))
-      // fileData.append("file", file)
+      fileData.append("files", file)
     }
-    return this.httpService.post<Employee>(this.apiurl, employee, this.httpOptions).pipe(tap(data => console.log(data)), catchError(this.handleError))
+    return this.httpService.post<Employee>(this.apiurl + "/save", employee, this.httpOptions).pipe(tap(data => console.log(data)), catchError(this.handleError))
   }
 
   getEmployeeById(id: number) {
-    const url = `${this.apiurl}/${id}`;
+    const url = `${this.apiurl}/getById/${id}`;
     return this.httpService.get<Employee>(url).pipe(
       catchError(this.handleError)
     );
   }
+
+
   getEmplyeeList(): Observable<Employee[]> {
-    return this.httpService.get<Employee[]>(this.apiurl).pipe(tap(data => console.log(data)),
+    return this.httpService.get<Employee[]>(this.apiurl+"/getAll").pipe(tap(data => console.log(data)),
       catchError(this.handleError)
     );
   }
+
+
   updateEmployee(id: number, employee: Employee): Observable<Employee> {
-    const url = `${this.apiurl}/${id}`;
+    const url = `${this.apiurl}/getById/${id}`;
     return this.httpService.put<Employee>(url, employee, this.httpOptions).pipe(tap(data => console.log(data)),
       catchError(this.handleError)
     );
   }
+
 
 }

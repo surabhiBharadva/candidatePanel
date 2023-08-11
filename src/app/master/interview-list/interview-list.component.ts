@@ -40,7 +40,7 @@ export class InterviewListComponent implements OnInit {
     }else if(status === "Interview-Rejected"){
       return "Rejected"
     }else if (status === "Interview-Rescheduled"){
-      return "Resuchduled";
+      return "Rescheduled";
     }else if(status === "Interview-Cancelled"){
       return "Cancelled"
     }

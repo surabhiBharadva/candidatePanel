@@ -28,7 +28,6 @@ export class Interviewsevice{
       }
 
     addInterview(candidateId : number,interview: Interview,employeeId : number): Observable<Interview> {
-        debugger
         const url = `${this.apiurl}/${candidateId}/${employeeId}`;
         return this.httpService.post<Interview>(url, interview, this.httpOptions).pipe(tap(data => console.log(data)), catchError(this.handleError))
     }
@@ -38,17 +37,14 @@ export class Interviewsevice{
         return this.httpService.get<Interview[]>(this.apiurl,this.httpOptions).pipe(tap(data => console.log(data)), catchError(this.handleError))
     }
     allInterviewList(): Observable<Interview[]> {
-        debugger
         let url = this.apiurl+"/allInterviewList";
         return this.httpService.get<Interview[]>(url, this.httpOptions).pipe(tap(data => console.log(data)), catchError(this.handleError))
     }
     previousInterviewList(): Observable<Interview[]> {
-        debugger
         let url = this.apiurl+"/previousInterviewList";
         return this.httpService.get<Interview[]>(url, this.httpOptions).pipe(tap(data => console.log(data)), catchError(this.handleError))
     }
     tommorowInterviewList(): Observable<Interview[]> {
-        debugger
         let url = this.apiurl+"/tommorowInterviewList";
         return this.httpService.get<Interview[]>(url, this.httpOptions).pipe(tap(data => console.log(data)), catchError(this.handleError))
     }
@@ -69,7 +65,6 @@ export class Interviewsevice{
     }
 
     updateInterviewResuchdule(candidateId: number, interviewId: number, interview : any, employeeId: any) {
-        debugger
         const url = `${this.apiurl}/${interviewId}/${candidateId}/${employeeId}`;
         return this.httpService.put<Interview>(url, interview, this.httpOptions).pipe(tap(data => console.log(data)),
             catchError(this.handleError)

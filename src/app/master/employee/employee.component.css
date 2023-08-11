@@ -1,24 +1,30 @@
-.container2{
+.container2 {
     margin-top: 70px;
     margin-left: 150px;
-    
+
 }
-.closeButton{
+
+.closeButton {
     margin-left: 30px;
 }
+
 @media screen and (max-width:768px) {
 
-    input .contact .col-md-6{
-        width:40.5%;
+    input .contact .col-md-6 {
+        width: 40.5%;
         margin: 15px 15px 0 58px;
     }
-    
+
     textarea .contact .col-md-12 {
-         margin: 15px 15px 0 58px;
+        margin: 15px 15px 0 58px;
     }
-    
-    button #submit .contact .submit{
+
+    button #submit .contact .submit {
         margin: 15px 15px 0 42px;
     }
-    
-    }
+
+}
+
+label {
+    margin-top: 1rem;
+}

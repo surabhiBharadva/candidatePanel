@@ -1,5 +1,8 @@
 export enum EmployeeStatus{
-    joining='Joining',
-    resign='Resign',
+    Joined='Joined',
+    Resigned='Resigned',
+    Terminated='Terminated',
+    OfferAccepted="Offer-Accepted",
+    TerminatedOfferRejected='Terminated-Offer-Rejected'
    
 }

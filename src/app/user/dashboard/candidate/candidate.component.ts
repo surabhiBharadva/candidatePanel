@@ -45,6 +45,7 @@ export class CandidateComponent implements OnInit {
   candiDateObjet: Candidate = {};
   createBy : string ='admin';
   modifiedBy : string ='admin';
+  message : string ='';
   // todayDate=this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -127,7 +128,6 @@ export class CandidateComponent implements OnInit {
     }
   }
   get f() {
-    debugger
    
     return this.formData.controls;
 
@@ -147,11 +147,7 @@ export class CandidateComponent implements OnInit {
           if (this.formData.invalid) {
             return;
           }
-        } else {
-          if (this.formData.invalid) {
-            return;
-          }
-        }
+        } 
 
       }
       this.submitting = true;
@@ -166,7 +162,7 @@ export class CandidateComponent implements OnInit {
       this.candidate.addCandidadte(this.formData.value, this.file).subscribe(
         (response: any) => {
           if (response.status === 'Error') {
-            this.notification.error(response.message);
+            this.message =this.message
             this.candidate.getCadidateById(this.num).subscribe(
               data => {
                 debugger
@@ -188,12 +184,11 @@ export class CandidateComponent implements OnInit {
               }
             )
           } else {
-            this.notification.success(response.message);
-            this.close();
+            this.message = response.message;
           }
         },
         (error: any) => {
-          this.notification.error(error.error)
+          this.message = error.error;
         }
       )
       this.loading = false;
@@ -218,13 +213,14 @@ export class CandidateComponent implements OnInit {
       this.candidate.addCandidadte(this.formData.value, this.file).subscribe(
         (response: any) => {
           if (response.status.error) {
-            this.notification.error(response.status.error)
+            this.message = response.status.error;
+            
           } else {
-            this.notification.success(response.message);
+            this.message = response.message;
           }
         },
         (error: any) => {
-          this.notification.error(error.error)
+          this.message = error.error;
         }
       )
 

@@ -11,6 +11,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { candiddateSer } from './service/candidateSer';
 import { EnumToArrayPipe } from './pipe/EnumToArrayPipe ';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,9 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
   exports:[
 
   ],
-  providers: [],
+  providers: [
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

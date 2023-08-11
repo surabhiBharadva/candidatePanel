@@ -1,8 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Employee } from 'src/app/model/Employee';
+import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from 'src/app/service/EmployeeService';
-import { ActivatedRoute, Router } from '@angular/router';
-import { EmployeeComponent } from '../employee/employee.component';
 
 @Component({
   selector: 'app-employee-list',
@@ -10,19 +7,21 @@ import { EmployeeComponent } from '../employee/employee.component';
   styleUrls: ['./employee-list.component.css']
 })
 export class EmployeeListComponent implements OnInit {
-  employeeList : Employee [] = [];
-  constructor( 
-    private employeeService :EmployeeService,
-    private route: ActivatedRoute
+  employeeList: any = [];
+  constructor(
+    private employeeService: EmployeeService,
   ) { }
 
   ngOnInit(): void {
-    this.employeeService.getEmplyeeList().subscribe(
-      data => {
-        this.employeeList = data;
-        console.log(this.employeeList)
-      }
+    this.employeeService.getEmplyeeList().subscribe(data => {
+      this.employeeList = data;
+      console.log(this.employeeList)
+    }
     );
   }
-  
+
+  open(){
+    
+  }
+
 }

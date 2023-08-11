@@ -12,12 +12,15 @@ import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { EmployeeComponent } from '../master/employee/employee.component';
 import { EmployeeListComponent } from '../master/employee-list/employee-list.component';
-import { InterviewStatusUpdateComponent } from '../master/interview-status-update/interview-status-update.component';
 import { CandidateViewComponent } from './dashboard/candidate-view/candidate-view.component';
 import { InterviewListComponent } from '../master/interview-list/interview-list.component';
+import { TimeSheetComponent } from '../time-sheet/time-sheet.component';
 
 @NgModule({
-  declarations: [EmployeeComponent, InterviewListComponent ,EmployeeListComponent, DashboardComponent, CandidateComponent, InterviewComponent, CandidateListComponent, HeaderComponent, FooterComponent, InterviewStatusUpdateComponent, CandidateViewComponent],
+    declarations: [EmployeeComponent, InterviewListComponent ,EmployeeListComponent, 
+      DashboardComponent, CandidateComponent, InterviewComponent, CandidateListComponent, 
+      HeaderComponent, FooterComponent, CandidateViewComponent,
+    TimeSheetComponent],
   imports: [
     CommonModule,
     UserRoutingModule,

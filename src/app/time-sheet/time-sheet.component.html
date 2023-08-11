@@ -1,0 +1,48 @@
+<div class="container">
+    <form [formGroup]="candidateForm" (ngSubmit)="onSubmit()">
+        <table class="table table-borderless">
+        <thead>
+            <!-- <tr>
+                <select class="form-control mb-3" formControlName="employeeId" (change)="onEmployeeChange($event)">
+                    <option value="">Select Employee</option>
+                    <option *ngFor="let employee of employeesList" [value]="employee.id">{{ employee.firstName }} {{ employee.lastName }}</option>
+                </select>
+            </tr> -->
+          <tr>
+            <th class="col-2">Project Name</th>
+            <th class="col-2">Task Name</th>
+            <th *ngFor="let date of weekDates" class="col">{{ date }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <select class="form-control" formControlName="project" (change)="onProjectChange($event)">
+                <option value="">Select Project</option>
+                <option *ngFor="let project of projectList" [value]="project.id">{{ project.name }}</option>
+              </select>
+            </td>
+            <td>
+              <select class="form-control" formControlName="task">
+                <option value="">Select Task</option>
+                <option *ngFor="let task of tasksList" [value]="task.id">{{ task.name }}</option>
+              </select>
+            </td>
+            <td *ngFor="let date of weekDates; let i = index">
+              <input class="form-control" type="number" [formControlName]="getSanitizedControlName(date)" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="form-button mt-3">
+        <button id="submit" type="submit" class="btn btn-dark">Update</button>
+        <button id="previous" type="button" class="btn btn-secondary" (click)="goToPreviousWeek()">Previous Week</button>
+        <button *ngIf="isCurrentWeek" id="next" type="button" class="btn btn-secondary" (click)="goToNextWeek()">Next Week</button>
+        <button id="addNew" type="button" class="btn btn-primary" (click)="resetForm()">Clear</button>
+      </div>
+      <div>
+        Last sync date
+      </div>
+    </form>
+  </div>
+  

@@ -1,17 +1,14 @@
-<div class="card mb-3 container2" style="width: 600px;">
+<div class="card mb-3 container2" style="width: 500px;">
     <div class="card-header d-flex justify-content-between align-items-center">
-    <h5 *ngIf="interviewReschdule">Reschedule Interview</h5>
+    <h5 *ngIf="interviewReschdule">Reschedule/Update Interview</h5>
     <h5 *ngIf="candidateSelect">Add Interview Candidate</h5>
     <h5 *ngIf="!interviewReschdule && candidateView ">Add Interview</h5>
         <button  type="button" class="btn-close" aria-label="Close" (click)="close()" style="color: black;"></button>
     </div>
     <div class="card-body">
         <form [formGroup]="formData" (ngSubmit)="onSubmit()">
-           
-              
-            
-           
                 <div *ngIf="candidateView">
+                    
                     <div>
                         <label class="form-label title">Candidate Details</label>
                     </div>
@@ -31,32 +28,74 @@
                         <label class="form-label">{{candidateObject?.phoneNo}}
                         </label>
                     </div>
+                    
                     <div>
-                    <label *ngIf="interviewReschdule && interviewObejct?.interviewCount" class="form-label titelView" >It is {{interviewObejct?.interviewCount}} Reschedule Interview</label>
+                        <label *ngIf="interviewReschdule && interviewObejct?.interviewCount" class="form-label titelView">It is
+                            {{interviewObejct?.interviewCount}} Reschedule Interview</label>
+                    </div>
                 </div>
+                <div class="mb-3" *ngIf="interviewReschdule">
+                    
+                        
+                    <label class="form-label">Interview Status *</label>
+                    <select [(ngModel)]="selectedStatus" data-style="btn-default"
+                        class="form-control selectpicker form-select" formControlName="status">
+                        <option selected disabled value="">-- Select --</option>
+                        <option *ngFor="let name of getStatus()" [value]="name" [id]="name">
+                            {{name}} </option>         
+                    </select>
+                    <span *ngIf="f['status'].errors" >
+                        <span *ngIf="f['status'].touched || submitted"></span>
+                        <span *ngIf="f['status'].errors['required']" style="color: rgb(194, 17, 17);">Interview Status is required</span>
+                    </span>
+                  
                 </div>
-           
+                
             <div class="mb-3" *ngIf="candidateSelect">
+               
     
-                <label class="form-label">Candidate Name</label><span>&nbsp;&nbsp;</span>
+                <label class="form-label">Candidate Name *</label><span>&nbsp;&nbsp;</span>
                 <select data-style="btn-default" formControlName="candidateId" class="form-control selectpicker form-select">
                     <option selected disabled value="">-- Select --</option>
                     <option *ngFor="let name of candidateList" [ngValue]="name.id" [id]="name.id"> {{name.firstName | titlecase}}
                         {{name.lastName | titlecase}}</option>
                 </select>
+                <span *ngIf="f['candidateId'].errors" >
+                    <span *ngIf="f['candidateId'].touched || submitted"></span>
+                    <span *ngIf="f['candidateId'].errors['required']" style="color: rgb(194, 17, 17);">Candidate Name is required</span>
+                </span>
+               
             </div>
-            <div class="mb-3">
-                <label class="form-label">Interviewer Name</label><span>&nbsp;&nbsp;</span>
+
+            <div class="mb-3" *ngIf="candidateSelect || candidateView">
+                
+                <label class="form-label">Interviewer Name *</label><span>&nbsp;&nbsp;</span>
                 <select formControlName="employeeId"   data-style="btn-default" class="form-control selectpicker form-select">
                     <option selected disabled value="">-- Select --</option>
                     <option *ngFor="let i of employeesList" [ngValue]="i.id" [id]="i.id"> {{i.firstName | titlecase}} {{i.lastName | titlecase}}</option>
                 </select>
+                <span *ngIf="f['employeeId'].errors" >
+                    <span *ngIf="f['employeeId'].touched || submitted"></span>
+                    <span *ngIf="f['employeeId'].errors['required']" style="color: rgb(194, 17, 17);">Interviewer Name is required</span>
+                </span>
+                
+            </div>
+
+
+            <div class="mb-3" *ngIf="candidateSelect || candidateView">
+                
+                <label class="form-label">Schedule Date and Time *</label>
+                <input type="datetime-local" formControlName="schduleDateTime" class="form-control" />
+               
+            </div>
+            <div class="mb-3" *ngIf="interviewReschdule">
+               
+                <label class="form-label">Feedback *</label>
+                <textarea type="text" formControlName="feedback" class="form-control" ></textarea>
+                
             </div>
             <div class="mb-3">
-                <label class="form-label">Schedule Date and Time</label>
-                <input type="datetime-local" formControlName="schduleDateTime" class="form-control" />
-            </div>
-            <div>
+                
                 <button [disabled]="loading" class="btn text-dark" style="background-color: rgb(226, 226, 226);">
                     <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
                     Submit
@@ -64,10 +103,51 @@
                 <span>&nbsp;&nbsp;</span>
                 <button class="btn text-dark" style="background-color: rgb(226, 226, 226);"
                     (click)="clearFrom()"><span></span>Clear</button>
+               
             </div>
-           
+            <div style="color: rgb(4, 4, 255);margin-top: 5px;">{{message}}</div>
         </form>
     </div>
     <router-outlet></router-outlet>
 </div>
 <router-outlet></router-outlet>
+<div class="container" *ngIf="interviewReschdule">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="title">Rescheduled Interview Details</div>
+    </div>
+    <div>
+
+    <table class="table thead-dark w-200">
+        <thead>
+            <tr>
+                <th>Interview Slot</th>
+                <th>Job Requirement</th>
+                <th>Candidate</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Resume</th>
+                <th>Interviewer</th>
+                <th>Interview Status</th>
+                <th>Arrange By</th>
+            </tr>
+        </thead>
+        <tbody>
+             <tr *ngFor="let interviewRescheduled of interviewRescheduledHistory">
+                <td>{{interviewRescheduled?.interview?.schduleDateTime | date: 'dd-MMM-yyyy hh:mm a'}}</td>
+                <td></td>
+                <td>{{interviewRescheduled?.interview?.candidate?.firstName | titlecase}} {{interviewRescheduled?.interview?.candidate?.lastName | titlecase}} </td>
+                <td>{{interviewRescheduled?.interview?.candidate?.email}}</td>
+                <td>{{interviewRescheduled?.interview?.candidate?.phoneNo}}</td>
+                <td>{{interviewRescheduled?.interview?.candidate?.documentDetails?.fileName}}
+                    
+                </td>
+                <td>{{interviewRescheduled?.interview?.employee?.firstName | titlecase}} {{interviewRescheduled?.interview?.employee?.lastName | titlecase}}</td> 
+                <td>{{getInetviewStatus(interviewRescheduled?.interview?.status)}}</td>
+                <td>{{interviewRescheduled?.interview?.modifiedBy}}</td>
+                
+            
+            </tr> 
+        </tbody>
+    </table>
+    <router-outlet></router-outlet>
+</div>

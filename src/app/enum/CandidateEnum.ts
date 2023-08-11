@@ -7,7 +7,7 @@ export enum CandidateStatusEnum{
     OfferRejected="Offer-Rejected",
     RejectedCancelled="Rejected/Cancelled",
     Joined="Joined",
-    InterviewResuchduled="Interview-Resuchduled",
+    InterviewRescheduled="Interview-Rescheduled",
     InterviewCancelled="Interview-Cancelled"
    
 }

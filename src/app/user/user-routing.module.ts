@@ -5,10 +5,10 @@ import { CandidateComponent } from './dashboard/candidate/candidate.component';
 import { InterviewComponent } from '../master/interview/interview.component';
 import { CandidateListComponent } from './dashboard/candidate-list/candidate-list.component';
 import { EmployeeComponent } from '../master/employee/employee.component';
-import { InterviewStatusUpdateComponent } from '../master/interview-status-update/interview-status-update.component';
 import { EmployeeListComponent } from '../master/employee-list/employee-list.component';
 import { CandidateViewComponent } from './dashboard/candidate-view/candidate-view.component';
 import { InterviewListComponent } from '../master/interview-list/interview-list.component';
+import { TimeSheetComponent } from '../time-sheet/time-sheet.component';
 
 const routes: Routes = [ 
   {
@@ -16,7 +16,7 @@ const routes: Routes = [
     children: [
       
       { path: 'candidateList', component: CandidateListComponent },
-     
+      { path: 'timeSheet', component: TimeSheetComponent },
       { path: 'candidate', component: CandidateComponent },
       { path: 'edit/:id', component: CandidateComponent },
       { path: 'interview', component: InterviewComponent },
@@ -29,17 +29,17 @@ const routes: Routes = [
         ]
       }, 
       { path: 'employeeUpdate/:id', component: EmployeeComponent},
-      { path: 'interviewUpdate/:id', component: InterviewStatusUpdateComponent},
+     
       { path: 'interviewList', component: InterviewListComponent},
       { path: 'interviewUpdate', component: InterviewComponent },
+      { path: 'employee', component: EmployeeComponent },
     ]
   },
   
   { path: 'interviewList', component: InterviewListComponent},
   { path: 'interviewUpdate', component: InterviewComponent },
-  { path: 'employee', component: EmployeeComponent },
+  
   { path: 'candidate', component: CandidateComponent },
-  { path : 'interviewUpdate/:id' , component : InterviewStatusUpdateComponent},
   { path: 'employeeUpdate/:id', component: EmployeeComponent }
   
 ];

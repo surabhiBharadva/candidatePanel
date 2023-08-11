@@ -1,25 +1,15 @@
-import { Address } from "./Address";
-import { EmployeeStatus } from "../enum/EmployeeStatus";
-
 export class Employee {
-    id ?:number
-    acardNum?:number
+    id?: number
+    aadharCardNumber?: number
     firstName?: string;
     lastName?: string;
-    email?:string;
-    joiningDate?:string;
-    phone?:number;
+    email?: string;
+    joiningDate?: string;
+    phoneNo?: number;
     dob?: Date;
-    country?:string
-    state?:string
-    city?:string
-    adadharcard?:string;
-    pancard?:string;
-    marksheet?:string;
-    status?:EmployeeStatus;
-    address?:string;
-    createBy?:string;
-    craeteDate?:Date;
-    modifiedBy?:string;
-    modifiedDate?:Date;
+    createBy?: string;
+    craeteDate?: Date;
+    modifiedBy?: string;
+    modifiedDate?: Date;
+    
 }
