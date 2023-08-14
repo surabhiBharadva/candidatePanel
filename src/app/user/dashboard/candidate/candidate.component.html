@@ -123,8 +123,8 @@
                     <select [(ngModel)]="selectedStatus"  data-style="btn-default" formControlName="candidateStatus"
                         class="form-control selectpicker form-select" data-live-search="true">
                         <option selected disabled value="">-- Select --</option>
-                        <option *ngFor="let name of getCandidateStatus()" [value]="name" >
-                            {{name}} </option>
+                        <option *ngFor="let i of configDataMasterValues" [ngValue]="i.configKey" [id]="i.configValue" >
+                           {{i.configValue}} </option>
                     </select>
                     <span *ngIf="f['candidateStatus'].errors" >
                         <span *ngIf="f['candidateStatus'].touched || submitted">

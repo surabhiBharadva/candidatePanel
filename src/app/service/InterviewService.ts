@@ -5,10 +5,10 @@ import { Interview } from "../model/Interview";
 
 @Injectable({ providedIn: 'root' })
 export class Interviewsevice{
-   
+  
    
     
-    private apiurl = 'http://localhost:8080/api/v1/interview';
+    private apiurl = 'http://localhost:8080/api/interview';
     headers = new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json');
     httpOptions = {
         headers: this.headers
@@ -57,6 +57,7 @@ export class Interviewsevice{
         );
     }
     getByIdCandidate(id : number) : Observable<Interview> {
+        debugger
     const url = `${this.apiurl}/${id}`;
     return this.httpService.get<Interview>(url).pipe(
         catchError(this.handleError)
@@ -72,11 +73,18 @@ export class Interviewsevice{
     }
     getInterviewBycandidateId(candidateId: number) : Observable<Interview> {
         debugger
-        const url = "http://localhost:8080/api/v1/interviewGet"
+        const url = "http://localhost:8080/api/interviewGet"
         const seturl = `${url}/${candidateId}`;
         return this.httpService.get<Interview>(seturl).pipe(
             catchError(this.handleError)
         );
       }
-    
+      getInterviewBycandidateIdView(candidateId: number) : Observable<Interview> {
+        const url = "http://localhost:8080/api/interviewView"
+        const seturl = `${url}/${candidateId}`;
+        return this.httpService.get<Interview>(seturl).pipe(
+            catchError(this.handleError)
+        );
+      }
+     
 }

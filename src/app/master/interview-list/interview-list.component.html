@@ -53,11 +53,11 @@
                 <td>{{interview?.candidate?.firstName | titlecase}} {{interview.candidate?.lastName | titlecase}} </td>
                 <td>{{interview?.candidate?.email}}</td>
                 <td>{{interview?.candidate?.phoneNo}}</td>
-                <td>{{interview?.candidate?.documentDetails?.fileName}}
-                    <img alt="" src="assets\image\resume.svg" width="30" height="30" (click)="download(interview?.candidate?.documentDetails?.fileName)" />
+                <td><a alt="" src="assets\image\resume.svg" style="color: rgb(44, 153, 255);cursor: pointer;" width="30" height="30"
+                        (click)="download(interview?.candidate?.documentDetails?.fileName)">{{interview?.candidate?.documentDetails?.fileName}}</a>
                 </td>
                 <td>{{interview?.employee?.firstName | titlecase}} {{interview?.employee?.lastName | titlecase}}</td> 
-                <td>{{getInetviewStatus(interview.status)}}</td>
+                <td>{{interview.status}}</td>
                 <td>{{interview?.modifiedBy}}</td>
                 <td style="white-space: nowrap">
                     <img alt="" src="assets\image\pen.svg" width="20" height="20" routerLinkActive="active"

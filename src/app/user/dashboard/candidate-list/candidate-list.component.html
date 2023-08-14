@@ -9,7 +9,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h1></h1>
                 <button type="submit" class="btn text-dark border border-dark fw-bold"
-                    style="background-color: rgb(226, 226, 226);width: 200px;height: 50px;" routerLinkActive="active"
+                    style="background-color: rgb(226, 226, 226);width: 170px;height: 40px;" routerLinkActive="active"
                     routerLink="../candidate/"> Add Candidate </button>
 
             </div>
@@ -39,11 +39,11 @@
                         <td>{{candidate.firstName | titlecase}} {{candidate.lastName | titlecase}} </td>
                         <td>{{candidate.email}}</td>
                         <td>{{candidate.phoneNo}}</td>
-                        <td>{{candidate?.documentDetails?.fileName}} <img alt="" src="assets\image\resume.svg"
-                                width="30" height="30" (click)="download(candidate?.documentDetails?.fileName)" />
+                        <td><a alt="" style="color: rgb(31, 147, 255);cursor: pointer;" width="30" height="30"
+                                (click)="download(candidate?.documentDetails?.fileName)">{{candidate?.documentDetails?.fileName}}</a>
                         </td>
                         <td>{{getAvailability(candidate.joiningAvailability)}}</td>
-                        <td>{{getStatus(candidate.candidateStatus)}}</td>
+                        <td>{{candidate.candidateStatus}}</td>
                         <td>{{candidate.joiningDate | date:'dd-MMM-yyyy'}}</td>
                         <td style="white-space: nowrap">
                             <img alt="" src="assets\image\see-icon.svg" width="30" height="30" routerLinkActive="active"

@@ -15,7 +15,7 @@
                     <div>
                         <label class="form-label">Candidate Name : </label>&nbsp;
                         <label class="form-label">{{candidateObject?.firstName}} {{candidateObject?.lastName}} (
-                            {{(patchPosition(candidateObject?.position))}} )
+                            {{(patchPosition(candidateObject?.position))}} ) 
                         </label>
                     </div>
                     <div>
@@ -41,8 +41,8 @@
                     <select [(ngModel)]="selectedStatus" data-style="btn-default"
                         class="form-control selectpicker form-select" formControlName="status">
                         <option selected disabled value="">-- Select --</option>
-                        <option *ngFor="let name of getStatus()" [value]="name" [id]="name">
-                            {{name}} </option>         
+                        <option *ngFor="let i of configDataMasterValues" [value]="i.configKey" [id]="i.configKey">
+                            {{i.configValue}} </option>         
                     </select>
                     <span *ngIf="f['status'].errors" >
                         <span *ngIf="f['status'].touched || submitted"></span>
@@ -96,9 +96,13 @@
             </div>
             <div class="mb-3">
                 
-                <button [disabled]="loading" class="btn text-dark" style="background-color: rgb(226, 226, 226);">
-                    <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                <button *ngIf="candidateSelect || !interviewReschdule && candidateView " class="btn text-dark" style="background-color: rgb(226, 226, 226);">
+                    <span></span>
                     Submit
+                </button>
+                <button *ngIf="interviewReschdule" class="btn text-dark" style="background-color: rgb(226, 226, 226);">
+                    <span></span>
+                    Reschedule
                 </button>
                 <span>&nbsp;&nbsp;</span>
                 <button class="btn text-dark" style="background-color: rgb(226, 226, 226);"
@@ -108,10 +112,13 @@
             <div style="color: rgb(4, 4, 255);margin-top: 5px;">{{message}}</div>
         </form>
     </div>
+    
     <router-outlet></router-outlet>
+    
 </div>
 <router-outlet></router-outlet>
 <div class="container" *ngIf="interviewReschdule">
+    
     <div class="d-flex justify-content-between align-items-center">
         <div class="title">Rescheduled Interview Details</div>
     </div>
@@ -121,31 +128,23 @@
         <thead>
             <tr>
                 <th>Interview Slot</th>
-                <th>Job Requirement</th>
-                <th>Candidate</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Resume</th>
-                <th>Interviewer</th>
-                <th>Interview Status</th>
+                <th>Candiddate Name</th>
+                <th>Interviewer Name</th>
+                <th>Feedback</th>
                 <th>Arrange By</th>
+                <th>Interview Status</th>
+                
             </tr>
         </thead>
         <tbody>
              <tr *ngFor="let interviewRescheduled of interviewRescheduledHistory">
-                <td>{{interviewRescheduled?.interview?.schduleDateTime | date: 'dd-MMM-yyyy hh:mm a'}}</td>
-                <td></td>
-                <td>{{interviewRescheduled?.interview?.candidate?.firstName | titlecase}} {{interviewRescheduled?.interview?.candidate?.lastName | titlecase}} </td>
-                <td>{{interviewRescheduled?.interview?.candidate?.email}}</td>
-                <td>{{interviewRescheduled?.interview?.candidate?.phoneNo}}</td>
-                <td>{{interviewRescheduled?.interview?.candidate?.documentDetails?.fileName}}
-                    
-                </td>
-                <td>{{interviewRescheduled?.interview?.employee?.firstName | titlecase}} {{interviewRescheduled?.interview?.employee?.lastName | titlecase}}</td> 
-                <td>{{getInetviewStatus(interviewRescheduled?.interview?.status)}}</td>
-                <td>{{interviewRescheduled?.interview?.modifiedBy}}</td>
-                
-            
+               
+                <td>{{interviewRescheduled.schduleDateTime | date: 'dd-MMM-yyyy hh:mm a'}}</td>
+                <td>{{interviewRescheduled.candidate?.firstName}} {{interviewRescheduled.candidate?.lastName}}</td>
+                <td>{{interviewRescheduled.employee?.firstName}} {{interviewRescheduled.employee?.lastName}}</td>
+                <td>{{interviewRescheduled.feedback}}</td>
+                <td>{{interviewRescheduled.modifiedBy}}</td>
+                <td>{{interviewRescheduled.status}}</td>
             </tr> 
         </tbody>
     </table>

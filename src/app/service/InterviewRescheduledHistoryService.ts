@@ -5,7 +5,7 @@ import { InterviewRescheduledHistory } from "../model/InterviewRescheduledHistor
 
 @Injectable({ providedIn: 'root' })
 export class InterviewRescheduledHistoryService{
-    private apiurl = 'http://localhost:8080/api/v1/interviewReschedule';
+    private apiurl = 'http://localhost:8080/api/interviewReschedule';
     headers = new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json');
     httpOptions = {
         headers: this.headers

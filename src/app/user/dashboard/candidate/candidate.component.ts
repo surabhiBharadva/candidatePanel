@@ -13,6 +13,8 @@ import { candidateservice } from 'src/app/service/candidateservice';
 import { CandidateAvailabilityEnum } from 'src/app/enum/CandidateAvailabilityEnum';
 import { error } from 'console';
 import { TranslateService } from '@ngx-translate/core';
+import { configDataMasterValuesService } from 'src/app/service/configDataMasterValuesService';
+import { ConfigDataMasterValues } from 'src/app/model/ConfigDataMasterValues';
 @Component({
   
   selector: 'app-candidate',
@@ -46,19 +48,21 @@ export class CandidateComponent implements OnInit {
   createBy : string ='admin';
   modifiedBy : string ='admin';
   message : string ='';
+  configDataMasterValues : ConfigDataMasterValues [] =[];
   // todayDate=this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private httpService: HttpClient,
     private candidate: candidateservice,
-    private notification: NotificationService) {
+    private notification: NotificationService,
+    private configDataMasterValuesService: configDataMasterValuesService) {
   }
 
   ngOnInit(): void {
 
     this.id2 = this.route.snapshot.params['id'];
-   
+    this.getCandidateStatus();
     this.formData = this.formBuilder.group({
       firstName: [null, Validators.required],
       lastName: [null, Validators.required],
@@ -95,7 +99,7 @@ export class CandidateComponent implements OnInit {
             
             //resume : reader.data.documentDetails,
             position: this.patchPosition(data.position),
-            candidateStatus : this.patchCandidateStatusData(data.candidateStatus),
+            candidateStatus : data.candidateStatus,
             joiningAvailability : this.patchValueAvailability(data.joiningAvailability),
             fileUpload : data.resume,
             id : data.id
@@ -107,12 +111,8 @@ export class CandidateComponent implements OnInit {
       this.updateCandidate = true;
     }
     this.resetAndUpdate();
+    
   }
-  patchFile(documentDetails: import("../../../model/DocumentData").DocumentData | undefined): any {
-   
- 
-  }
-
 
  
 
@@ -133,9 +133,6 @@ export class CandidateComponent implements OnInit {
 
   }
   
-
-
-
   onSubmit() {
     debugger
     if (this.updateCandidate) {
@@ -147,14 +144,14 @@ export class CandidateComponent implements OnInit {
           if (this.formData.invalid) {
             return;
           }
-        } 
+        } else{
+          return;
+        }
 
       }
       this.submitting = true;
       let value = this.changePosition(this.formData.get("position")?.value);
       this.formData.get("position")?.setValue(value);
-      let position = this.changeEmployeeStatus(this.formData.get("candidateStatus")?.value);
-      this.formData.get("candidateStatus")?.setValue(position);
 
       let candidateAvailability = this.changeAvailability(this.formData.get("joiningAvailability")?.value);
       this.formData.get("joiningAvailability")?.setValue(candidateAvailability);
@@ -175,7 +172,7 @@ export class CandidateComponent implements OnInit {
                   joiningDate: data.joiningDate,
                   comment: data.comment,
                   position: this.patchPosition(data.position),
-                  candidateStatus : this.patchCandidateStatusData(data.candidateStatus),
+                  candidateStatus : data.candidateStatus,
                   joiningAvailability : this.patchValueAvailability(data.joiningAvailability),
                   fileUpload : data.resume
       
@@ -249,6 +246,7 @@ export class CandidateComponent implements OnInit {
         data => {
           debugger
           this.formData.patchValue({
+          
             firstName: data.firstName,
             lastName: data.lastName ,
             skills: data.skills,
@@ -257,7 +255,7 @@ export class CandidateComponent implements OnInit {
             joiningDate: data.joiningDate,
             comment: data.comment,
             position: this.patchPosition(data.position),
-            candidateStatus : this.patchCandidateStatusData(data.candidateStatus),
+            candidateStatus : data.candidateStatus,
             joiningAvailability : this.patchValueAvailability(data.joiningAvailability),
             fileUpload : data.resume
 
@@ -279,19 +277,29 @@ export class CandidateComponent implements OnInit {
   getPosition(): string[] {
     return Object.values(PositionEnum).filter((k) => isNaN(Number(k)));
   }
-  getCandidateStatus(): string[] {
-    return Object.values(CandidateStatusEnum).filter((k) => isNaN(Number(k)));
-  }
-
+  getCandidateStatus() {
+    debugger
+    this.configDataMasterValuesService.getCandidateStatus().subscribe(
+      (response: any) => {
+        if (response.status.error) {
+          this.message = response.status.error;
+          
+        } else {
+          debugger
+          this.configDataMasterValues = response.body;
+        }
+      },
+      (error: any) => {
+        this.message = error.error;
+      }
+    )
+    }
   patchValueAvailability(availability: any) {
 
     const indexOfS = Object.keys(CandidateAvailabilityEnum).indexOf(availability);
     return Object.values(CandidateAvailabilityEnum)[indexOfS];
   }
-  patchCandidateStatusData(status: any) {
-    const indexOfS = Object.keys(CandidateStatusEnum).indexOf(status);
-    return Object.values(CandidateStatusEnum)[indexOfS];
-  }
+  
   patchPosition(position: any) {
     const indexOfS = Object.keys(PositionEnum).indexOf(position);
     return Object.values(PositionEnum)[indexOfS];
@@ -308,10 +316,7 @@ export class CandidateComponent implements OnInit {
     return this.enum = Object.keys(PositionEnum)[indexOfS];
  
   }
-  changeEmployeeStatus(name: any) {
-    const indexOfS = Object.values(CandidateStatusEnum).indexOf(name as unknown as CandidateStatusEnum);
-    return this.enum = Object.keys(CandidateStatusEnum)[indexOfS];
-  }
+ 
 }
 
 

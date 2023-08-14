@@ -12,6 +12,8 @@ import { NotificationService } from 'src/app/service/NotificationService';
 import { PositionEnum } from 'src/app/enum/PositionEnum';
 import { InterviewRescheduledHistoryService } from 'src/app/service/InterviewRescheduledHistoryService';
 import { InterviewRescheduledHistory } from 'src/app/model/InterviewRescheduledHistory';
+import { ConfigDataMasterValues } from 'src/app/model/ConfigDataMasterValues';
+import { configDataMasterValuesService } from 'src/app/service/configDataMasterValuesService';
 
 @Component({
   selector: 'app-interview',
@@ -42,6 +44,7 @@ export class InterviewComponent implements OnInit {
   interviewCounter:number = 0;
   selectedStatus : string = '';
   message : string ='';
+  configDataMasterValues : ConfigDataMasterValues [] =[];
   constructor(
     private candidateService: candidateservice,
     private formBuilder: FormBuilder,
@@ -50,13 +53,15 @@ export class InterviewComponent implements OnInit {
     private interviewSevice: Interviewsevice,
     private notification : NotificationService,
     private router: Router,
-    private interviewReschduled : InterviewRescheduledHistoryService
+    
+    private configDataMasterValuesService : configDataMasterValuesService
   ) {
   }
 
   ngOnInit(): void {
     this.candidateId = this.route.snapshot.params['id'];
     this.candidateIdNum = parseInt(this.candidateId);
+    this.getInterViewStatus();
     if(!this.candidateId){
     this.candidateService.getCandidatePendingInterview().subscribe(
       data => {
@@ -67,14 +72,17 @@ export class InterviewComponent implements OnInit {
       }  
     )
     }
-    this.candidateService.getCadidateById(this.candidateIdNum).subscribe(
-      data => {
-        if (data != null) {
-          this.candidateView = true
-          this.candidateObject = data
+    if (this.candidateIdNum) {
+      this.candidateService.getCadidateById(this.candidateIdNum).subscribe(
+        data => {
+          debugger
+          if (data != null) {
+            this.candidateView = true
+            this.candidateObject = data
+          }
         }
-      }
-    )
+      )
+    }
     this.employeeService.getEmplyeeList().subscribe(
       data => {
         this.employeesList = data;
@@ -82,51 +90,80 @@ export class InterviewComponent implements OnInit {
     );
     this.interviewSevice.getInterview().subscribe(
       data => {
+        if(data){
         this.interviewList = data;
+        }
       }
     );
-  
-    if (this.interviewReschduled) {
-      if (this.interviewId) {
-        this.interviewReschduled.getReScheduleInterviewById(this.interviewId).subscribe(data => {
-          this.interviewRescheduledHistory = data;
-        })
-      }
-    }
     if (this.candidateIdNum) {
-      this.interviewSevice.getInterviewBycandidateId(this.candidateIdNum).subscribe(data => {
-        if (data != null) {
-          this.interviewObejct = data;
-          this.interviewId = this.interviewObejct.id;
-          this.interviewReschdule = true;
+      this.interviewSevice.getInterviewBycandidateId(this.candidateIdNum).subscribe(
+        (response: any) => {
+          if (response.status.error) {
+            this.message = response.status.error
+          } else {
+            this.interviewObejct = response.body;
+            this.interviewRescheduledHistory = response.body2;
+            this.interviewId = this?.interviewObejct?.id;
+            this.interviewReschdule = true;
+          }
+        },
+        (error: any) => {
+          this.message = error.error
+
         }
-      })
+      )
     }
+
     this.formData = this.formBuilder.group({
-      candidateId : ['null', Validators.required],
-      employeeId: ['null', Validators.required],
+      candidateId : ['', Validators.required],
+      employeeId: ['', Validators.required],
       schduleDateTime: ['null', Validators.required],
       status:['null', Validators.required],
       feedback: ['',Validators.required],
       
     });
     if (this.candidateIdNum) {
-      this.interviewSevice.getInterviewBycandidateId(this.candidateIdNum).subscribe(data => {
-        debugger
-        if (data != null) {
-          debugger
-          this.formData.patchValue({
-            status : this.patchStatus(data.status),
-            employeeId : data.employee?.id,
-            schduleDateTime : data.schduleDateTime,
-            feedback : data.feedback
-          })
+      this.interviewSevice.getInterviewBycandidateId(this.candidateIdNum).subscribe(
+        (response: any) => {
+          if (response.status.error) {
+            this.message = response.status.error
+          } else {
+            let data = response.body;
+           
+            this.formData.patchValue({
+              status: data.status,
+              employeeId: data.employee?.id,
+              schduleDateTime: data.schduleDateTime,
+              feedback: data.feedback
+            })
+          }
+        },
+        (error: any) => {
+          this.message = error.error
+
         }
-      })
+      )
     }
-    
+
     this.validationClear();
   }
+  getInterViewStatus() {
+    this.configDataMasterValuesService.interviewStatus().subscribe(
+      (response: any) => {
+        if (response.status.error) {
+          this.message = response.status.error;
+          
+        } else {
+          
+          this.configDataMasterValues = response.body;
+        }
+      },
+      (error: any) => {
+        this.message = error.error;
+      }
+    )
+  }
+  
   validationClear(){
     if(!this.candidateSelect){
       this.formData.get('candidateId')?.setValidators(null);
@@ -154,9 +191,6 @@ export class InterviewComponent implements OnInit {
 
       if (!this.candidateSelect) {
         if (this.interviewReschdule) {
-
-          let status = this.changeStatus(this.formData.get("status")?.value);
-          this.formData.get("status")?.setValue(status);
 
           this.interviewSevice.updateInterviewResuchdule(this.candidateIdNum, this.interviewId, this.formData.value, this.formData.get('employeeId')?.value)
             .subscribe(
@@ -199,13 +233,13 @@ export class InterviewComponent implements OnInit {
           .subscribe(
             (response: any) => {
               if (response.status.error) {
-                this.notification.error(response.status.error)
+                this.message = response.status.error
               } else {
-                this.notification.success(response.message);
+                this.message = response.message
               }
             },
             (error: any) => {
-              this.notification.error(error.error)
+             this.message = error.error
             }
           )
 
@@ -227,30 +261,6 @@ export class InterviewComponent implements OnInit {
   clearFrom() {
     this.formData.reset();
   }
-  patchStatus(status : any){
-    const indexOfS = Object.keys(StatusEnum).indexOf(status);
-    return Object.values(StatusEnum)[indexOfS];
-  }
-
-  getValue(id: any) {
-    const indexOfS = Object.keys(StatusEnum).indexOf(id);
-    return Object.values(StatusEnum)[indexOfS];
-  }
-  getInetviewStatus(name: any) {
-    const indexOfS = Object.keys(StatusEnum).indexOf(name);
-    let status = Object.values(StatusEnum)[indexOfS];
-    if (status === "Interview-Scheduled") {
-      return "Scheduled";
-    } else if (status === "Interview-Selected") {
-      return "Selected";
-    } else if (status === "Interview-Rejected") {
-      return "Rejected"
-    } else if (status === "Interview-Rescheduled") {
-      return "Resuchduled";
-    } else if (status === "Interview-Cancelled") {
-      return "Cancelled"
-    }
-
-    return;
-  }
+ 
+  
 }

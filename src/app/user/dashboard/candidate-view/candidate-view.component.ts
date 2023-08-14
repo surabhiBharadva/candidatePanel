@@ -22,16 +22,15 @@ export class CandidateViewComponent implements OnInit {
   constructor(private route: ActivatedRoute, private candidateService : candidateservice,  private router: Router,private intrviewService : Interviewsevice) { }
 
   ngOnInit(): void {
-    debugger
     this.candidateId = this.route.snapshot.params['candidate'];
-    this.candidateService.getCadidateById(parseInt(this.candidateId)).subscribe(
+    this.candidateService.getCadidateByIdView(parseInt(this.candidateId)).subscribe(
       data => {
-        debugger
         if (data) {
+          debugger
           this.candidateObject = data;
         }
       })
-    this.intrviewService.getInterviewBycandidateId(parseInt(this.candidateId)).subscribe(
+    this.intrviewService.getInterviewBycandidateIdView(parseInt(this.candidateId)).subscribe(
       data => {
         if (data) {
           this.interviewObject = data;
@@ -42,7 +41,20 @@ export class CandidateViewComponent implements OnInit {
   close() {
     this.router.navigate(["./dashboard/candidateList"]);
   }
+  download(filename: any) {  
+    debugger  
+    this.candidateService.downloadFile(filename).subscribe(event => {
+      debugger
+      let blob: Blob = event.body as Blob;
 
+      var urlOpean = URL.createObjectURL(blob);
+      window.open(urlOpean, '_blank');
+
+    }, error => {
+      console.log("Error via downloading file..." + error);
+
+    });
+  }
   getPosition(name: any) {
     const indexOfS = Object.keys(PositionEnum).indexOf(name);
     return Object.values(PositionEnum)[indexOfS];

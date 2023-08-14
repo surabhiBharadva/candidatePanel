@@ -12,73 +12,53 @@ import { candidateservice } from 'src/app/service/candidateservice';
 })
 export class InterviewListComponent implements OnInit {
   interviewList?: Interview[] = [];
-  constructor(private interviewSevice : Interviewsevice,private candidateService : candidateservice) { }
+  constructor(private interviewSevice: Interviewsevice, private candidateService: candidateservice) { }
 
   ngOnInit(): void {
     this.interviewSevice.getInterview().subscribe(
       data => {
-        debugger
         this.interviewList = data;
       }
     );
   }
-  getValue(name : any){
-    const indexOfS = Object.keys(StatusEnum).indexOf(name);
-    return Object.values(StatusEnum)[indexOfS];
-  }
-  getPosition(name : any){
+
+  getPosition(name: any) {
     const indexOfS = Object.keys(PositionEnum).indexOf(name);
     return Object.values(PositionEnum)[indexOfS];
   }
-  getInetviewStatus(name : any){
-    const indexOfS = Object.keys(StatusEnum).indexOf(name);
-    let status = Object.values(StatusEnum)[indexOfS];
-    if(status === "Interview-Scheduled"){
-      return "Scheduled";
-    }else if (status === "Interview-Selected"){
-      return "Selected";
-    }else if(status === "Interview-Rejected"){
-      return "Rejected"
-    }else if (status === "Interview-Rescheduled"){
-      return "Rescheduled";
-    }else if(status === "Interview-Cancelled"){
-      return "Cancelled"
-    }
 
-    return ;
-  }
-  allInterview(){
+  allInterview() {
     this.interviewSevice.allInterviewList().subscribe(
-    
+
       data => {
-        debugger
+
         this.interviewList = data
       }
     );
   }
-  previousInterview(){
-    debugger
+  previousInterview() {
+
     this.interviewSevice.previousInterviewList().subscribe(
-    
+
       data => {
-        debugger
+
         this.interviewList = data
       }
     );
   }
-  tommorowInterview(){
+  tommorowInterview() {
     this.interviewSevice.tommorowInterviewList().subscribe(
-    
+
       data => {
-        debugger
+
         this.interviewList = data
       }
     );
   }
-  download(filename: any) {  
-    debugger  
+  download(filename: any) {
+
     this.candidateService.downloadFile(filename).subscribe(event => {
-      debugger
+
       let blob: Blob = event.body as Blob;
 
       var urlOpean = URL.createObjectURL(blob);

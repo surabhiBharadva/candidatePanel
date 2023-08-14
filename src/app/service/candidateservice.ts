@@ -7,10 +7,11 @@ import { Interview } from "../model/Interview";
 
 @Injectable({ providedIn: 'root' })
 export class candidateservice {
+  
 
   id : number = 6 ;
   
-  private url = 'http://localhost:8080/api/v1/candidate';
+  private url = 'http://localhost:8080/api/candidate';
   headers = new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json');
   httpOptions = {
     headers: this.headers
@@ -32,14 +33,19 @@ export class candidateservice {
   }
 
   getCadidateById(id: number) : Observable<Candidate> {
+    debugger
     const url = `${this.url}/${id}`;
     return this.httpService.get<Candidate>(url).pipe(
     catchError(this.handleError)
     );
   }
-
+  getCadidateByIdView(id: number)  : Observable<Candidate> {
+    const url = `${this.url+"/candidateview"}/${id}`;
+    return this.httpService.get<Candidate>(url).pipe(
+    catchError(this.handleError)
+    );
+  }
   addCandidadte(candidate: any, file: any): Observable<Candidate> {
-    debugger
     const fileData = new FormData();
     if (file) {
       fileData.append("candidate", JSON.stringify(candidate))
@@ -57,7 +63,6 @@ export class candidateservice {
   
  
   getCandidatePendingInterview() : Observable<Candidate[]> {
-    debugger
       let url = this.url+"/candidateList";
       return this.httpService.get<Candidate[]>(url).pipe(tap(
         data => this.candidateListInterView = data),
@@ -65,7 +70,6 @@ export class candidateservice {
       );
     }
     downloadFile(fileName: string): Observable<any> {
-      debugger
-      return this.httpService.get("http://localhost:8080/api/v1/candidate/download/" + fileName, { observe: 'response', responseType: 'blob' });
+      return this.httpService.get("http://localhost:8080/api/candidate/download/" + fileName, { observe: 'response', responseType: 'blob' });
     }
 }

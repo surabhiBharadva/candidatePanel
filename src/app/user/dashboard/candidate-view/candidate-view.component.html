@@ -10,6 +10,10 @@
                 <label class="form-label" style="display: inline-block;">Application Date : </label>&nbsp;
                 <label class="form-label" style="display: inline-block;">{{candidateObject.applicationDate | date:'dd-MMM-yyyy'}}</label>
             </div>
+            <div class="col-6 mb-3">
+                <label class="form-label" style="display: inline-block;">Resume : </label>&nbsp;
+              
+            </div>
             </div>
         <div class="row">
             <div class="col-4 mb-3">
@@ -43,7 +47,7 @@
         <div class="row">
             <div class="col-4 mb-3">
                 <label class="form-label" style="display: inline-block;">Candidate Status : </label>&nbsp;
-                <label class="form-label" style="display: inline-block;">{{getStatus(candidateObject.candidateStatus)}}</label>
+                <label class="form-label" style="display: inline-block;">{{candidateObject.candidateStatus}}</label>
             </div>
             <div class="col-4 mb-3" *ngIf="candidateObject.joiningDate">
                 <label class="form-label" style="display: inline-block;">Joining Date : </label>&nbsp;
@@ -77,7 +81,7 @@
             </div>
             <div class="col-4 mb-3">
                 <label class="form-label" style="display: inline-block;">Interview Status : </label>&nbsp;
-                <label class="form-label" style="display: inline-block;">{{patchStatus(interviewObject.status)}}</label>
+                <label class="form-label" style="display: inline-block;">{{interviewObject.status}}</label>
             </div>
             <div class="col-4 mb-3">
                 <label class="form-label" style="display: inline-block;">Feedback : </label>&nbsp;
