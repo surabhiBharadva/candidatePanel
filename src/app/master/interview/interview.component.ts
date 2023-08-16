@@ -85,6 +85,7 @@ export class InterviewComponent implements OnInit {
     }
     this.employeeService.getEmplyeeList().subscribe(
       data => {
+        debugger
         this.employeesList = data;
       }
     );
@@ -117,8 +118,8 @@ export class InterviewComponent implements OnInit {
     this.formData = this.formBuilder.group({
       candidateId : ['', Validators.required],
       employeeId: ['', Validators.required],
-      schduleDateTime: ['null', Validators.required],
-      status:['null', Validators.required],
+      interviewSlot: ['null', Validators.required],
+      interviewStatus:['null', Validators.required],
       feedback: ['',Validators.required],
       
     });
@@ -131,9 +132,9 @@ export class InterviewComponent implements OnInit {
             let data = response.body;
            
             this.formData.patchValue({
-              status: data.status,
+              interviewStatus: data.interviewStatus,
               employeeId: data.employee?.id,
-              schduleDateTime: data.schduleDateTime,
+              interviewSlot: data.interviewSlot,
               feedback: data.feedback
             })
           }
@@ -143,6 +144,7 @@ export class InterviewComponent implements OnInit {
 
         }
       )
+      this.interviewReschdule = true;
     }
 
     this.validationClear();
@@ -165,18 +167,18 @@ export class InterviewComponent implements OnInit {
   }
   
   validationClear(){
-    if(!this.candidateSelect){
-      this.formData.get('candidateId')?.setValidators(null);
-      this.formData.get('candidateId')?.updateValueAndValidity();
-      this.formData.get('candidateId')?.clearValidators();
-    }
+    debugger
     if(!this.interviewReschdule){
-      this.formData.get('status')?.setValidators(null);
-      this.formData.get('status')?.updateValueAndValidity();
-      this.formData.get('status')?.clearValidators();
-      this.formData.get('feedback')?.setValidators(null);
-      this.formData.get('feedback')?.updateValueAndValidity();
-      this.formData.get('feedback')?.clearValidators();
+      this.formData.controls['interviewStatus'].setValidators(null);
+      this.formData.controls['interviewStatus'].updateValueAndValidity();
+      this.formData.controls['interviewStatus'].clearValidators();
+      this.formData.controls['feedback'].setValidators(null);
+      this.formData.controls['feedback'].updateValueAndValidity();
+      this.formData.controls['feedback'].clearValidators();
+    }else{
+      this.formData.controls['candidateId'].setValidators(null);
+      this.formData.controls['candidateId'].updateValueAndValidity();
+      this.formData.controls['candidateId'].clearValidators();
     }
   }
   getStatus(){
@@ -187,7 +189,9 @@ export class InterviewComponent implements OnInit {
     return this.formData.controls;
   }
   onSubmit() {
+    debugger
     if (this.formData.valid) {
+      
 
       if (!this.candidateSelect) {
         if (this.interviewReschdule) {

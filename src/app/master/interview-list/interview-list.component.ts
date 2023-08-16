@@ -12,6 +12,7 @@ import { candidateservice } from 'src/app/service/candidateservice';
 })
 export class InterviewListComponent implements OnInit {
   interviewList?: Interview[] = [];
+  selectpicker ?: String = '';
   constructor(private interviewSevice: Interviewsevice, private candidateService: candidateservice) { }
 
   ngOnInit(): void {
@@ -37,7 +38,7 @@ export class InterviewListComponent implements OnInit {
     );
   }
   previousInterview() {
-
+debugger
     this.interviewSevice.previousInterviewList().subscribe(
 
       data => {
@@ -69,5 +70,15 @@ export class InterviewListComponent implements OnInit {
 
     });
   }
-
+  selectList(data: any) {
+    if (data === "Previous Interview") {
+      this.previousInterview();
+    } else if (data === "All Interview") {
+      this.allInterview();
+    } else if (data === "Tommorow Interview") {
+      this.tommorowInterview();
+    }else{
+      this.ngOnInit()
+    }
+  }
 }

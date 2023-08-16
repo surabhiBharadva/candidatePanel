@@ -4,8 +4,8 @@ import { Interview } from "./Interview";
 
 export class InterviewRescheduledHistory{
     id?:number;
-	schduleDateTime?:Date;
-	status?:string;
+	interviewSlot?: Date;
+    interviewStatus?:string;
 	feedback?:string;
 	candidate ?:Candidate;
 	employee?: Employee;

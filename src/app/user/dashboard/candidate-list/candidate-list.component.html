@@ -34,7 +34,7 @@
                 <tbody>
                     <tr
                         *ngFor="let candidate of candidateList">
-                        <td>{{getPosition(candidate.position)}}</td>
+                        <td>{{getPosition(candidate.jobRequirement)}}</td>
                         <td>{{candidate.applicationDate | date:'dd-MMM-yyyy'}}</td>
                         <td>{{candidate.firstName | titlecase}} {{candidate.lastName | titlecase}} </td>
                         <td>{{candidate.email}}</td>

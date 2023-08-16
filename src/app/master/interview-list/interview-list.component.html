@@ -5,30 +5,22 @@
         <div class="title">Scheduled Interview</div>
     </div>
     <div>
-        <div class="d-flex justify-content-between align-items-center">
-           <h1></h1>
+        <div class="d-flex justify-content-end align-items-center">
+            <h1></h1>
             <div class="dropdown">
-                <select data-style="btn-default"
-                        class="form-control selectpicker form-select" data-style="btn-default" class="selectpicker form-select">
-                       
-                            <option selected disabled value="">-- Select --</option>
-                            <option><a class="btn text-dark border border-dark fw-bold" style="background-color: rgb(226, 226, 226);"
-                            (click)="previousInterview()">Previous Interview</a></option>
-                            <option><a class="btn text-dark border border-dark fw-bold" style="background-color: rgb(226, 226, 226);"
-                            (click)="allInterview()">All Interview</a></option>
-                            <option><button class="btn text-dark border border-dark fw-bold" style="background-color: rgb(226, 226, 226);"
-                            (click)="tommorowInterview()">Tommorow Interview</button></option>
-                          
-                    </select>
-              </div>
-              <button type="submit" class="btn text-dark border border-dark fw-bold" style="background-color: rgb(226, 226, 226);"
-                            (click)="previousInterview()">Previous Interview</button>
-                            <button type="submit" class="btn text-dark border border-dark fw-bold" style="background-color: rgb(226, 226, 226);"
-                            (click)="allInterview()">All Interview</button>
-                            <button type="submit" class="btn text-dark border border-dark fw-bold" style="background-color: rgb(226, 226, 226);"
-                            (click)="tommorowInterview()">Tommorow Interview</button>
+                <select data-style="btn-default" class="form-control selectpicker form-select"
+                  [(ngModel)]="selectpicker" (change)="selectList(selectpicker)">
+                
+                    <option selected disabled value="">-- Select --</option>
+                    <option>Default</option>
+                    <option>Previous Interview</option>
+                    <option>All Interview</option>
+                    <option>Tommorow Interview</option>
+                
+                </select>
+            </div>
             <button type="submit" class="btn text-dark border border-dark fw-bold" style="background-color: rgb(226, 226, 226);"
-                routerLinkActive="active" routerLink="../interviewUpdate/">Schedule Interview </button>
+            routerLinkActive="active" routerLink="../interviewUpdate/">Schedule Interview </button>
         </div>
     <table class="table table-striped">
         <thead>
@@ -48,8 +40,8 @@
         </thead>
         <tbody>
             <tr *ngFor="let interview of interviewList">
-                <td>{{interview?.schduleDateTime | date: 'dd-MMM-yyyy hh:mm a'}}</td>
-                <td>{{getPosition(interview?.candidate?.position)}}</td>
+                <td>{{interview?.interviewSlot | date: 'dd-MMM-yyyy hh:mm a'}}</td>
+                <td>{{getPosition(interview?.candidate?.jobRequirement)}}</td>
                 <td>{{interview?.candidate?.firstName | titlecase}} {{interview.candidate?.lastName | titlecase}} </td>
                 <td>{{interview?.candidate?.email}}</td>
                 <td>{{interview?.candidate?.phoneNo}}</td>
@@ -57,7 +49,7 @@
                         (click)="download(interview?.candidate?.documentDetails?.fileName)">{{interview?.candidate?.documentDetails?.fileName}}</a>
                 </td>
                 <td>{{interview?.employee?.firstName | titlecase}} {{interview?.employee?.lastName | titlecase}}</td> 
-                <td>{{interview.status}}</td>
+                <td>{{interview.interviewStatus}}</td>
                 <td>{{interview?.modifiedBy}}</td>
                 <td style="white-space: nowrap">
                     <img alt="" src="assets\image\pen.svg" width="20" height="20" routerLinkActive="active"

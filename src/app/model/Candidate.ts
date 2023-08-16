@@ -5,13 +5,13 @@ export class Candidate{
     id?:number;
     firstName ?: string;
     lastName ?: string;
-    position?: string;
+    jobRequirement?: string;
     email ?: string;
     phoneNo ?: string;
     skills ?: string;
     resume?: string;
     joiningDate?:Date;
-    comment?:string;
+    comments?:string;
     candidateStatus?:string;
     hireOrNotHire?:boolean;
     interview ?: Interview;

@@ -5,4 +5,5 @@ export class DocumentData{
     craeteDate?:Date;
     modifiedBy?:string;
     modifiedDate?:Date;
+    fileData ?: any;
 }

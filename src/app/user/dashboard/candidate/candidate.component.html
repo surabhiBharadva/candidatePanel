@@ -2,165 +2,189 @@
     <div class="card-header bg-transparent border-success d-flex justify-content-between align-items-center">
         <h4>{{title}} Candidate Details</h4>
 
-      
-        <button  type="button" class="btn-close" aria-label="Close" (click)="close()" style="color: black;"></button>
+
+        <button type="button" class="btn-close" aria-label="Close" (click)="close()" style="color: black;"></button>
     </div>
     <div class="card-body border-dark">
         <form [formGroup]="formData" (ngSubmit)="onSubmit()">
-            
+
             <div class="row">
                 <div class="col-6 mb-3">
                     <label class="form-label">Job Requirement *</label>
-                    <select  data-style="btn-default" class="selectpicker form-select" formControlName="position">
-            
+                    <select data-style="btn-default" class="selectpicker form-select" formControlName="jobRequirement">
+
                         <option selected disabled value="">-- Select --</option>
                         <option *ngFor="let name of getPosition()" [value]="name">
                             {{name}} </option>
-                           
+
                     </select>
-                    <span *ngIf="f['position'].errors" >
-                        <span *ngIf="f['position'].touched || submitted">
-                        <span *ngIf="f['position'].errors['required']" style="color: rgb(194, 17, 17);">Position is
-                            Required</span>
+                    <span *ngIf="f['jobRequirement'].errors">
+                        <span *ngIf="f['jobRequirement'].touched || submitted">
+                            <span *ngIf="f['jobRequirement'].errors['required']"
+                                style="color: rgb(194, 17, 17);">Position is
+                                Required</span>
+                        </span>
                     </span>
-                    </span>
-                    
-                   
-                    
+
+
+
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="col-6 mb-3">
                     <label class="form-label">First Name *</label>
-                    <input type="text" formControlName="firstName" class="form-control"
-                        />   
+                    <input type="text" formControlName="firstName" class="form-control" />
                     <div *ngIf="f['firstName'].errors">
                         <div *ngIf="f['firstName'].touched || submitted">
-                        <div *ngIf="f['firstName'].errors['required']" style="color: rgb(194, 17, 17); ">FirstName is Required</div>
-                    </div>
+                            <div *ngIf="f['firstName'].errors['required']" style="color: rgb(194, 17, 17); ">FirstName
+                                is Required</div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-6 mb-3">
                     <label class="form-label">Last Name *</label>
-                    <input type="text" formControlName="lastName" class="form-control"
-                        />
+                    <input type="text" formControlName="lastName" class="form-control" />
                     <div *ngIf="f['lastName'].errors ">
                         <div *ngIf="f['lastName'].touched || submitted">
-                        <div *ngIf="f['lastName'].errors['required']" style="color: rgb(194, 17, 17); ">LastName is Required</div>
+                            <div *ngIf="f['lastName'].errors['required']" style="color: rgb(194, 17, 17); ">LastName is
+                                Required</div>
+                        </div>
                     </div>
                 </div>
-                </div>
             </div>
-            
+
             <div class="row">
                 <div class="col-6 mb-3">
                     <label class="form-label">Email *</label>
-                    <input type="email" formControlName="email" class="form-control"
-                         />
+                    <input type="email" formControlName="email" class="form-control" />
                     <div *ngIf="submitted && f['email'].errors">
                         <div *ngIf="f['email'].touched  || submitted">
-                        <div *ngIf="f['email'].errors['required']" style="color: rgb(194, 17, 17);">Email is Required</div>
-                        <div *ngIf="f['email'].errors['email']"  style="color: rgb(194, 17, 17);">Email must be a valid email address</div>
-                    </div>
+                            <div *ngIf="f['email'].errors['required']" style="color: rgb(194, 17, 17);">Email is
+                                Required</div>
+                            <div *ngIf="f['email'].errors['email']" style="color: rgb(194, 17, 17);">Email must be a
+                                valid email address</div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-6 mb-3">
                     <label class="form-label">Phone No *</label>
-                    <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" formControlName="phoneNo" class="form-control"
-                        />
-                    <div *ngIf="f['phoneNo'].errors" >
+                    <input type="text"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                        formControlName="phoneNo" class="form-control" />
+                    <div *ngIf="f['phoneNo'].errors">
                         <div *ngIf="f['phoneNo'].touched || submitted">
-                        <div *ngIf="f['phoneNo'].errors['required']" style="color: rgb(194, 17, 17);" >Phone No is Required</div>
+                            <div *ngIf="f['phoneNo'].errors['required']" style="color: rgb(194, 17, 17);">Phone No is
+                                Required</div>
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
             <div class="mb-3">
                 <label class="form-label">Skills *</label>
-                <input type="text" formControlName="skills" class="form-control"
-                    />
-                <div *ngIf="f['skills'].errors" >
+                <input type="text" formControlName="skills" class="form-control" />
+                <div *ngIf="f['skills'].errors">
                     <div *ngIf="f['skills'].touched || submitted">
-                    <div *ngIf="f['skills'].errors['required']" style="color: rgb(194, 17, 17);">Skills is Required</div>
-                    </div>
-                </div>
-            </div>
-            
-            
-            <div class="row">
-                <div class="col-6 mb-3">
-                    <label class="form-label">Upload Resume *</label>
-                    <input class="form-control" formControlName="resume" accept=".pdf" type="file"
-                        (change)="onChange($event)"  />
-                    <div *ngIf="f['resume'].errors">
-                        <div *ngIf="submitted">
-                            <div *ngIf="f['resume'].errors['required']" style="color: rgb(194, 17, 17);">Resume is Required</div>
+                        <div *ngIf="f['skills'].errors['required']" style="color: rgb(194, 17, 17);">Skills is Required
                         </div>
                     </div>
                 </div>
+            </div>
+
+
+            <div class="row" >
+                <div class="col-6 mb-3"
+                *ngIf="!updateCandidate">
+                    <label class="form-label">Upload Resume *</label>
+                    <input class="form-control" formControlName="resume" accept=".pdf" type="file"  (change)="onChange($event)"/>
+
+                        <div *ngIf="f['resume'].touched || submitted">
+                            <div *ngIf="f['resume'].errors" class="text-danger">
+                                <div *ngIf="f['resume'].errors['required']" style="color: rgb(194, 17, 17);">Resume is Required</div>
+                                <div *ngIf="f['resume'].errors['fileType']" style="color: rgb(194, 17, 17);">
+                                    Invalid file type. Please select a PDF file.
+                                </div>
+                            </div>
+                        </div>
+                   
+                </div>
+                <div class="col-6 mb-3" *ngIf="fileName && updateCandidate">
+                    <label class="form-label">Resume</label>  &nbsp;&nbsp;
+                   
+                        <a  *ngIf="!reopenUpload" alt="" style="color: rgb(31, 147, 255);cursor: pointer;" width="30" height="30"
+                        (click)="download(fileName.fileName)">{{fileName.fileName}}</a> &nbsp;&nbsp;
+                        <button class="btn text-dark border border-dark"
+                        style="background-color: rgb(226, 226, 226);"
+                        (click)="reupoladClick(true)"><span></span>Reupolad</button>
+                        <input class="form-control" *ngIf="reopenUpload" formControlName="resume" accept=".pdf" type="file"  (change)="onChange($event)"/>
+                    
+            </div>
                 <div class="col-6 mb-3">
                     <label class="form-label">Joining Availability *</label>
                     <select  data-style="btn-default"
                         class="form-control selectpicker form-select" formControlName="joiningAvailability">
                         <option selected disabled value="">-- Select --</option>
                         <option *ngFor="let name of getAvailability()" [value]="name">
-                            {{name}} </option>         
+                            {{name}} </option>
                     </select>
                     <span *ngIf="f['joiningAvailability'].errors" >
                         <span *ngIf="f['joiningAvailability'].touched || submitted">
-                        <span *ngIf="f['joiningAvailability'].errors['required']" style="color: rgb(194, 17, 17);">Availability is Required</span>
+                            <span *ngIf="f['joiningAvailability'].errors['required']" style="color: rgb(194, 17, 17);">Availability is Required</span>
+                        </span>
                     </span>
-                </span>
                 </div>
-                
+
             </div>
 
             <div class="row">
                 <div class="col-6 mb-3" *ngIf="updateCandidate">
                     <label class="form-label">Status</label>
 
-                    <select [(ngModel)]="selectedStatus"  data-style="btn-default" formControlName="candidateStatus"
+                    <select [(ngModel)]="selectedStatus" data-style="btn-default" formControlName="candidateStatus"
                         class="form-control selectpicker form-select" data-live-search="true">
                         <option selected disabled value="">-- Select --</option>
-                        <option *ngFor="let i of configDataMasterValues" [ngValue]="i.configKey" [id]="i.configValue" >
-                           {{i.configValue}} </option>
+                        <option *ngFor="let i of configDataMasterValues" [ngValue]="i.configKey" [id]="i.configValue">
+                            {{i.configValue}} </option>
                     </select>
-                    <span *ngIf="f['candidateStatus'].errors" >
+                    <span *ngIf="f['candidateStatus'].errors">
                         <span *ngIf="f['candidateStatus'].touched || submitted">
-                        <span *ngIf="f['candidateStatus'].errors['required']" style="color: rgb(194, 17, 17);">Status is Required</span>
+                            <span *ngIf="f['candidateStatus'].errors['required']"
+                                style="color: rgb(194, 17, 17);">Status is Required</span>
+                        </span>
                     </span>
-                    </span>
-                   
+
                 </div>
                 <div class="col-6 mb-3" *ngIf="updateCandidate && selectedStatus === 'OfferAccepted'">
                     <label class="form-label">Joining Date</label>
                     <input type="Date" formControlName="joiningDate" class="form-control" />
                     <div *ngIf="f['joiningDate'].errors">
                         <div *ngIf="f['joiningDate'].touched || submitted">
-                            <div *ngIf="f['joiningDate'].errors['required']" style="color: rgb(194, 17, 17);">Joining Date is Required</div>
+                            <div *ngIf="f['joiningDate'].errors['required']" style="color: rgb(194, 17, 17);">Joining
+                                Date is Required</div>
                         </div>
                     </div>
-                   
+
                 </div>
             </div>
             <div class="mb-3">
                 <label class="form-label">Comment</label>
-                <textarea type="textarea" formControlName="comment" class="form-control"></textarea>
+                <textarea type="textarea" formControlName="comments" class="form-control"></textarea>
             </div>
 
-            <div> 
-                <button [disabled]="submitting" class="btn text-dark border border-dark btn-lg"  style="background-color: rgb(226, 226, 226);width:14%;color: black;">
+            <div>
+                <button [disabled]="submitting" class="btn text-dark border border-dark btn-lg"
+                    style="background-color: rgb(226, 226, 226);width:14%;color: black;">
                     <span *ngIf="submitting" class="spinner-border spinner-border-sm me-1"></span>
                     Submit
                 </button>
                 <span>&nbsp;&nbsp;</span>
-                <button class="btn text-dark border border-dark btn-lg" style="background-color: rgb(226, 226, 226);width:14%;"
+                <button class="btn text-dark border border-dark btn-lg"
+                    style="background-color: rgb(226, 226, 226);width:14%;"
                     (click)="clearFrom()"><span></span>Clear</button>
             </div>
             <div style="color: rgb(4, 4, 255);margin-top: 5px;">{{message}}</div>
         </form>
-       
+
     </div>
 </div>
 

@@ -15,7 +15,7 @@
                     <div>
                         <label class="form-label">Candidate Name : </label>&nbsp;
                         <label class="form-label">{{candidateObject?.firstName}} {{candidateObject?.lastName}} (
-                            {{(patchPosition(candidateObject?.position))}} ) 
+                            {{(patchPosition(candidateObject?.jobRequirement))}} ) 
                         </label>
                     </div>
                     <div>
@@ -39,14 +39,14 @@
                         
                     <label class="form-label">Interview Status *</label>
                     <select [(ngModel)]="selectedStatus" data-style="btn-default"
-                        class="form-control selectpicker form-select" formControlName="status">
+                        class="form-control selectpicker form-select" formControlName="interviewStatus">
                         <option selected disabled value="">-- Select --</option>
                         <option *ngFor="let i of configDataMasterValues" [value]="i.configKey" [id]="i.configKey">
                             {{i.configValue}} </option>         
                     </select>
-                    <span *ngIf="f['status'].errors" >
-                        <span *ngIf="f['status'].touched || submitted"></span>
-                        <span *ngIf="f['status'].errors['required']" style="color: rgb(194, 17, 17);">Interview Status is required</span>
+                    <span *ngIf="f['interviewStatus'].errors" >
+                        <span *ngIf="f['interviewStatus'].touched || submitted"></span>
+                        <span *ngIf="f['interviewStatus'].errors['required']" style="color: rgb(194, 17, 17);">Interview Status is required</span>
                     </span>
                   
                 </div>
@@ -66,33 +66,38 @@
                 </span>
                
             </div>
-
             <div class="mb-3" *ngIf="candidateSelect || candidateView">
-                
+               
+    
                 <label class="form-label">Interviewer Name *</label><span>&nbsp;&nbsp;</span>
-                <select formControlName="employeeId"   data-style="btn-default" class="form-control selectpicker form-select">
+                <select data-style="btn-default" formControlName="employeeId" class="form-control selectpicker form-select">
                     <option selected disabled value="">-- Select --</option>
-                    <option *ngFor="let i of employeesList" [ngValue]="i.id" [id]="i.id"> {{i.firstName | titlecase}} {{i.lastName | titlecase}}</option>
+                    <option *ngFor="let i of employeesList" [ngValue]="i.id" [id]="i.id"> {{i.firstName}} {{i.lastName}}</option>
                 </select>
                 <span *ngIf="f['employeeId'].errors" >
                     <span *ngIf="f['employeeId'].touched || submitted"></span>
-                    <span *ngIf="f['employeeId'].errors['required']" style="color: rgb(194, 17, 17);">Interviewer Name is required</span>
+                    <span *ngIf="f['employeeId'].errors['required']" style="color: rgb(194, 17, 17);">Name is required</span>
                 </span>
-                
+               
             </div>
-
 
             <div class="mb-3" *ngIf="candidateSelect || candidateView">
                 
                 <label class="form-label">Schedule Date and Time *</label>
-                <input type="datetime-local" formControlName="schduleDateTime" class="form-control" />
-               
+                <input type="datetime-local" formControlName="interviewSlot" class="form-control" />
+                <span *ngIf="f['interviewSlot'].errors" >
+                    <span *ngIf="f['interviewSlot'].touched || submitted"></span>
+                    <span *ngIf="f['interviewSlot'].errors['required']" style="color: rgb(194, 17, 17);">Schedule Date and Time is required</span>
+                </span>
             </div>
             <div class="mb-3" *ngIf="interviewReschdule">
                
                 <label class="form-label">Feedback *</label>
                 <textarea type="text" formControlName="feedback" class="form-control" ></textarea>
-                
+                <span *ngIf="f['feedback'].errors" >
+                    <span *ngIf="f['feedback'].touched || submitted"></span>
+                    <span *ngIf="f['feedback'].errors['required']" style="color: rgb(194, 17, 17);">Feedback is required</span>
+                </span>
             </div>
             <div class="mb-3">
                 
@@ -124,7 +129,7 @@
     </div>
     <div>
 
-    <table class="table thead-dark w-200">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Interview Slot</th>
@@ -139,12 +144,12 @@
         <tbody>
              <tr *ngFor="let interviewRescheduled of interviewRescheduledHistory">
                
-                <td>{{interviewRescheduled.schduleDateTime | date: 'dd-MMM-yyyy hh:mm a'}}</td>
+                <td>{{interviewRescheduled.interviewSlot | date: 'dd-MMM-yyyy hh:mm a'}}</td>
                 <td>{{interviewRescheduled.candidate?.firstName}} {{interviewRescheduled.candidate?.lastName}}</td>
                 <td>{{interviewRescheduled.employee?.firstName}} {{interviewRescheduled.employee?.lastName}}</td>
                 <td>{{interviewRescheduled.feedback}}</td>
                 <td>{{interviewRescheduled.modifiedBy}}</td>
-                <td>{{interviewRescheduled.status}}</td>
+                <td>{{interviewRescheduled.interviewStatus}}</td>
             </tr> 
         </tbody>
     </table>

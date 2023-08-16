@@ -5,8 +5,8 @@ import { StatusEnum } from "../enum/StatusEnum";
 export class Interview{
     id?:number;
     comment?: string;
-    schduleDateTime?: string;
-    status?:StatusEnum;
+    interviewSlot?: Date;
+    interviewStatus?:string;
     candidate ?: Candidate;
     candidateId?: number;
     feedback?:string;
