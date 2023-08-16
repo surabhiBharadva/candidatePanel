@@ -12,7 +12,8 @@
             </div>
             <div class="col-6 mb-3">
                 <label class="form-label" style="display: inline-block;">Resume : </label>&nbsp;
-              
+                <a alt="" style="color: rgb(31, 147, 255);cursor: pointer;" width="30" height="30"
+                (click)="download(candidateObject?.documentDetails?.fileName)">{{candidateObject?.documentDetails?.fileName}}</a>
             </div>
             </div>
         <div class="row">

@@ -119,12 +119,12 @@ export class CandidateComponent implements OnInit {
   resetAndUpdate() {
     if (!this.updateCandidate) {
       debugger
-      this.formData.get('joiningDate')?.setValidators(null);
-      this.formData.get('joiningDate')?.updateValueAndValidity();
-      this.formData.get('joiningDate')?.clearValidators();
-      this.formData.get('candidateStatus')?.setValidators(null);
-      this.formData.get('candidateStatus')?.updateValueAndValidity();
-      this.formData.get('candidateStatus')?.clearValidators();
+      this.formData.controls['joiningDate'].setValidators(null);
+      this.formData.controls['joiningDate'].updateValueAndValidity();
+      this.formData.controls['joiningDate'].clearValidators();
+      this.formData.controls['candidateStatus'].setValidators(null);
+      this.formData.controls['candidateStatus'].updateValueAndValidity();
+      this.formData.controls['candidateStatus'].clearValidators();
     }
   }
   get f() {
@@ -140,12 +140,17 @@ export class CandidateComponent implements OnInit {
       //update Code 
       this.submitted = true;
       if (this.formData.invalid) {
-        if (this.selectedStatus === "Offer-Accepted") {
+        if (this.selectedStatus === "OfferAccepted") {
           if (this.formData.invalid) {
             return;
           }
         } else{
-          return;
+          this.formData.controls['joiningDate'].setValidators(null);
+          this.formData.controls['joiningDate'].updateValueAndValidity();
+          this.formData.controls['joiningDate'].clearValidators();
+          if (this.formData.invalid) {
+            return;
+          }
         }
 
       }
