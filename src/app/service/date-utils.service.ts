@@ -17,9 +17,9 @@ export class DateUtilsService {
   }
 
   getDateWithMonthDayDate(date:Date){
-    if (isNaN(date.getTime())) {
-      return '';
-  }
+  //   if (isNaN(date.getTime())) {
+  //     return '';
+  // }
     return this.datePipe.transform(date, 'MMM dd EEE');
   }
 
@@ -37,4 +37,11 @@ export class DateUtilsService {
     return this.datePipe.transform(date, 'yyyy-MM-dd');
   }
 
+  getDateWithYearMonthDayAndTime(date:Date){
+    return this.datePipe.transform(date, 'yyyy-MM-dd HH:mm:ss');
+  }
+
+  dBToUI(date:Date){
+    return this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ss.SSS');
+  }
 }
