@@ -79,6 +79,7 @@ export class InterviewComponent implements OnInit {
           if (data != null) {
             this.candidateView = true
             this.candidateObject = data
+            this.validationClearAdd()
           }
         }
       )
@@ -144,10 +145,21 @@ export class InterviewComponent implements OnInit {
 
         }
       )
-      this.interviewReschdule = true;
+      
     }
 
     this.validationClear();
+  }
+  validationClearAdd() {
+    this.formData.controls['interviewStatus'].setValidators(null);
+    this.formData.controls['interviewStatus'].updateValueAndValidity();
+    this.formData.controls['interviewStatus'].clearValidators();
+    this.formData.controls['feedback'].setValidators(null);
+    this.formData.controls['feedback'].updateValueAndValidity();
+    this.formData.controls['feedback'].clearValidators();
+    this.formData.controls['candidateId'].setValidators(null);
+    this.formData.controls['candidateId'].updateValueAndValidity();
+    this.formData.controls['candidateId'].clearValidators();
   }
   getInterViewStatus() {
     this.configDataMasterValuesService.interviewStatus().subscribe(
@@ -194,11 +206,14 @@ export class InterviewComponent implements OnInit {
       
 
       if (!this.candidateSelect) {
+        
+
         if (this.interviewReschdule) {
 
           this.interviewSevice.updateInterviewResuchdule(this.candidateIdNum, this.interviewId, this.formData.value, this.formData.get('employeeId')?.value)
             .subscribe(
               (response: any) => {
+                debugger
                 if (response.status.error) {
                   this.message = response.status.error
                  

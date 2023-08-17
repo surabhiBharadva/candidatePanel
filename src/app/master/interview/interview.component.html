@@ -44,8 +44,8 @@
                         <option *ngFor="let i of configDataMasterValues" [value]="i.configKey" [id]="i.configKey">
                             {{i.configValue}} </option>         
                     </select>
-                    <div *ngIf="f['interviewStatus'].touched || submitted">
-                        <div *ngIf="f['interviewStatus'].errors" >
+                    <div *ngIf="f['interviewStatus'].errors">
+                        <div *ngIf="f['interviewStatus'].touched || submitted" >
                             <div *ngIf="f['interviewStatus'].errors['required']" style="color: rgb(194, 17, 17);">Interview Status is required</div>
                         </div>
                     </div>
@@ -60,8 +60,8 @@
                     <option *ngFor="let name of candidateList" [ngValue]="name.id" [id]="name.id"> {{name.firstName | titlecase}}
                         {{name.lastName | titlecase}}</option>
                 </select>
-                <div *ngIf="f['candidateId'].touched || submitted">
-                    <div *ngIf="f['candidateId'].errors" >
+                <div *ngIf="f['candidateId'].errors ">
+                    <div *ngIf="f['candidateId'].touched || submitted" >
                         <div *ngIf="f['candidateId'].errors['required']" style="color: rgb(194, 17, 17);"> Candidate Name is required</div>
                     </div>
                 </div>
@@ -74,8 +74,8 @@
                     <option selected disabled value="">-- Select --</option>
                     <option *ngFor="let i of employeesList" [ngValue]="i.id" [id]="i.id"> {{i.firstName}} {{i.lastName}}</option>
                 </select>
-                <div *ngIf="f['employeeId'].touched || submitted">
-                    <div *ngIf="f['employeeId'].errors" >
+                <div *ngIf="f['employeeId'].errors">
+                    <div *ngIf="f['employeeId'].touched || submitted" >
                         <div *ngIf="f['employeeId'].errors['required']" style="color: rgb(194, 17, 17);">Name is required</div>
                     </div>
                 </div>
@@ -85,8 +85,8 @@
                 
                 <label class="form-label">Schedule Date and Time *</label>
                 <input type="datetime-local" formControlName="interviewSlot" class="form-control" />
-                <div *ngIf="f['interviewSlot'].touched || submitted">
-                    <div *ngIf="f['interviewSlot'].errors" >
+                <div *ngIf="f['interviewSlot'].errors">
+                    <div *ngIf=" f['interviewSlot'].touched || submitted" >
                         <div *ngIf="f['interviewSlot'].errors['required']" style="color: rgb(194, 17, 17);">Schedule Date and Time is required</div>
                     </div>
                 </div>
@@ -95,8 +95,8 @@
                
                 <label class="form-label">Feedback *</label>
                 <textarea type="text" formControlName="feedback" class="form-control" ></textarea>
-                <div *ngIf="f['feedback'].touched || submitted">
-                    <div *ngIf="f['feedback'].errors" >
+                <div *ngIf="f['feedback'].errors">
+                    <div *ngIf="f['feedback'].touched || submitted" >
                         <div *ngIf="f['feedback'].errors['required']" style="color: rgb(194, 17, 17);">Feedback is required</div>
                     </div>
                 </div>
