@@ -4,7 +4,6 @@ import { StatusEnum } from 'src/app/enum/StatusEnum';
 import { Interview } from 'src/app/model/Interview';
 import { Interviewsevice } from 'src/app/service/InterviewService';
 import { candidateservice } from 'src/app/service/candidateservice';
-
 @Component({
   selector: 'app-interview-list',
   templateUrl: './interview-list.component.html',

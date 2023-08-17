@@ -196,7 +196,8 @@ export class CandidateComponent implements OnInit {
 
       let candidateAvailability = this.changeAvailability(this.formData.get("joiningAvailability")?.value);
       this.formData.get("joiningAvailability")?.setValue(candidateAvailability);
-      this.formData.get("modifiedBy")?.setValue('Admin');
+      const formData2 = new FormData()
+     
       this.candidate.addCandidadte(this.formData.value, this.file).subscribe(
         (response: any) => {
           if (response.status === 'Error') {
@@ -229,12 +230,11 @@ export class CandidateComponent implements OnInit {
 
       let candidateAvailability = this.changeAvailability(this.formData.get("joiningAvailability")?.value);
       this.formData.get("joiningAvailability")?.setValue(candidateAvailability);
-      this.formData.get("modifiedBy")?.setValue('Admin');
+      
       this.candidate.addCandidadte(this.formData.value, this.file).subscribe(
         (response: any) => {
           if (response.status.error) {
-            this.message = response.status.error;
-
+            this.message = response.message
           } else {
             this.message = response.message;
           }

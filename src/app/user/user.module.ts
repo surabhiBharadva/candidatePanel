@@ -15,18 +15,19 @@ import { EmployeeListComponent } from '../master/employee-list/employee-list.com
 import { CandidateViewComponent } from './dashboard/candidate-view/candidate-view.component';
 import { InterviewListComponent } from '../master/interview-list/interview-list.component';
 import { TimeSheetComponent } from '../time-sheet/time-sheet.component';
+import { DynamicLabelPipe } from 'src/app/service/DynamicLabelPipe';
 
 @NgModule({
     declarations: [EmployeeComponent, InterviewListComponent ,EmployeeListComponent, 
       DashboardComponent, CandidateComponent, InterviewComponent, CandidateListComponent, 
       HeaderComponent, FooterComponent, CandidateViewComponent,
-    TimeSheetComponent],
+    TimeSheetComponent,DynamicLabelPipe],
   imports: [
     CommonModule,
     UserRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-
+    
     
   ]
 })

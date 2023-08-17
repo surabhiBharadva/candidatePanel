@@ -1,7 +1,7 @@
 .container2{
     margin-top: 70px;
     margin-left: 150px;
-    
+    width: 1000px;
 }
 .closeButton{
     margin-left: 30px;
@@ -15,11 +15,7 @@
     font-weight: 100px;
 }
 
-@media(max-width: 768px) {
-    .card {
-      width: 330px;
-    }
-  }
+
 #hideMeAfter5Seconds {
     animation: hideAnimation 0s ease-in 10s;
     animation-fill-mode: forwards;
@@ -31,4 +27,14 @@
         width: 0;
         height: 0;
     }
+}
+
+@media only screen and (max-width:800px) {
+    .container2{
+    margin-top: 100px;
+    margin-left: 0px; 
+    width: 100%;
+    }
+    
+   
 }

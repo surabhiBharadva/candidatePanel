@@ -12,13 +12,12 @@ import { candiddateSer } from './service/candidateSer';
 import { EnumToArrayPipe } from './pipe/EnumToArrayPipe ';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { DatePipe } from '@angular/common';
-
+import { DynamicLabelPipe } from 'src/app/service/DynamicLabelPipe';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     NotificationComponent,
-    
   ],
   imports: [
     BrowserModule,
@@ -33,7 +32,7 @@ import { DatePipe } from '@angular/common';
 
   ],
   providers: [
-    DatePipe
+    DatePipe,
   ],
   bootstrap: [AppComponent]
 })

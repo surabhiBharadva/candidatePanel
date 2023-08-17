@@ -1,6 +1,6 @@
-<div class="card border-dark mb-3 container2" style="width: 1000px;">
-    <div class="card-header bg-transparent border-success d-flex justify-content-between align-items-center">
-        <h4>{{title}} Candidate Details</h4>
+<div class="card mb-3 container2">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4>{{title}} {{'CandidateDetails' | dynamicLabel}}</h4>
 
 
         <button type="button" class="btn-close" aria-label="Close" (click)="close()" style="color: black;"></button>
@@ -109,15 +109,12 @@
             
                 </div>
                 <div class="col-6 mb-3" *ngIf="fileName && updateCandidate">
-                    <label *ngIf="!reopenUpload" class="form-label" style="font-size:16px;">Resume : </label>
+                    <label *ngIf="!reopenUpload" class="form-label" style="font-size:16px;padding-top: 34px;">Resume : </label>
+                <a *ngIf="!reopenUpload" alt="" style="color: rgb(31, 147, 255);cursor: pointer;font-size: 16px;margin-left: 10px;padding-top: 34px;"
+                    (click)="download(fileName.fileName)">{{fileName.fileName}}</a>
                 
-                    <a *ngIf="!reopenUpload" alt="" style="color: rgb(31, 147, 255);cursor: pointer;font-size: 16px;margin-left: 10px;"
-                        (click)="download(fileName.fileName)">{{fileName.fileName}}</a>
-                    <div *ngIf="!reopenUpload">
-                        <button class="btn text-dark border border-dark"
-                            style="background-color: rgb(226, 226, 226);"
-                            (click)="reupoladClick(true)"><span></span>Reupload Resume</button>
-                    </div>
+                <img *ngIf="!reopenUpload" style="margin-left: 10px;padding-top: 5px;" alt="" src="assets\image\pen.svg" width="30" height="30" (click)="reupoladClick(true)" />
+                   
                     <label *ngIf="reopenUpload" class="form-label">Reupload Resume *</label>
                     <input class="form-control" *ngIf="reopenUpload" formControlName="resume" accept=".pdf" type="file"
                         (change)="onChange($event)" />
@@ -130,6 +127,8 @@
                         </div>
                 
                 </div>
+                
+
                 <div class="col-6 mb-3">
                     <label class="form-label">Joining Availability *</label>
                     <select data-style="btn-default" class="form-control selectpicker form-select"
@@ -148,6 +147,7 @@
 
                 </div>
             
+               
             </div>
 
             <div class="row">
@@ -186,15 +186,15 @@
             </div>
 
             <div>
-                <button type="submit" (click)="onSubmit()" [disabled]="submitting" class="btn text-dark border border-dark btn-lg"
-                    style="background-color: rgb(226, 226, 226);width:14%;color: black;">
+                <button type="submit" (click)="onSubmit()" [disabled]="submitting" class="btn border border-dark btn-lg"
+                    style="background-color: rgb(226, 226, 226);color: black;">
                     <span *ngIf="submitting" class="spinner-border spinner-border-sm me-1"></span>
-                    Submit
+                    {{'Submit'|dynamicLabel}}
                 </button>
                 <span>&nbsp;&nbsp;</span>
-                <button type="clear" class="btn text-dark border border-dark btn-lg"
-                    style="background-color: rgb(226, 226, 226);width:14%;"
-                    (click)="clearFrom()"><span></span>Clear</button>
+                <button type="clear" class="btn border border-dark btn-lg"
+                    style="background-color: rgb(226, 226, 226);"
+                    (click)="clearFrom()"><span></span> {{'Clear'|dynamicLabel}}</button>
             </div>
             <div style="color: rgb(4, 4, 255);margin-top: 5px;" id="hideMeAfter5Seconds">{{message}}</div>
         </form>

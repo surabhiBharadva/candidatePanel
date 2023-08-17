@@ -1,4 +1,4 @@
-<div class="card mb-3 container2" style="width: 500px;">
+<div class="card mb-3 container2" >
     <div class="card-header d-flex justify-content-between align-items-center">
     <h5 *ngIf="interviewReschdule">Reschedule/Update Interview</h5>
     <h5 *ngIf="candidateSelect">Add Interview Candidate</h5>
@@ -10,21 +10,21 @@
                 <div *ngIf="candidateView">
                     
                     <div>
-                        <label class="form-label title">Candidate Details</label>
+                        <label class="form-label title">{{'CandidateDetails' | dynamicLabel}}</label>
                     </div>
                     <div>
-                        <label class="form-label">Candidate Name : </label>&nbsp;
+                        <label class="form-label">{{'CandidateName_'|dynamicLabel}} </label>&nbsp;
                         <label class="form-label">{{candidateObject?.firstName}} {{candidateObject?.lastName}} (
                             {{(patchPosition(candidateObject?.jobRequirement))}} ) 
                         </label>
                     </div>
                     <div>
-                        <label class="form-label">Email : </label>&nbsp;
+                        <label class="form-label">{{'Email_'|dynamicLabel}} </label>&nbsp;
                         <label class="form-label">{{candidateObject?.email}}
                         </label>
                     </div>
                     <div>
-                        <label class="form-label">Phone :</label>&nbsp;
+                        <label class="form-label">{{'Phone_'|dynamicLabel}}</label>&nbsp;
                         <label class="form-label">{{candidateObject?.phoneNo}}
                         </label>
                     </div>
@@ -37,7 +37,7 @@
                 <div class="mb-3" *ngIf="interviewReschdule">
                     
                         
-                    <label class="form-label">Interview Status *</label>
+                    <label class="form-label">{{'InterviewStatus' | dynamicLabel}} *</label>
                     <select [(ngModel)]="selectedStatus" data-style="btn-default"
                         class="form-control selectpicker form-select" formControlName="interviewStatus">
                         <option selected disabled value="">-- Select --</option>
@@ -54,7 +54,7 @@
             <div class="mb-3" *ngIf="candidateSelect">
                
     
-                <label class="form-label">Candidate Name *</label><span>&nbsp;&nbsp;</span>
+                <label class="form-label">{{'CandidateName' | dynamicLabel}}  *</label><span>&nbsp;&nbsp;</span>
                 <select data-style="btn-default" formControlName="candidateId" class="form-control selectpicker form-select">
                     <option selected disabled value="">-- Select --</option>
                     <option *ngFor="let name of candidateList" [ngValue]="name.id" [id]="name.id"> {{name.firstName | titlecase}}
@@ -69,7 +69,7 @@
             <div class="mb-3" *ngIf="candidateSelect || candidateView">
                
     
-                <label class="form-label">Interviewer Name *</label><span>&nbsp;&nbsp;</span>
+                <label class="form-label">{{'InterviewerName' | dynamicLabel}} *</label><span>&nbsp;&nbsp;</span>
                 <select data-style="btn-default" formControlName="employeeId" class="form-control selectpicker form-select">
                     <option selected disabled value="">-- Select --</option>
                     <option *ngFor="let i of employeesList" [ngValue]="i.id" [id]="i.id"> {{i.firstName}} {{i.lastName}}</option>
@@ -83,17 +83,18 @@
 
             <div class="mb-3" *ngIf="candidateSelect || candidateView">
                 
-                <label class="form-label">Schedule Date and Time *</label>
+                <label class="form-label">{{'InterviewSlot' | dynamicLabel}} *</label>
                 <input type="datetime-local" formControlName="interviewSlot" class="form-control" />
                 <div *ngIf="f['interviewSlot'].errors">
-                    <div *ngIf=" f['interviewSlot'].touched || submitted" >
+                    <div *ngIf="f['interviewSlot'].touched || submitted" >
                         <div *ngIf="f['interviewSlot'].errors['required']" style="color: rgb(194, 17, 17);">Schedule Date and Time is required</div>
                     </div>
                 </div>
+              
             </div>
             <div class="mb-3" *ngIf="interviewReschdule">
                
-                <label class="form-label">Feedback *</label>
+                <label class="form-label">{{'Feedback'| dynamicLabel}} *</label>
                 <textarea type="text" formControlName="feedback" class="form-control" ></textarea>
                 <div *ngIf="f['feedback'].errors">
                     <div *ngIf="f['feedback'].touched || submitted" >
@@ -105,15 +106,15 @@
                 
                 <button *ngIf="candidateSelect || !interviewReschdule && candidateView " class="btn text-dark" (click)="onSubmit()" style="background-color: rgb(226, 226, 226);">
                     <span></span>
-                    Submit
+                    {{'Submit'|dynamicLabel}}
                 </button>
                 <button *ngIf="interviewReschdule"  (click)="onSubmit()" class="btn text-dark" style="background-color: rgb(226, 226, 226);">
                     <span></span>
-                    Reschedule
+                    {{'Reschedule'|dynamicLabel}}
                 </button>
                 <span>&nbsp;&nbsp;</span>
                 <button class="btn text-dark" style="background-color: rgb(226, 226, 226);"
-                    (click)="clearFrom()"><span></span>Clear</button>
+                    (click)="clearFrom()"><span></span> {{'Clear'|dynamicLabel}}</button>
                
             </div>
             <div style="color: rgb(4, 4, 255);margin-top: 5px;" id="hideMeAfter5Seconds">{{message}}</div>
@@ -131,15 +132,15 @@
     </div>
     <div>
 
-    <table class="table table-striped">
+    <table class="table table-striped" id="no-more-tables">
         <thead>
             <tr>
-                <th>Interview Slot</th>
-                <th>Candiddate Name</th>
-                <th>Interviewer Name</th>
-                <th>Feedback</th>
-                <th>Arrange By</th>
-                <th>Interview Status</th>
+                <th>{{'InterviewSlot' | dynamicLabel}}</th>
+                <th>{{'CandidateName' | dynamicLabel}}</th>
+                <th>{{'InterviewerName' | dynamicLabel}}</th>
+                <th>{{'Feedback' | dynamicLabel}}</th>
+                <th>{{'ArrangeBy' | dynamicLabel}}</th>
+                <th>{{'InterviewStatus' | dynamicLabel}}</th>
                 
             </tr>
         </thead>

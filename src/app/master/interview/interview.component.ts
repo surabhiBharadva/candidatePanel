@@ -79,7 +79,7 @@ export class InterviewComponent implements OnInit {
           if (data != null) {
             this.candidateView = true
             this.candidateObject = data
-            this.validationClearAdd()
+          
           }
         }
       )
@@ -104,7 +104,9 @@ export class InterviewComponent implements OnInit {
             this.message = response.status.error
           } else {
             this.interviewObejct = response.body;
-            this.interviewRescheduledHistory = response.body2;
+            if (response.body2) {
+              this.interviewRescheduledHistory = response.body2;
+            }
             this.interviewId = this?.interviewObejct?.id;
             this.interviewReschdule = true;
           }
@@ -119,8 +121,8 @@ export class InterviewComponent implements OnInit {
     this.formData = this.formBuilder.group({
       candidateId : ['', Validators.required],
       employeeId: ['', Validators.required],
-      interviewSlot: ['null', Validators.required],
-      interviewStatus:['null', Validators.required],
+      interviewSlot: ['', Validators.required],
+      interviewStatus:['', Validators.required],
       feedback: ['',Validators.required],
       
     });
@@ -148,7 +150,6 @@ export class InterviewComponent implements OnInit {
       
     }
 
-    this.validationClear();
   }
   validationClearAdd() {
     this.formData.controls['interviewStatus'].setValidators(null);
@@ -178,21 +179,7 @@ export class InterviewComponent implements OnInit {
     )
   }
   
-  validationClear(){
-    debugger
-    if(!this.interviewReschdule){
-      this.formData.controls['interviewStatus'].setValidators(null);
-      this.formData.controls['interviewStatus'].updateValueAndValidity();
-      this.formData.controls['interviewStatus'].clearValidators();
-      this.formData.controls['feedback'].setValidators(null);
-      this.formData.controls['feedback'].updateValueAndValidity();
-      this.formData.controls['feedback'].clearValidators();
-    }else{
-      this.formData.controls['candidateId'].setValidators(null);
-      this.formData.controls['candidateId'].updateValueAndValidity();
-      this.formData.controls['candidateId'].clearValidators();
-    }
-  }
+ 
   getStatus(){
     return Object.values(StatusEnum).filter((k) => isNaN(Number(k)));
   }
@@ -202,14 +189,23 @@ export class InterviewComponent implements OnInit {
   }
   onSubmit() {
     debugger
-    if (this.formData.valid) {
-      
-
+  
       if (!this.candidateSelect) {
-        
-
+        this.submitted = true;
+      
+    
         if (this.interviewReschdule) {
-
+          if (this.formData.invalid) {
+            this.formData.controls['candidateId'].setValidators(null);
+            this.formData.controls['candidateId'].updateValueAndValidity();
+            this.formData.controls['candidateId'].clearValidators();
+            this.formData.controls['employeeId'].setValidators(null);
+            this.formData.controls['employeeId'].updateValueAndValidity();
+            this.formData.controls['employeeId'].clearValidators();
+            if(this.formData.invalid){
+              return;
+            }
+          }
           this.interviewSevice.updateInterviewResuchdule(this.candidateIdNum, this.interviewId, this.formData.value, this.formData.get('employeeId')?.value)
             .subscribe(
               (response: any) => {
@@ -219,7 +215,9 @@ export class InterviewComponent implements OnInit {
                  
                 } else {
                   this.message = response.message
-                  
+                  if(response.body2){
+                  this.interviewRescheduledHistory = response.body2
+                  }
                 }
               },
               (error: any) => {
@@ -230,7 +228,20 @@ export class InterviewComponent implements OnInit {
 
 
         } else {
-
+          if (this.formData.invalid) {
+            this.formData.controls['candidateId'].setValidators(null);
+            this.formData.controls['candidateId'].updateValueAndValidity();
+            this.formData.controls['candidateId'].clearValidators();
+            this.formData.controls['interviewStatus'].setValidators(null);
+            this.formData.controls['interviewStatus'].updateValueAndValidity();
+            this.formData.controls['interviewStatus'].clearValidators();
+            this.formData.controls['feedback'].setValidators(null);
+            this.formData.controls['feedback'].updateValueAndValidity();
+            this.formData.controls['feedback'].clearValidators();
+            if(this.formData.invalid){
+              return;
+            }
+          }
           this.interviewSevice.addInterview(this.candidateIdNum, this.formData.value, this.formData.get('employeeId')?.value)
             .subscribe(
               (response: any) => {
@@ -248,6 +259,18 @@ export class InterviewComponent implements OnInit {
             )
         }
       } else {
+        this.submitted = true;
+        if (this.formData.invalid) {
+          this.formData.controls['interviewStatus'].setValidators(null);
+          this.formData.controls['interviewStatus'].updateValueAndValidity();
+          this.formData.controls['interviewStatus'].clearValidators();
+          this.formData.controls['feedback'].setValidators(null);
+          this.formData.controls['feedback'].updateValueAndValidity();
+          this.formData.controls['feedback'].clearValidators();
+          if(this.formData.invalid){
+            return;
+          }
+        }
         this.interviewSevice.addInterview(this.formData.get('candidateId')?.value, this.formData.value, this.formData.get('employeeId')?.value)
           .subscribe(
             (response: any) => {
@@ -263,7 +286,7 @@ export class InterviewComponent implements OnInit {
           )
 
       }
-    }
+    
   }
   changeStatus(status : any){
     const indexOfS = Object.values(StatusEnum).indexOf(status as unknown as StatusEnum);
@@ -278,8 +301,34 @@ export class InterviewComponent implements OnInit {
   }
 
   clearFrom() {
-    this.formData.reset();
+    if (this.interviewReschdule) {
+      if (this.candidateIdNum) {
+        this.interviewSevice.getInterviewBycandidateId(this.candidateIdNum).subscribe(
+          (response: any) => {
+            if (response.status.error) {
+              this.message = response.status.error
+            } else {
+              let data = response.body;
+
+              this.formData.patchValue({
+                interviewStatus: data.interviewStatus,
+                employeeId: data.employee?.id,
+                interviewSlot: data.interviewSlot,
+                feedback: data.feedback
+              })
+            }
+          },
+          (error: any) => {
+            this.message = error.error
+
+          }
+        )
+
+      }
+    } else {
+      this.formData.reset();
+    }
   }
- 
+
   
 }

@@ -1,7 +1,7 @@
 .container2{
     margin-top: 70px;
     margin-left: 150px;
-    
+    width: 1000px;
 }
 .closeButton{
     margin-left: 30px;
@@ -9,4 +9,18 @@
 .container3{
     margin-top: 0px;
     margin-left: 150px;
+    width: 1000px;
+}
+@media only screen and (max-width:800px) {
+    .container2{
+    margin-top: 100px;
+    margin-left: 0px; 
+    width: 100%;
+    }
+    .container3{
+        margin-top: 0px;
+        margin-left: 0px;
+        width: 100%;
+    }
+   
 }
