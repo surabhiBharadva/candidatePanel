@@ -9,6 +9,8 @@ import { CandidateStatusEnum } from 'src/app/enum/CandidateEnum';
 import { DocumentService } from 'src/app/service/DocumentService';
 import { candidateservice } from 'src/app/service/candidateservice';
 import { CandidateAvailabilityEnum } from 'src/app/enum/CandidateAvailabilityEnum';
+import { configDataMasterValuesService } from 'src/app/service/configDataMasterValuesService';
+import { ConfigDataMasterValues } from 'src/app/model/ConfigDataMasterValues';
 
 @Component({
   selector: 'app-candidate-list',
@@ -20,9 +22,27 @@ export class CandidateListComponent implements OnInit {
   candidateList?: Candidate[] = []
   candiDateData: any;
   file!: Blob;
-  constructor(private candidateService: candidateservice, private route: ActivatedRoute, private http: HttpClient, private documentService: DocumentService, private router: Router,) { }
+  selectedStatus : string = '';
+  configDataMasterValues: ConfigDataMasterValues[] = [];
+  constructor(private candidateService: candidateservice, 
+    private route: ActivatedRoute, private http: HttpClient,
+    private documentService: DocumentService, private router: Router,
+     private configDataMasterValuesService: configDataMasterValuesService) { }
 
   ngOnInit(): void {
+    this.configDataMasterValuesService.getCandidateStatus().subscribe(
+      (response: any) => {
+        if (response.status.error) {
+         
+        } else {
+          debugger
+          this.configDataMasterValues = response.body;
+        }
+      },
+      (error: any) => {
+        
+      }
+    )
     this.candidateService.getCandidateList().subscribe(
       data => {
         this.candidateList = data;
@@ -86,5 +106,11 @@ export class CandidateListComponent implements OnInit {
     });
   }
 
+  selectList(value: any) {
+    this.candidateService.getStatusList(value).subscribe(
+      data =>
+        this.candidateList = data
 
+    )
+  }
 }

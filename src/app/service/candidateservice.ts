@@ -47,8 +47,8 @@ export class candidateservice {
   }
   addCandidadte(candidate: any, file: any): Observable<Candidate> {
     const fileData = new FormData();
+    fileData.append("candidate", JSON.stringify(candidate))
     if (file) {
-      fileData.append("candidate", JSON.stringify(candidate))
       fileData.append("file", file)
     }
     return this.httpService.post<Candidate>(`${this.url}`, fileData).pipe(tap(data => console.log(data))
@@ -59,6 +59,13 @@ export class candidateservice {
       data => this.candidateList = data),
       catchError(this.handleError)
     );
+  }
+  getStatusList(status: any) : Observable<Candidate[]> {
+    let url = `${this.url+"/candidateStatus"}/${status}`;
+      return this.httpService.get<Candidate[]>(url).pipe(tap(
+        data => this.candidateListInterView = data),
+        catchError(this.handleError)
+      );
   }
   
  

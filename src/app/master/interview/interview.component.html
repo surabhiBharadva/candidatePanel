@@ -6,7 +6,7 @@
         <button  type="button" class="btn-close" aria-label="Close" (click)="close()" style="color: black;"></button>
     </div>
     <div class="card-body">
-        <form [formGroup]="formData" (ngSubmit)="onSubmit()">
+        <form [formGroup]="formData" >
                 <div *ngIf="candidateView">
                     
                     <div>
@@ -44,11 +44,11 @@
                         <option *ngFor="let i of configDataMasterValues" [value]="i.configKey" [id]="i.configKey">
                             {{i.configValue}} </option>         
                     </select>
-                    <span *ngIf="f['interviewStatus'].errors" >
-                        <span *ngIf="f['interviewStatus'].touched || submitted"></span>
-                        <span *ngIf="f['interviewStatus'].errors['required']" style="color: rgb(194, 17, 17);">Interview Status is required</span>
-                    </span>
-                  
+                    <div *ngIf="f['interviewStatus'].touched || submitted">
+                        <div *ngIf="f['interviewStatus'].errors" >
+                            <div *ngIf="f['interviewStatus'].errors['required']" style="color: rgb(194, 17, 17);">Interview Status is required</div>
+                        </div>
+                    </div>
                 </div>
                 
             <div class="mb-3" *ngIf="candidateSelect">
@@ -60,11 +60,11 @@
                     <option *ngFor="let name of candidateList" [ngValue]="name.id" [id]="name.id"> {{name.firstName | titlecase}}
                         {{name.lastName | titlecase}}</option>
                 </select>
-                <span *ngIf="f['candidateId'].errors" >
-                    <span *ngIf="f['candidateId'].touched || submitted"></span>
-                    <span *ngIf="f['candidateId'].errors['required']" style="color: rgb(194, 17, 17);">Candidate Name is required</span>
-                </span>
-               
+                <div *ngIf="f['candidateId'].touched || submitted">
+                    <div *ngIf="f['candidateId'].errors" >
+                        <div *ngIf="f['candidateId'].errors['required']" style="color: rgb(194, 17, 17);"> Candidate Name is required</div>
+                    </div>
+                </div>
             </div>
             <div class="mb-3" *ngIf="candidateSelect || candidateView">
                
@@ -74,38 +74,40 @@
                     <option selected disabled value="">-- Select --</option>
                     <option *ngFor="let i of employeesList" [ngValue]="i.id" [id]="i.id"> {{i.firstName}} {{i.lastName}}</option>
                 </select>
-                <span *ngIf="f['employeeId'].errors" >
-                    <span *ngIf="f['employeeId'].touched || submitted"></span>
-                    <span *ngIf="f['employeeId'].errors['required']" style="color: rgb(194, 17, 17);">Name is required</span>
-                </span>
-               
+                <div *ngIf="f['employeeId'].touched || submitted">
+                    <div *ngIf="f['employeeId'].errors" >
+                        <div *ngIf="f['employeeId'].errors['required']" style="color: rgb(194, 17, 17);">Name is required</div>
+                    </div>
+                </div>
             </div>
 
             <div class="mb-3" *ngIf="candidateSelect || candidateView">
                 
                 <label class="form-label">Schedule Date and Time *</label>
                 <input type="datetime-local" formControlName="interviewSlot" class="form-control" />
-                <span *ngIf="f['interviewSlot'].errors" >
-                    <span *ngIf="f['interviewSlot'].touched || submitted"></span>
-                    <span *ngIf="f['interviewSlot'].errors['required']" style="color: rgb(194, 17, 17);">Schedule Date and Time is required</span>
-                </span>
+                <div *ngIf="f['interviewSlot'].touched || submitted">
+                    <div *ngIf="f['interviewSlot'].errors" >
+                        <div *ngIf="f['interviewSlot'].errors['required']" style="color: rgb(194, 17, 17);">Schedule Date and Time is required</div>
+                    </div>
+                </div>
             </div>
             <div class="mb-3" *ngIf="interviewReschdule">
                
                 <label class="form-label">Feedback *</label>
                 <textarea type="text" formControlName="feedback" class="form-control" ></textarea>
-                <span *ngIf="f['feedback'].errors" >
-                    <span *ngIf="f['feedback'].touched || submitted"></span>
-                    <span *ngIf="f['feedback'].errors['required']" style="color: rgb(194, 17, 17);">Feedback is required</span>
-                </span>
+                <div *ngIf="f['feedback'].touched || submitted">
+                    <div *ngIf="f['feedback'].errors" >
+                        <div *ngIf="f['feedback'].errors['required']" style="color: rgb(194, 17, 17);">Feedback is required</div>
+                    </div>
+                </div>
             </div>
             <div class="mb-3">
                 
-                <button *ngIf="candidateSelect || !interviewReschdule && candidateView " class="btn text-dark" style="background-color: rgb(226, 226, 226);">
+                <button *ngIf="candidateSelect || !interviewReschdule && candidateView " class="btn text-dark" (click)="onSubmit()" style="background-color: rgb(226, 226, 226);">
                     <span></span>
                     Submit
                 </button>
-                <button *ngIf="interviewReschdule" class="btn text-dark" style="background-color: rgb(226, 226, 226);">
+                <button *ngIf="interviewReschdule"  (click)="onSubmit()" class="btn text-dark" style="background-color: rgb(226, 226, 226);">
                     <span></span>
                     Reschedule
                 </button>
@@ -114,7 +116,7 @@
                     (click)="clearFrom()"><span></span>Clear</button>
                
             </div>
-            <div style="color: rgb(4, 4, 255);margin-top: 5px;">{{message}}</div>
+            <div style="color: rgb(4, 4, 255);margin-top: 5px;" id="hideMeAfter5Seconds">{{message}}</div>
         </form>
     </div>
     

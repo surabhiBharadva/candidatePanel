@@ -6,14 +6,21 @@
 
         </div>
         <div>
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-end align-items-center">
                 <h1></h1>
+                <div class="dropdown">
+                    <select (change)="selectList(selectedStatus)" [(ngModel)]="selectedStatus" data-style="btn-default" class="form-control selectpicker form-select" data-live-search="true">
+                        <option selected disabled value="">-- Select --</option>
+                        <option *ngFor="let i of configDataMasterValues" [ngValue]="i.configKey" [id]="i.configValue">
+                            {{i.configValue}} </option>
+                    </select>
+                </div>
                 <button type="submit" class="btn text-dark border border-dark fw-bold"
                     style="background-color: rgb(226, 226, 226);width: 170px;height: 40px;" routerLinkActive="active"
                     routerLink="../candidate/"> Add Candidate </button>
-
+        
             </div>
-
+        
         </div>
         <div class="table-responsive" id="no-more-tables">
             <table class="table table-striped w-200">

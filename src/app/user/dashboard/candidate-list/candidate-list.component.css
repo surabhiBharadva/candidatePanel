@@ -16,7 +16,9 @@
 .tr{
     font-weight: 100px;
 }
-
+.dropdown{
+    margin-right: 30px;
+}
 @media only screen and (max-width:800px) {
     .container{
     margin-top: 50px;

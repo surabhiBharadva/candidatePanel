@@ -23,7 +23,7 @@ import { DocumentData } from 'src/app/model/DocumentData';
   styleUrls: ['./candidate.component.css']
 })
 export class CandidateComponent implements OnInit {
-  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+ 
   keyAvailability = {};
   positionEnum!: PositionEnum;
   formData!: FormGroup;
@@ -51,7 +51,7 @@ export class CandidateComponent implements OnInit {
   modifiedBy: string = 'admin';
   message: string = '';
   configDataMasterValues: ConfigDataMasterValues[] = [];
-  fileNameData : any ;
+
   reopenUpload = false;
   // todayDate=this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   constructor(private formBuilder: FormBuilder,
@@ -71,8 +71,8 @@ export class CandidateComponent implements OnInit {
       firstName: [null, Validators.required],
       lastName: [null, Validators.required],
       jobRequirement: ['', Validators.required],
-      email: [null, [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
-      phoneNo: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
+      phoneNo: ['',[Validators.required,Validators.pattern('[0-9]\\d{9}')]],
       skills: [null, Validators.required],
       resume: [null, Validators.required],
       joiningDate: [null, Validators.required],
@@ -87,7 +87,6 @@ export class CandidateComponent implements OnInit {
       this.title = "Edit";
       this.loading = true;
       this.num = parseInt(this.id2);
-      let reader = new FileReader();
 
       this.candidate.getCadidateById(this.num).subscribe(
         data => {
@@ -117,7 +116,7 @@ export class CandidateComponent implements OnInit {
     this.resetAndUpdate();
 
   }
-
+  
   
 
   resetAndUpdate() {
@@ -161,7 +160,14 @@ export class CandidateComponent implements OnInit {
       this.submitted = true;
       if (this.formData.invalid) {
         if (this.selectedStatus === "OfferAccepted") {
-          if (this.formData.invalid) {
+          if (!this.reopenUpload) {
+            this.formData.controls['resume'].setValidators(null);
+            this.formData.controls['resume'].updateValueAndValidity();
+            this.formData.controls['resume'].clearValidators();
+            if (this.formData.invalid) {
+              return;
+            }
+          } else {
             return;
           }
         } else {
@@ -169,7 +175,17 @@ export class CandidateComponent implements OnInit {
           this.formData.controls['joiningDate'].updateValueAndValidity();
           this.formData.controls['joiningDate'].clearValidators();
           if (this.formData.invalid) {
-            return;
+            if (!this.reopenUpload) {
+              this.formData.controls['resume'].setValidators(null);
+              this.formData.controls['resume'].updateValueAndValidity();
+              this.formData.controls['resume'].clearValidators();
+              if (this.formData.invalid) {
+                return;
+              }
+            } else {
+              return;
+            }
+
           }
         }
 
@@ -180,33 +196,15 @@ export class CandidateComponent implements OnInit {
 
       let candidateAvailability = this.changeAvailability(this.formData.get("joiningAvailability")?.value);
       this.formData.get("joiningAvailability")?.setValue(candidateAvailability);
-
+      this.formData.get("modifiedBy")?.setValue('Admin');
       this.candidate.addCandidadte(this.formData.value, this.file).subscribe(
         (response: any) => {
           if (response.status === 'Error') {
-            this.message = this.message
-            this.candidate.getCadidateById(this.num).subscribe(
-              data => {
-                debugger
-                this.formData.patchValue({
-                  firstName: data.firstName,
-                  lastName: data.lastName,
-                  skills: data.skills,
-                  email: data.email,
-                  phoneNo: data.phoneNo,
-                  joiningDate: data.joiningDate,
-                  comments: data.comments,
-                  resume : data.documentDetails?.fileData,
-                  position: this.patchPosition(data.jobRequirement),
-                  candidateStatus: data.candidateStatus,
-                  joiningAvailability: this.patchValueAvailability(data.joiningAvailability),
-                  fileUpload: data.resume
-                });
-
-              }
-            )
+            this.message = response.message
+            this.patchValue(this.num);
           } else {
             this.message = response.message;
+            this.patchValue(this.num);
           }
         },
         (error: any) => {
@@ -231,7 +229,7 @@ export class CandidateComponent implements OnInit {
 
       let candidateAvailability = this.changeAvailability(this.formData.get("joiningAvailability")?.value);
       this.formData.get("joiningAvailability")?.setValue(candidateAvailability);
-
+      this.formData.get("modifiedBy")?.setValue('Admin');
       this.candidate.addCandidadte(this.formData.value, this.file).subscribe(
         (response: any) => {
           if (response.status.error) {
@@ -269,30 +267,34 @@ export class CandidateComponent implements OnInit {
       this.formData.reset();
 
     } else {
-      this.candidate.getCadidateById(this.num).subscribe(
-        data => {
-          debugger
-          this.formData.patchValue({
-
-            firstName: data.firstName,
-            lastName: data.lastName,
-            skills: data.skills,
-            email: data.email,
-            phoneNo: data.phoneNo,
-            joiningDate: data.joiningDate,
-            comment: data.comments,
-            jobRequirement: this.patchPosition(data.jobRequirement),
-            candidateStatus: data.candidateStatus,
-            joiningAvailability: this.patchValueAvailability(data.joiningAvailability),
-            fileUpload: data.resume,
-            
-          });
-
-        }
-      )
+      this.patchValue(this.num);
+      
       this.reopenUpload = false
     }
 
+  }
+  patchValue(num: number) {
+    this.candidate.getCadidateById(num).subscribe(
+      data => {
+        debugger
+        this.formData.patchValue({
+
+          firstName: data.firstName,
+          lastName: data.lastName,
+          skills: data.skills,
+          email: data.email,
+          phoneNo: data.phoneNo,
+          joiningDate: data.joiningDate,
+          comment: data.comments,
+          jobRequirement: this.patchPosition(data.jobRequirement),
+          candidateStatus: data.candidateStatus,
+          joiningAvailability: this.patchValueAvailability(data.joiningAvailability),
+          fileUpload: data.resume,
+          
+        });
+
+      }
+    )
   }
   close() {
     this.router.navigate(["./dashboard/candidateList"]);

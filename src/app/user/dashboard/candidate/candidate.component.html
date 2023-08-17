@@ -6,7 +6,7 @@
         <button type="button" class="btn-close" aria-label="Close" (click)="close()" style="color: black;"></button>
     </div>
     <div class="card-body border-dark">
-        <form [formGroup]="formData" (ngSubmit)="onSubmit()">
+        <form [formGroup]="formData" >
 
             <div class="row">
                 <div class="col-6 mb-3">
@@ -59,7 +59,7 @@
                     <label class="form-label">Email *</label>
                     <input type="email" formControlName="email" class="form-control" />
                     <div *ngIf="submitted && f['email'].errors">
-                        <div *ngIf="f['email'].touched  || submitted">
+                        <div *ngIf="f['email'].touched || submitted">
                             <div *ngIf="f['email'].errors['required']" style="color: rgb(194, 17, 17);">Email is
                                 Required</div>
                             <div *ngIf="f['email'].errors['email']" style="color: rgb(194, 17, 17);">Email must be a
@@ -71,11 +71,12 @@
                     <label class="form-label">Phone No *</label>
                     <input type="text"
                         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                        formControlName="phoneNo" class="form-control" />
+                        formControlName="phoneNo" class="form-control"  maxlength="10"/>
                     <div *ngIf="f['phoneNo'].errors">
                         <div *ngIf="f['phoneNo'].touched || submitted">
                             <div *ngIf="f['phoneNo'].errors['required']" style="color: rgb(194, 17, 17);">Phone No is
                                 Required</div>
+                                <div *ngIf="f['phoneNo'].errors['pattern']" style="color: rgb(194, 17, 17);">Phone Number in 10 digit</div>
                         </div>
                     </div>
                 </div>
@@ -92,48 +93,61 @@
             </div>
 
 
-            <div class="row" >
-                <div class="col-6 mb-3"
-                *ngIf="!updateCandidate">
+            <div class="row">
+                <div class="col-6 mb-3" *ngIf="!updateCandidate">
                     <label class="form-label">Upload Resume *</label>
-                    <input class="form-control" formControlName="resume" accept=".pdf" type="file"  (change)="onChange($event)"/>
-
-                        <div *ngIf="f['resume'].touched || submitted">
-                            <div *ngIf="f['resume'].errors" class="text-danger">
-                                <div *ngIf="f['resume'].errors['required']" style="color: rgb(194, 17, 17);">Resume is Required</div>
-                                <div *ngIf="f['resume'].errors['fileType']" style="color: rgb(194, 17, 17);">
-                                    Invalid file type. Please select a PDF file.
+                    <input class="form-control" formControlName="resume" accept=".pdf" type="file" (change)="onChange($event)" />
+            
+                    <div *ngIf="f['resume'].touched || submitted">
+                        <div *ngIf="f['resume'].errors" class="text-danger">
+                            <div *ngIf="f['resume'].errors['required']" style="color: rgb(194, 17, 17);">Resume is Required</div>
+                            <div *ngIf="f['resume'].errors['fileType']" style="color: rgb(194, 17, 17);">
+                                Invalid file type. Please select a PDF file.
+                            </div>
+                        </div>
+                    </div>
+            
+                </div>
+                <div class="col-6 mb-3" *ngIf="fileName && updateCandidate">
+                    <label *ngIf="!reopenUpload" class="form-label" style="font-size:16px;">Resume : </label>
+                
+                    <a *ngIf="!reopenUpload" alt="" style="color: rgb(31, 147, 255);cursor: pointer;font-size: 16px;margin-left: 10px;"
+                        (click)="download(fileName.fileName)">{{fileName.fileName}}</a>
+                    <div *ngIf="!reopenUpload">
+                        <button class="btn text-dark border border-dark"
+                            style="background-color: rgb(226, 226, 226);"
+                            (click)="reupoladClick(true)"><span></span>Reupload Resume</button>
+                    </div>
+                    <label *ngIf="reopenUpload" class="form-label">Reupload Resume *</label>
+                    <input class="form-control" *ngIf="reopenUpload" formControlName="resume" accept=".pdf" type="file"
+                        (change)="onChange($event)" />
+                        <div *ngIf="f['resume'].errors && reopenUpload">
+                            <div *ngIf="f['resume'].touched || submitted  ">
+                                <div *ngIf="f['resume'].errors['required']" style="color: rgb(194, 17, 17);">Resume
+                                    is Required
                                 </div>
                             </div>
                         </div>
-                   
+                
                 </div>
-                <div class="col-6 mb-3" *ngIf="fileName && updateCandidate">
-                    <label class="form-label">Resume</label>  &nbsp;&nbsp;
-                   
-                        <a  *ngIf="!reopenUpload" alt="" style="color: rgb(31, 147, 255);cursor: pointer;" width="30" height="30"
-                        (click)="download(fileName.fileName)">{{fileName.fileName}}</a> &nbsp;&nbsp;
-                        <button class="btn text-dark border border-dark"
-                        style="background-color: rgb(226, 226, 226);"
-                        (click)="reupoladClick(true)"><span></span>Reupolad</button>
-                        <input class="form-control" *ngIf="reopenUpload" formControlName="resume" accept=".pdf" type="file"  (change)="onChange($event)"/>
-                    
-            </div>
                 <div class="col-6 mb-3">
                     <label class="form-label">Joining Availability *</label>
-                    <select  data-style="btn-default"
-                        class="form-control selectpicker form-select" formControlName="joiningAvailability">
+                    <select data-style="btn-default" class="form-control selectpicker form-select"
+                        formControlName="joiningAvailability">
                         <option selected disabled value="">-- Select --</option>
                         <option *ngFor="let name of getAvailability()" [value]="name">
                             {{name}} </option>
                     </select>
-                    <span *ngIf="f['joiningAvailability'].errors" >
-                        <span *ngIf="f['joiningAvailability'].touched || submitted">
-                            <span *ngIf="f['joiningAvailability'].errors['required']" style="color: rgb(194, 17, 17);">Availability is Required</span>
-                        </span>
-                    </span>
-                </div>
+                    <div *ngIf="f['joiningAvailability'].errors">
+                        <div *ngIf="f['joiningAvailability'].touched || submitted">
+                            <div *ngIf="f['joiningAvailability'].errors['required']" style="color: rgb(194, 17, 17);">Availability
+                                is Required
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
+            
             </div>
 
             <div class="row">
@@ -146,12 +160,12 @@
                         <option *ngFor="let i of configDataMasterValues" [ngValue]="i.configKey" [id]="i.configValue">
                             {{i.configValue}} </option>
                     </select>
-                    <span *ngIf="f['candidateStatus'].errors">
-                        <span *ngIf="f['candidateStatus'].touched || submitted">
-                            <span *ngIf="f['candidateStatus'].errors['required']"
-                                style="color: rgb(194, 17, 17);">Status is Required</span>
-                        </span>
-                    </span>
+                    <div *ngIf="f['candidateStatus'].errors">
+                        <div *ngIf="f['candidateStatus'].touched || submitted">
+                            <div *ngIf="f['candidateStatus'].errors['required']"
+                                style="color: rgb(194, 17, 17);">Status is Required</div>
+                        </div>
+                    </div>
 
                 </div>
                 <div class="col-6 mb-3" *ngIf="updateCandidate && selectedStatus === 'OfferAccepted'">
@@ -172,17 +186,17 @@
             </div>
 
             <div>
-                <button [disabled]="submitting" class="btn text-dark border border-dark btn-lg"
+                <button type="submit" (click)="onSubmit()" [disabled]="submitting" class="btn text-dark border border-dark btn-lg"
                     style="background-color: rgb(226, 226, 226);width:14%;color: black;">
                     <span *ngIf="submitting" class="spinner-border spinner-border-sm me-1"></span>
                     Submit
                 </button>
                 <span>&nbsp;&nbsp;</span>
-                <button class="btn text-dark border border-dark btn-lg"
+                <button type="clear" class="btn text-dark border border-dark btn-lg"
                     style="background-color: rgb(226, 226, 226);width:14%;"
                     (click)="clearFrom()"><span></span>Clear</button>
             </div>
-            <div style="color: rgb(4, 4, 255);margin-top: 5px;">{{message}}</div>
+            <div style="color: rgb(4, 4, 255);margin-top: 5px;" id="hideMeAfter5Seconds">{{message}}</div>
         </form>
 
     </div>
